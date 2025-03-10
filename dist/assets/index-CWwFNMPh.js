@@ -1,14 +1,14 @@
-(function(){const n=document.createElement("link").relList;if(n&&n.supports&&n.supports("modulepreload"))return;for(const t of document.querySelectorAll('link[rel="modulepreload"]'))a(t);new MutationObserver(t=>{for(const o of t)if(o.type==="childList")for(const c of o.addedNodes)c.tagName==="LINK"&&c.rel==="modulepreload"&&a(c)}).observe(document,{childList:!0,subtree:!0});function i(t){const o={};return t.integrity&&(o.integrity=t.integrity),t.referrerPolicy&&(o.referrerPolicy=t.referrerPolicy),t.crossOrigin==="use-credentials"?o.credentials="include":t.crossOrigin==="anonymous"?o.credentials="omit":o.credentials="same-origin",o}function a(t){if(t.ep)return;t.ep=!0;const o=i(t);fetch(t.href,o)}})();/**
+(function(){const o=document.createElement("link").relList;if(o&&o.supports&&o.supports("modulepreload"))return;for(const t of document.querySelectorAll('link[rel="modulepreload"]'))a(t);new MutationObserver(t=>{for(const n of t)if(n.type==="childList")for(const c of n.addedNodes)c.tagName==="LINK"&&c.rel==="modulepreload"&&a(c)}).observe(document,{childList:!0,subtree:!0});function i(t){const n={};return t.integrity&&(n.integrity=t.integrity),t.referrerPolicy&&(n.referrerPolicy=t.referrerPolicy),t.crossOrigin==="use-credentials"?n.credentials="include":t.crossOrigin==="anonymous"?n.credentials="omit":n.credentials="same-origin",n}function a(t){if(t.ep)return;t.ep=!0;const n=i(t);fetch(t.href,n)}})();/**
  * @license lucide v0.358.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const p=(e,n,i=[])=>{const a=document.createElementNS("http://www.w3.org/2000/svg",e);return Object.keys(n).forEach(t=>{a.setAttribute(t,String(n[t]))}),i.length&&i.forEach(t=>{const o=p(...t);a.appendChild(o)}),a};var L=([e,n,i])=>p(e,n,i);/**
+ */const h=(e,o,i=[])=>{const a=document.createElementNS("http://www.w3.org/2000/svg",e);return Object.keys(o).forEach(t=>{a.setAttribute(t,String(o[t]))}),i.length&&i.forEach(t=>{const n=h(...t);a.appendChild(n)}),a};var L=([e,o,i])=>h(e,o,i);/**
  * @license lucide v0.358.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const I=e=>Array.from(e.attributes).reduce((n,i)=>(n[i.name]=i.value,n),{}),N=e=>typeof e=="string"?e:!e||!e.class?"":e.class&&typeof e.class=="string"?e.class.split(" "):e.class&&Array.isArray(e.class)?e.class:"",z=e=>e.flatMap(N).map(i=>i.trim()).filter(Boolean).filter((i,a,t)=>t.indexOf(i)===a).join(" "),O=e=>e.replace(/(\w)(\w*)(_|-|\s*)/g,(n,i,a)=>i.toUpperCase()+a.toLowerCase()),h=(e,{nameAttr:n,icons:i,attrs:a})=>{var u;const t=e.getAttribute(n);if(t==null)return;const o=O(t),c=i[o];if(!c)return console.warn(`${e.outerHTML} icon name was not found in the provided icons object.`);const s=I(e),[A,_,E]=c,l={..._,"data-lucide":t,...a,...s},d=z(["lucide",`lucide-${t}`,s,a]);d&&Object.assign(l,{class:d});const C=L([A,l,E]);return(u=e.parentNode)==null?void 0:u.replaceChild(C,e)};/**
+ */const I=e=>Array.from(e.attributes).reduce((o,i)=>(o[i.name]=i.value,o),{}),N=e=>typeof e=="string"?e:!e||!e.class?"":e.class&&typeof e.class=="string"?e.class.split(" "):e.class&&Array.isArray(e.class)?e.class:"",z=e=>e.flatMap(N).map(i=>i.trim()).filter(Boolean).filter((i,a,t)=>t.indexOf(i)===a).join(" "),O=e=>e.replace(/(\w)(\w*)(_|-|\s*)/g,(o,i,a)=>i.toUpperCase()+a.toLowerCase()),p=(e,{nameAttr:o,icons:i,attrs:a})=>{var u;const t=e.getAttribute(o);if(t==null)return;const n=O(t),c=i[n];if(!c)return console.warn(`${e.outerHTML} icon name was not found in the provided icons object.`);const s=I(e),[_,A,E]=c,l={...A,"data-lucide":t,...a,...s},d=z(["lucide",`lucide-${t}`,s,a]);d&&Object.assign(l,{class:d});const C=L([_,l,E]);return(u=e.parentNode)==null?void 0:u.replaceChild(C,e)};/**
  * @license lucide v0.358.0 - ISC
  *
  * This source code is licensed under the ISC license.
@@ -43,25 +43,25 @@
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const v=["svg",r,[["path",{d:"M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"}],["path",{d:"m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"}],["path",{d:"M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"}],["path",{d:"M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"}]]];/**
+ */const b=["svg",r,[["path",{d:"M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"}],["path",{d:"m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"}],["path",{d:"M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"}],["path",{d:"M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"}]]];/**
  * @license lucide v0.358.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const b=["svg",r,[["path",{d:"M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"}]]];/**
+ */const k=["svg",r,[["path",{d:"M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"}]]];/**
  * @license lucide v0.358.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const k=["svg",r,[["path",{d:"M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"}],["path",{d:"m10 15 5-3-5-3z"}]]];/**
+ */const v=["svg",r,[["path",{d:"M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"}],["path",{d:"m10 15 5-3-5-3z"}]]];/**
  * @license lucide v0.358.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const M=({icons:e={},nameAttr:n="data-lucide",attrs:i={}}={})=>{if(!Object.values(e).length)throw new Error(`Please provide an icons object.
+ */const M=({icons:e={},nameAttr:o="data-lucide",attrs:i={}}={})=>{if(!Object.values(e).length)throw new Error(`Please provide an icons object.
 If you want to use all the icons you can import it like:
  \`import { createIcons, icons } from 'lucide';
-lucide.createIcons({icons});\``);if(typeof document>"u")throw new Error("`createIcons()` only works in a browser environment.");const a=document.querySelectorAll(`[${n}]`);if(Array.from(a).forEach(t=>h(t,{nameAttr:n,icons:e,attrs:i})),n==="data-lucide"){const t=document.querySelectorAll("[icon-name]");t.length>0&&(console.warn("[Lucide] Some icons were found with the now deprecated icon-name attribute. These will still be replaced for backwards compatibility, but will no longer be supported in v1.0 and you should switch to data-lucide"),Array.from(t).forEach(o=>h(o,{nameAttr:"icon-name",icons:e,attrs:i})))}};console.log("Imported Lucide components:",{ArrowUpRight:m,Linkedin:w,Twitter:b,Building2:f,Calendar:g,Youtube:k,Newspaper:y,Rocket:v});try{console.log("Attempting to initialize icons..."),M({icons:{"arrow-up-right":m,linkedin:w,twitter:b,building:f,calendar:g,youtube:k,newspaper:y,rocket:v}}),console.log("Icons initialized successfully")}catch(e){console.error("Error initializing icons:",e)}const S=`
+lucide.createIcons({icons});\``);if(typeof document>"u")throw new Error("`createIcons()` only works in a browser environment.");const a=document.querySelectorAll(`[${o}]`);if(Array.from(a).forEach(t=>p(t,{nameAttr:o,icons:e,attrs:i})),o==="data-lucide"){const t=document.querySelectorAll("[icon-name]");t.length>0&&(console.warn("[Lucide] Some icons were found with the now deprecated icon-name attribute. These will still be replaced for backwards compatibility, but will no longer be supported in v1.0 and you should switch to data-lucide"),Array.from(t).forEach(n=>p(n,{nameAttr:"icon-name",icons:e,attrs:i})))}};console.log("Imported Lucide components:",{ArrowUpRight:m,Linkedin:w,Twitter:k,Building2:f,Calendar:g,Youtube:v,Newspaper:y,Rocket:b});try{console.log("Attempting to initialize icons..."),M({icons:{"arrow-up-right":m,linkedin:w,twitter:k,building:f,calendar:g,youtube:v,newspaper:y,rocket:b}}),console.log("Icons initialized successfully")}catch(e){console.error("Error initializing icons:",e)}const P=`
   <div>
     <div class="profile">
       <img src="/profile.jpg" alt="Ryan Rademann" />
@@ -77,24 +77,24 @@ lucide.createIcons({icons});\``);if(typeof document>"u")throw new Error("`create
       <a href="https://x.com/RyanRademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Twitter</h2>
         <i data-lucide="twitter" class="link-icon" aria-hidden="true"></i>
-        <p>I retweet on more technical software and I topics.</p>
+        <p>I retweet more technical software topics.</p>
       </a>
-      <a href="your-wipfli-url" class="link-card" target="_blank">
+      <a href="https://www.wipfli.com/about-wipfli/partners-and-associates/ryan-rademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Wipfli Bio</h2>
         <i data-lucide="building" class="link-icon" aria-hidden="true"></i>
         <p>Wipfli is a tech, succession, and transition powerhouse.</p>
       </a>
-      <a href="your-calendar-url" class="link-card" target="_blank">
+      <a href="https://outlook.office.com/bookwithme/user/32a54d6a57dc459c9dd140df42f528d4%40wipfli.com/meetingtype/oPi0YrzoZkKlA2r3m0aRcA2?bookingcode=5bfcef0c-c41a-4af4-ac45-a82ca5adc519&anonymous&isanonymous=true&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Schedule a Meeting</h2>
         <i data-lucide="calendar" class="link-icon" aria-hidden="true"></i>
         <p>Book a teams, zoom, or phone call.</p>
       </a>
-      <a href="your-podcast-url" class="link-card" target="_blank">
+      <a href="https://youtu.be/i8l8gEdD6fQ?si=3hOmM_x3Zedb-0I3&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Latest Podcast</h2>
         <i data-lucide="youtube" class="link-icon" aria-hidden="true"></i>
         <p>Constructive Podcast on YouTube - 2025 February.</p>
       </a>
-      <a href="your-article-url" class="link-card" target="_blank">
+      <a href="https://www.forconstructionpros.com/construction-technology/project-management/article/22932667/wipfli-llp-how-ai-agents-are-leading-the-future-of-construction?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Latest Article</h2>
         <i data-lucide="newspaper" class="link-icon" aria-hidden="true"></i>
         <p>AI Agents on For Construction Pros.</p>
@@ -106,4 +106,4 @@ lucide.createIcons({icons});\``);if(typeof document>"u")throw new Error("`create
       </a>
     </div>
   </div>
-`;document.querySelector("#app").innerHTML=S;console.log("Content added to DOM");try{console.log("Re-initializing icons after content load..."),M(),console.log("Icons re-initialized successfully")}catch(e){console.error("Error re-initializing icons:",e)}
+`;document.querySelector("#app").innerHTML=P;console.log("Content added to DOM");try{console.log("Re-initializing icons after content load..."),M(),console.log("Icons re-initialized successfully")}catch(e){console.error("Error re-initializing icons:",e)}
