@@ -61,7 +61,7 @@
  */const M=({icons:e={},nameAttr:o="data-lucide",attrs:i={}}={})=>{if(!Object.values(e).length)throw new Error(`Please provide an icons object.
 If you want to use all the icons you can import it like:
  \`import { createIcons, icons } from 'lucide';
-lucide.createIcons({icons});\``);if(typeof document>"u")throw new Error("`createIcons()` only works in a browser environment.");const a=document.querySelectorAll(`[${o}]`);if(Array.from(a).forEach(t=>p(t,{nameAttr:o,icons:e,attrs:i})),o==="data-lucide"){const t=document.querySelectorAll("[icon-name]");t.length>0&&(console.warn("[Lucide] Some icons were found with the now deprecated icon-name attribute. These will still be replaced for backwards compatibility, but will no longer be supported in v1.0 and you should switch to data-lucide"),Array.from(t).forEach(n=>p(n,{nameAttr:"icon-name",icons:e,attrs:i})))}};console.log("Imported Lucide components:",{ArrowUpRight:m,Linkedin:w,Twitter:k,Building2:f,Calendar:g,Youtube:v,Newspaper:y,Rocket:b});try{console.log("Attempting to initialize icons..."),M({icons:{"arrow-up-right":m,linkedin:w,twitter:k,building:f,calendar:g,youtube:v,newspaper:y,rocket:b}}),console.log("Icons initialized successfully")}catch(e){console.error("Error initializing icons:",e)}const P=`
+lucide.createIcons({icons});\``);if(typeof document>"u")throw new Error("`createIcons()` only works in a browser environment.");const a=document.querySelectorAll(`[${o}]`);if(Array.from(a).forEach(t=>p(t,{nameAttr:o,icons:e,attrs:i})),o==="data-lucide"){const t=document.querySelectorAll("[icon-name]");t.length>0&&(console.warn("[Lucide] Some icons were found with the now deprecated icon-name attribute. These will still be replaced for backwards compatibility, but will no longer be supported in v1.0 and you should switch to data-lucide"),Array.from(t).forEach(n=>p(n,{nameAttr:"icon-name",icons:e,attrs:i})))}};console.log("Imported Lucide components:",{ArrowUpRight:m,Linkedin:w,Twitter:k,Building2:f,Calendar:g,Youtube:v,Newspaper:y,Rocket:b});try{console.log("Attempting to initialize icons..."),M({icons:{"arrow-up-right":m,linkedin:w,twitter:k,building:f,calendar:g,youtube:v,newspaper:y,rocket:b}}),console.log("Icons initialized successfully")}catch(e){console.error("Error initializing icons:",e)}const S=`
   <div>
     <div class="profile">
       <img src="/profile.jpg" alt="Ryan Rademann" />
@@ -77,33 +77,33 @@ lucide.createIcons({icons});\``);if(typeof document>"u")throw new Error("`create
       <a href="https://x.com/RyanRademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Twitter</h2>
         <i data-lucide="twitter" class="link-icon" aria-hidden="true"></i>
-        <p>I retweet more technical software topics.</p>
+        <p>I retweet more technical | software topics.</p>
       </a>
       <a href="https://www.wipfli.com/about-wipfli/partners-and-associates/ryan-rademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Wipfli Bio</h2>
         <i data-lucide="building" class="link-icon" aria-hidden="true"></i>
-        <p>Wipfli is a tech, succession, and transition powerhouse.</p>
+        <p>Construction's tech | succession, and transition powerhouse.</p>
       </a>
-      <a href="https://outlook.office.com/bookwithme/user/32a54d6a57dc459c9dd140df42f528d4%40wipfli.com/meetingtype/oPi0YrzoZkKlA2r3m0aRcA2?bookingcode=5bfcef0c-c41a-4af4-ac45-a82ca5adc519&anonymous&isanonymous=true&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
+      <a href="https://outlook.office.com/bookwithme/user/32a54d6a57dc459c9dd140df42f528d4%40wipfli.com?bookingcode=5bfcef0c-c41a-4af4-ac45-a82ca5adc519&anonymous&isanonymous=true&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Schedule a Meeting</h2>
         <i data-lucide="calendar" class="link-icon" aria-hidden="true"></i>
-        <p>Book a teams, zoom, or phone call.</p>
+        <p>Book a teams, zoom, | or phone call.</p>
       </a>
       <a href="https://youtu.be/i8l8gEdD6fQ?si=3hOmM_x3Zedb-0I3&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Latest Podcast</h2>
         <i data-lucide="youtube" class="link-icon" aria-hidden="true"></i>
-        <p>Constructive Podcast on YouTube - 2025 February.</p>
+        <p>Constructive Podcast on YouTube | 2025 February.</p>
       </a>
       <a href="https://www.forconstructionpros.com/construction-technology/project-management/article/22932667/wipfli-llp-how-ai-agents-are-leading-the-future-of-construction?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Latest Article</h2>
         <i data-lucide="newspaper" class="link-icon" aria-hidden="true"></i>
-        <p>AI Agents on For Construction Pros.</p>
+        <p>AI Agents on | For Construction Pros.</p>
       </a>
       <a href="https://fieldsity.com?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Stealth Mode Side Project</h2>
         <i data-lucide="rocket" class="link-icon" aria-hidden="true"></i>
-        <p>We are building in public a SMB field ops play.</p>
+        <p>We are building in public | a SMB field ops play.</p>
       </a>
     </div>
   </div>
-`;document.querySelector("#app").innerHTML=P;console.log("Content added to DOM");try{console.log("Re-initializing icons after content load..."),M(),console.log("Icons re-initialized successfully")}catch(e){console.error("Error re-initializing icons:",e)}
+`;document.querySelector("#app").innerHTML=S;console.log("Content added to DOM");try{console.log("Re-initializing icons after content load..."),M(),console.log("Icons re-initialized successfully")}catch(e){console.error("Error re-initializing icons:",e)}

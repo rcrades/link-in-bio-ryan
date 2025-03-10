@@ -45,9 +45,9 @@ const content = `
       <a href="https://www.wipfli.com/about-wipfli/partners-and-associates/ryan-rademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Wipfli Bio</h2>
         <i data-lucide="building" class="link-icon" aria-hidden="true"></i>
-        <p>Wipfli is a tech, succession, and transition powerhouse.</p>
+        <p>Construction's tech, succession,<br> and transition powerhouse.</p>
       </a>
-      <a href="https://outlook.office.com/bookwithme/user/32a54d6a57dc459c9dd140df42f528d4%40wipfli.com/meetingtype/oPi0YrzoZkKlA2r3m0aRcA2?bookingcode=5bfcef0c-c41a-4af4-ac45-a82ca5adc519&anonymous&isanonymous=true&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
+      <a href="https://outlook.office.com/bookwithme/user/32a54d6a57dc459c9dd140df42f528d4%40wipfli.com?bookingcode=5bfcef0c-c41a-4af4-ac45-a82ca5adc519&anonymous&isanonymous=true&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Schedule a Meeting</h2>
         <i data-lucide="calendar" class="link-icon" aria-hidden="true"></i>
         <p>Book a teams, zoom, or phone call.</p>
@@ -55,17 +55,17 @@ const content = `
       <a href="https://youtu.be/i8l8gEdD6fQ?si=3hOmM_x3Zedb-0I3&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Latest Podcast</h2>
         <i data-lucide="youtube" class="link-icon" aria-hidden="true"></i>
-        <p>Constructive Podcast on YouTube - 2025 February.</p>
+        <p>Constructive Podcast on YouTube<br>2025 February.</p>
       </a>
       <a href="https://www.forconstructionpros.com/construction-technology/project-management/article/22932667/wipfli-llp-how-ai-agents-are-leading-the-future-of-construction?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Latest Article</h2>
         <i data-lucide="newspaper" class="link-icon" aria-hidden="true"></i>
-        <p>AI Agents on For Construction Pros.</p>
+        <p>AI Agents on<br>For Construction Pros.</p>
       </a>
       <a href="https://fieldsity.com?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Stealth Mode Side Project</h2>
         <i data-lucide="rocket" class="link-icon" aria-hidden="true"></i>
-        <p>We are building in public a SMB field ops play.</p>
+        <p>We are building in public<br>a SMB field ops play.</p>
       </a>
     </div>
   </div>

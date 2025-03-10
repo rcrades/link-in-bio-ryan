@@ -27,8 +27,9 @@ body {
 
 #app {
   width: 100%;
-  max-width: 600px;
-  margin: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem 2rem;  /* More padding on sides */
 }
 
 .profile {
@@ -75,6 +76,9 @@ body {
   color: white;
   transition: all 0.3s ease;
   cursor: pointer;
+  width: calc(100% - 2.5rem);
+  box-sizing: border-box;
+  min-height: 100px;  /* Increased to accommodate potential two lines */
 }
 
 .link-icon {
@@ -106,7 +110,11 @@ body {
 .link-card h2 {
   margin: 0;
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 2rem;
 }
 
 .link-card p {
@@ -114,11 +122,42 @@ body {
   font-size: 0.9rem;
   opacity: 0.9;
   font-weight: 400;
+  padding-right: 2rem;
+  line-height: 1.4;
+  height: 2.8em;
+  display: block;
+  text-align: left;
+  overflow: hidden;
+  color: white;
+}
+
+/* Style for hover state */
+.link-card:hover p {
+  color: #0047CC;
+}
+
+/* Add styles for the last card */
+.link-card:last-child {
+  opacity: 0.7;
+}
+
+.link-card:last-child:hover {
+  opacity: 0.9;
 }
 
 @media (max-width: 640px) {
   body {
-    padding: 1rem;
+    padding: 0.25rem;
+  }
+  
+  #app {
+    padding: 0.5rem 1rem;
+  }
+  
+  .link-card {
+    padding: 0.875rem;
+    width: calc(100% - 1.5rem);
+    min-height: 90px;  /* Increased to accommodate potential two lines */
   }
 }
 
