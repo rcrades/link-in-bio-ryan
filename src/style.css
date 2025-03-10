@@ -10,6 +10,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Image position controls */
+  --img-position-x: 41%;
+  --img-position-y: 50%;
+  --img-scale: 1;
 }
 
 body {
@@ -31,11 +36,14 @@ body {
 }
 
 .profile img {
-  width: 120px;
-  height: 120px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   margin-bottom: 1rem;
   border: 3px solid #0047CC;
+  object-fit: cover;
+  object-position: var(--img-position-x) var(--img-position-y);
+  transform: scale(var(--img-scale));
 }
 
 .profile h1 {
@@ -111,5 +119,67 @@ body {
 @media (max-width: 640px) {
   body {
     padding: 1rem;
+  }
+}
+
+/* Admin page styles */
+.admin-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.preview-section,
+.controls-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.control-group {
+  margin-bottom: 1.5rem;
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.control-group input[type="range"] {
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.control-group span {
+  display: inline-block;
+  min-width: 4rem;
+  text-align: right;
+  color: #666;
+}
+
+.reset-button {
+  background-color: #0047CC;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.reset-button:hover {
+  background-color: #003399;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .admin-container {
+    grid-template-columns: 1fr;
   }
 }
