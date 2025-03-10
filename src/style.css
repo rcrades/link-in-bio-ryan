@@ -324,16 +324,17 @@ body {
 }
 
 .tech-stack {
-  margin-top: 1rem;  /* Reduced since we now have the divider */
+  margin-top: 1rem;
   padding: 1.5rem;
   border-top: 1px solid var(--border);
   font-size: 0.9rem;
-  color: var(--muted);
   background: var(--card);
+  color: var(--card-foreground);
   border-radius: 12px;
   width: calc(100% - 2.5rem);
   box-sizing: border-box;
   margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .tech-stack-header {
@@ -389,7 +390,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--foreground);
+  color: var(--card-foreground);
   font-weight: 500;
 }
 
@@ -398,18 +399,13 @@ body {
   font-weight: 600;
   letter-spacing: -0.01em;
   margin: 0;
-}
-
-.tech-stack .love-note .tech-icon {
-  color: #ff3366;
-  width: 1.3rem;
-  height: 1.3rem;
+  color: var(--card-foreground);
 }
 
 .tech-stack .tech-icon {
   width: 1.1rem;
   height: 1.1rem;
-  color: var(--primary);
+  color: var(--card-foreground);
   flex-shrink: 0;
 }
 
@@ -426,9 +422,10 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.4rem;
+  padding: 0.75rem;
   border-radius: 6px;
-  background: var(--background);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--card-foreground);
   transition: all 0.2s ease;
   font-size: 0.85rem;
 }
@@ -438,41 +435,57 @@ body {
 }
 
 .tech-stack a {
-  color: var(--primary-foreground);
+  color: var(--card-foreground);
   text-decoration: none;
   transition: all 0.2s ease;
   padding: 0.25rem 0.6rem;
   border-radius: 4px;
-  background-color: var(--primary);
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   font-weight: 500;
   font-size: 0.85rem;
-}
-
-.dark .tech-stack a {
-  background-color: var(--primary);
-  color: var(--background);
-}
-
-.tech-stack a:hover {
-  transform: translateY(-1px);
-  opacity: 0.9;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .tech-pill {
   display: inline-block;
   padding: 0.25rem 0.6rem;
   border-radius: 4px;
-  background-color: var(--card-hover);
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--card-foreground);
   font-weight: 500;
   font-size: 0.85rem;
   transition: all 0.2s ease;
 }
 
-.tech-pill:hover {
-  transform: translateY(-1px);
-  opacity: 0.9;
+.dark .tech-stack {
+  background: var(--background);
+}
+
+.dark .tech-stack p,
+.dark .tech-stack .love-note {
+  color: var(--foreground);
+}
+
+.dark .tech-stack .tech-icon {
+  color: var(--primary);
+}
+
+.dark .tech-stack li {
+  background: var(--card);
+  border: none;
+}
+
+.dark .tech-stack a {
+  background-color: var(--primary);
+  color: var(--background);
+  border: none;
+}
+
+.dark .tech-pill {
+  background-color: var(--card-hover);
+  color: var(--card-foreground);
+  border: none;
 }
 
 @media (max-width: 640px) {
