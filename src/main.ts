@@ -85,6 +85,23 @@ const content = `
         <p>We are building in public<br>a SMB field ops play.</p>
       </a>
     </div>
+    <footer class="tech-stack">
+      <p><i icon-name="code" class="tech-icon" aria-hidden="true"></i> Built with a bespoke software stack</p>
+      <ul>
+        <li>
+          <i icon-name="layout-template" class="tech-icon" aria-hidden="true"></i>
+          Layout: <a href="https://bolt.new/?rid=qsz5nv" target="_blank">bolt.new</a>
+        </li>
+        <li>
+          <i icon-name="boxes" class="tech-icon" aria-hidden="true"></i>
+          Codebase: <span class="tech-pill">React</span> + <span class="tech-pill">Vite</span>
+        </li>
+        <li>
+          <i icon-name="cloud" class="tech-icon" aria-hidden="true"></i>
+          Hosting: <span class="tech-pill">Vercel</span> + <span class="tech-pill">GoDaddy</span>
+        </li>
+      </ul>
+    </footer>
   </div>
 `
 

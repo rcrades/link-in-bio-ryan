@@ -213,6 +213,15 @@ body {
   opacity: 0.9;
 }
 
+/* Special styling for stealth mode card in dark mode */
+.dark .link-card:last-child {
+  border-color: rgba(96, 165, 250, 0.3);  /* Using primary color but more transparent */
+}
+
+.dark .link-card:last-child:hover {
+  border-color: rgba(96, 165, 250, 0.5);  /* Slightly more visible on hover */
+}
+
 @media (max-width: 640px) {
   body {
     padding: 0.25rem;
@@ -294,5 +303,85 @@ body {
 @media (max-width: 768px) {
   .admin-container {
     grid-template-columns: 1fr;
+  }
+}
+
+.tech-stack {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.tech-stack p {
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.tech-stack .tech-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  color: var(--primary);
+}
+
+.tech-stack ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tech-stack li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tech-stack a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background-color: var(--card);
+  font-weight: 500;
+}
+
+.tech-stack a:hover {
+  transform: translateY(-1px);
+  background-color: var(--card-hover);
+}
+
+.tech-pill {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background-color: var(--card);
+  color: var(--card-foreground);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tech-pill:hover {
+  transform: translateY(-1px);
+  background-color: var(--card-hover);
+}
+
+@media (max-width: 640px) {
+  .tech-stack {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+  
+  .tech-stack ul {
+    gap: 0.5rem;
   }
 }
