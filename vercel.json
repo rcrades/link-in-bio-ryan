@@ -3,6 +3,5 @@
   "buildCommand": "vite build",
   "devCommand": "vite --port $PORT",
   "outputDirectory": "dist",
-  "framework": "vite",
-  "nodeVersion": "20.x"
+  "framework": "vite"
 } 
