@@ -422,7 +422,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem;
+  padding: 0.75rem 1rem;
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--card-foreground);
@@ -444,6 +444,15 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.2);
   font-weight: 500;
   font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tech-stack a .tech-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-top: 1px;
 }
 
 .tech-pill {
@@ -451,7 +460,9 @@ body {
   padding: 0.25rem 0.6rem;
   border-radius: 4px;
   background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(244, 237, 237, 0.2);
+  /* Add a subtle outline effect using box-shadow */
+  box-shadow: 0 0 0 2px rgba(234, 230, 230, 0.1);
   color: var(--card-foreground);
   font-weight: 500;
   font-size: 0.85rem;
@@ -459,7 +470,7 @@ body {
 }
 
 .dark .tech-stack {
-  background: var(--background);
+  background: var(--card);
 }
 
 .dark .tech-stack p,
@@ -471,20 +482,25 @@ body {
   color: var(--primary);
 }
 
-.dark .tech-stack li,
-.dark .github-link {
-  background: var(--card);
+.dark .tech-stack li {
+  background: #1a1a1a;
   border: none;
 }
 
-.dark .tech-stack a {
+.dark .tech-stack a,
+.dark .github-link {
   background-color: var(--primary);
   color: var(--background);
   border: none;
 }
 
+.dark .tech-stack a .tech-icon,
+.dark .github-link .tech-icon {
+  color: var(--background);
+}
+
 .dark .tech-pill {
-  background-color: var(--card-hover);
+  background-color: #1a1a1a;
   color: var(--card-foreground);
   border: none;
 }
@@ -511,7 +527,7 @@ body {
   }
   
   .tech-stack li {
-    padding: 0.3rem;
+    padding: 0.75rem 1rem;
   }
 }
 
@@ -520,7 +536,7 @@ body {
   align-items: center;
   gap: 0.75rem;
   margin-top: 1.5rem;
-  padding: 0.75rem;
+  padding: 0.75rem 1rem;
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--card-foreground);
@@ -528,6 +544,18 @@ body {
   font-size: 0.85rem;
   font-weight: 500;
   transition: all 0.2s ease;
+}
+
+.github-link .tech-icon:first-child {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.github-link .tech-icon:last-child {
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-left: 0.25rem;
+  margin-top: 1px;
 }
 
 .github-link:hover {
@@ -545,6 +573,10 @@ body {
   color: var(--background);
 }
 
+.dark .github-link:hover {
+  transform: translateY(-1px);
+}
+
 @media (max-width: 640px) {
   .divider {
     margin: 1.5rem 0;
@@ -567,6 +599,10 @@ body {
   }
   
   .tech-stack li {
-    padding: 0.3rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .github-link {
+    padding: 0.75rem 1rem;
   }
 }

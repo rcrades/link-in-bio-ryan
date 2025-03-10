@@ -106,7 +106,7 @@ const content = `
         <ul>
           <li>
             <i icon-name="layout-template" class="tech-icon" aria-hidden="true"></i>
-            Layout: <a href="https://bolt.new/?rid=qsz5nv" target="_blank">bolt.new</a>
+            Boilerplate & Prototype: <a href="https://bolt.new/?rid=qsz5nv" target="_blank">bolt.new <i icon-name="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
           </li>
           <li>
             <i icon-name="boxes" class="tech-icon" aria-hidden="true"></i>
@@ -119,7 +119,7 @@ const content = `
         </ul>
         <a href="https://github.com/rcrades/link-in-bio-ryan" target="_blank" class="github-link">
           <i icon-name="github" class="tech-icon" aria-hidden="true"></i>
-          rcrades
+          rcrades <i icon-name="arrow-up-right" class="tech-icon" aria-hidden="true"></i>
         </a>
       </div>
     </footer>
