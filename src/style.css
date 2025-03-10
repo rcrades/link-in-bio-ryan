@@ -3,8 +3,17 @@
   line-height: 1.5;
   font-weight: 400;
   
-  color: #213547;
-  background-color: #f5f5f5;
+  /* Light mode colors */
+  --background: #f5f5f5;
+  --foreground: #213547;
+  --primary: #0047CC;
+  --primary-foreground: white;
+  --muted: #666;
+  --card: #0047CC;
+  --card-foreground: white;
+  --card-hover: white;
+  --card-hover-foreground: #0047CC;
+  --border: #0047CC;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,19 +26,83 @@
   --img-scale: 1;
 }
 
+/* Dark mode colors */
+.dark {
+  --background: #1a1a1a;
+  --foreground: #ffffff;
+  --primary: #60a5fa;
+  --primary-foreground: #1a1a1a;
+  --muted: #a1a1aa;
+  --card: #27272a;
+  --card-foreground: #ffffff;
+  --card-hover: #3f3f46;
+  --card-hover-foreground: #ffffff;
+  --border: var(--primary);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--card-foreground);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.theme-toggle:hover {
+  background: var(--card-hover);
+  transform: translateY(-2px);
+}
+
+.theme-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Show/hide icons based on theme */
+.dark .theme-icon.sun {
+  display: block;
+}
+
+.dark .theme-icon.moon {
+  display: none;
+}
+
+.theme-icon.sun {
+  display: none;
+}
+
+.theme-icon.moon {
+  display: block;
+}
+
 body {
   margin: 0;
   display: flex;
   min-width: 320px;
   min-height: 100vh;
   padding: 2rem;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 #app {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  padding: 1rem 2rem;  /* More padding on sides */
+  padding: 1rem 2rem;
+  position: relative;
 }
 
 .profile {
@@ -41,7 +114,7 @@ body {
   height: 200px;
   border-radius: 50%;
   margin-bottom: 1rem;
-  border: 3px solid #0047CC;
+  border: 3px solid var(--primary);
   object-fit: cover;
   object-position: var(--img-position-x) var(--img-position-y);
   transform: scale(var(--img-scale));
@@ -50,12 +123,12 @@ body {
 .profile h1 {
   font-size: 2.5em;
   font-weight: 800;
-  color: #0047CC;
+  color: var(--primary);
   margin: 0;
 }
 
 .profile p {
-  color: #666;
+  color: var(--muted);
   margin: 0.5rem 0;
   font-weight: 400;
 }
@@ -65,20 +138,20 @@ body {
 }
 
 .link-card {
-  background-color: #0047CC;
-  border: 2px solid #0047CC;
+  background-color: var(--card);
+  border: 2px solid var(--border);
   border-radius: 8px;
   padding: 1rem;
   margin: 1rem 0;
   display: block;
   position: relative;
   text-decoration: none;
-  color: white;
+  color: var(--card-foreground);
   transition: all 0.3s ease;
   cursor: pointer;
   width: calc(100% - 2.5rem);
   box-sizing: border-box;
-  min-height: 100px;  /* Increased to accommodate potential two lines */
+  min-height: 100px;
 }
 
 .link-icon {
@@ -93,8 +166,8 @@ body {
 }
 
 .link-card:hover {
-  background-color: white;
-  color: #0047CC;
+  background-color: var(--card-hover);
+  color: var(--card-hover-foreground);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 71, 204, 0.1);
 }
@@ -102,9 +175,6 @@ body {
 .link-card:hover .link-icon {
   opacity: 1;
   transform: translateX(2px) translateY(-2px);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
 }
 
 .link-card h2 {
@@ -128,15 +198,13 @@ body {
   display: block;
   text-align: left;
   overflow: hidden;
-  color: white;
+  color: var(--card-foreground);
 }
 
-/* Style for hover state */
 .link-card:hover p {
-  color: #0047CC;
+  color: var(--card-hover-foreground);
 }
 
-/* Add styles for the last card */
 .link-card:last-child {
   opacity: 0.7;
 }
@@ -157,7 +225,12 @@ body {
   .link-card {
     padding: 0.875rem;
     width: calc(100% - 1.5rem);
-    min-height: 90px;  /* Increased to accommodate potential two lines */
+    min-height: 90px;
+  }
+
+  .theme-toggle {
+    top: 0.5rem;
+    right: 0.5rem;
   }
 }
 
@@ -173,7 +246,8 @@ body {
 
 .preview-section,
 .controls-section {
-  background: white;
+  background: var(--card);
+  color: var(--card-foreground);
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -198,12 +272,12 @@ body {
   display: inline-block;
   min-width: 4rem;
   text-align: right;
-  color: #666;
+  color: var(--muted);
 }
 
 .reset-button {
-  background-color: #0047CC;
-  color: white;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
@@ -213,7 +287,7 @@ body {
 }
 
 .reset-button:hover {
-  background-color: #003399;
+  opacity: 0.9;
   transform: translateY(-1px);
 }
 

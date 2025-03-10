@@ -1,22 +1,35 @@
+// Theme handling
+const getThemePreference = () => {
+  // First check localStorage
+  if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+    return localStorage.getItem('theme');
+  }
+  // Then check system preference, default to dark if no preference
+  const systemPreference = window.matchMedia('(prefers-color-scheme: light)');
+  return systemPreference.matches ? 'light' : 'dark';
+};
+
+// Apply theme immediately
+const isDark = getThemePreference() === 'dark';
+document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+
+// Watch for theme changes
+if (typeof localStorage !== 'undefined') {
+  const observer = new MutationObserver(() => {
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+}
+
 import './style.css'
-import { createIcons, ArrowUpRight, Linkedin, Twitter, Building2, Calendar, Youtube, Newspaper, Rocket } from 'lucide'
+import * as lucide from 'lucide'
 
-console.log('Imported Lucide components:', { ArrowUpRight, Linkedin, Twitter, Building2, Calendar, Youtube, Newspaper, Rocket })
-
-// Initialize icons
+// Initialize icons with all available icons
 try {
   console.log('Attempting to initialize icons...')
-  createIcons({
-    icons: {
-      'arrow-up-right': ArrowUpRight,
-      'linkedin': Linkedin,
-      'twitter': Twitter,
-      'building': Building2,
-      'calendar': Calendar,
-      'youtube': Youtube,
-      'newspaper': Newspaper,
-      'rocket': Rocket
-    }
+  lucide.createIcons({
+    icons: lucide.icons
   })
   console.log('Icons initialized successfully')
 } catch (error) {
@@ -26,6 +39,10 @@ try {
 // Create HTML content
 const content = `
   <div>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+      <i icon-name="sun" class="theme-icon sun" aria-hidden="true"></i>
+      <i icon-name="moon" class="theme-icon moon" aria-hidden="true"></i>
+    </button>
     <div class="profile">
       <img src="/profile.jpg" alt="Ryan Rademann" />
       <h1>Ryan Rademann</h1>
@@ -34,37 +51,37 @@ const content = `
     <div class="links-container">
       <a href="https://www.linkedin.com/in/ryanrademann/?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>LinkedIn</h2>
-        <i data-lucide="linkedin" class="link-icon" aria-hidden="true"></i>
+        <i icon-name="linkedin" class="link-icon" aria-hidden="true"></i>
         <p>Follow me on LinkedIn.</p>
       </a>
       <a href="https://x.com/RyanRademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Twitter</h2>
-        <i data-lucide="twitter" class="link-icon" aria-hidden="true"></i>
+        <i icon-name="twitter" class="link-icon" aria-hidden="true"></i>
         <p>I retweet more technical software topics.</p>
       </a>
       <a href="https://www.wipfli.com/about-wipfli/partners-and-associates/ryan-rademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Wipfli Bio</h2>
-        <i data-lucide="building" class="link-icon" aria-hidden="true"></i>
+        <i icon-name="building-2" class="link-icon" aria-hidden="true"></i>
         <p>Construction's tech, succession,<br> and transition powerhouse.</p>
       </a>
       <a href="https://outlook.office.com/bookwithme/user/32a54d6a57dc459c9dd140df42f528d4%40wipfli.com?bookingcode=5bfcef0c-c41a-4af4-ac45-a82ca5adc519&anonymous&isanonymous=true&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Schedule a Meeting</h2>
-        <i data-lucide="calendar" class="link-icon" aria-hidden="true"></i>
+        <i icon-name="calendar" class="link-icon" aria-hidden="true"></i>
         <p>Book a teams, zoom, or phone call.</p>
       </a>
       <a href="https://youtu.be/i8l8gEdD6fQ?si=3hOmM_x3Zedb-0I3&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Latest Podcast</h2>
-        <i data-lucide="youtube" class="link-icon" aria-hidden="true"></i>
+        <i icon-name="youtube" class="link-icon" aria-hidden="true"></i>
         <p>Constructive Podcast on YouTube<br>2025 February.</p>
       </a>
       <a href="https://www.forconstructionpros.com/construction-technology/project-management/article/22932667/wipfli-llp-how-ai-agents-are-leading-the-future-of-construction?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Latest Article</h2>
-        <i data-lucide="newspaper" class="link-icon" aria-hidden="true"></i>
+        <i icon-name="newspaper" class="link-icon" aria-hidden="true"></i>
         <p>AI Agents on<br>For Construction Pros.</p>
       </a>
       <a href="https://fieldsity.com?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Stealth Mode Side Project</h2>
-        <i data-lucide="rocket" class="link-icon" aria-hidden="true"></i>
+        <i icon-name="rocket" class="link-icon" aria-hidden="true"></i>
         <p>We are building in public<br>a SMB field ops play.</p>
       </a>
     </div>
@@ -78,8 +95,15 @@ console.log('Content added to DOM')
 // Re-run createIcons after content is added
 try {
   console.log('Re-initializing icons after content load...')
-  createIcons()
+  lucide.createIcons({
+    icons: lucide.icons
+  })
   console.log('Icons re-initialized successfully')
 } catch (error) {
   console.error('Error re-initializing icons:', error)
 }
+
+// Add theme toggle functionality
+document.getElementById('theme-toggle')?.addEventListener('click', () => {
+  document.documentElement.classList.toggle('dark');
+});
