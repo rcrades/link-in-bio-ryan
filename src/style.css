@@ -308,26 +308,41 @@ body {
 
 .tech-stack {
   margin-top: 3rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: 2rem;
   border-top: 1px solid var(--border);
   font-size: 0.9rem;
   color: var(--muted);
+  background: var(--card);
+  border-radius: 12px;
 }
 
 .tech-stack p {
-  margin: 0 0 1rem 0;
+  margin: 0 0 1.5rem 0;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   color: var(--foreground);
   font-weight: 500;
+}
+
+.tech-stack .love-note {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.tech-stack .love-note .tech-icon {
+  color: #ff3366;
+  width: 1.4rem;
+  height: 1.4rem;
 }
 
 .tech-stack .tech-icon {
   width: 1.2rem;
   height: 1.2rem;
   color: var(--primary);
+  flex-shrink: 0;
 }
 
 .tech-stack ul {
@@ -336,52 +351,72 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .tech-stack li {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: var(--background);
+  transition: all 0.2s ease;
+}
+
+.tech-stack li:hover {
+  transform: translateY(-1px);
 }
 
 .tech-stack a {
-  color: var(--primary);
+  color: var(--primary-foreground);
   text-decoration: none;
-  transition: all 0.3s ease;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  background-color: var(--card);
+  transition: all 0.2s ease;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  background-color: var(--primary);
   font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.dark .tech-stack a {
+  background-color: var(--primary);
+  color: var(--background);
 }
 
 .tech-stack a:hover {
   transform: translateY(-1px);
-  background-color: var(--card-hover);
+  opacity: 0.9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .tech-pill {
   display: inline-block;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  background-color: var(--card);
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  background-color: var(--card-hover);
   color: var(--card-foreground);
   font-weight: 500;
-  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
 }
 
 .tech-pill:hover {
   transform: translateY(-1px);
-  background-color: var(--card-hover);
+  opacity: 0.9;
 }
 
 @media (max-width: 640px) {
   .tech-stack {
     margin-top: 2rem;
-    padding-top: 1.5rem;
+    padding: 1.5rem;
   }
   
   .tech-stack ul {
-    gap: 0.5rem;
+    gap: 0.75rem;
+  }
+  
+  .tech-stack li {
+    padding: 0.4rem;
   }
 }

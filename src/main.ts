@@ -86,7 +86,14 @@ const content = `
       </a>
     </div>
     <footer class="tech-stack">
-      <p><i icon-name="code" class="tech-icon" aria-hidden="true"></i> Built with a bespoke software stack</p>
+      <p class="love-note">
+        <i icon-name="heart" class="tech-icon" aria-hidden="true"></i>
+        Like this contact info page?
+      </p>
+      <p>
+        <i icon-name="code" class="tech-icon" aria-hidden="true"></i>
+        Built with a bespoke software stack in 2025
+      </p>
       <ul>
         <li>
           <i icon-name="layout-template" class="tech-icon" aria-hidden="true"></i>
