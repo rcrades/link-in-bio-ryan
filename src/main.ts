@@ -117,6 +117,10 @@ const content = `
             Hosting: <span class="tech-pill">Vercel</span> + <span class="tech-pill">GoDaddy</span>
           </li>
         </ul>
+        <a href="https://github.com/rcrades/link-in-bio-ryan" target="_blank" class="github-link">
+          <i icon-name="github" class="tech-icon" aria-hidden="true"></i>
+          rcrades
+        </a>
       </div>
     </footer>
   </div>
