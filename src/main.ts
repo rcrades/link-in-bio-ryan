@@ -85,29 +85,39 @@ const content = `
         <p>We are building in public<br>a SMB field ops play.</p>
       </a>
     </div>
+    <div class="divider">
+      <i icon-name="hard-hat" class="divider-icon" aria-hidden="true"></i>
+    </div>
     <footer class="tech-stack">
-      <p class="love-note">
-        <i icon-name="heart" class="tech-icon" aria-hidden="true"></i>
-        Like this contact info page?
-      </p>
-      <p>
-        <i icon-name="code" class="tech-icon" aria-hidden="true"></i>
-        Built with a bespoke software stack in 2025
-      </p>
-      <ul>
-        <li>
-          <i icon-name="layout-template" class="tech-icon" aria-hidden="true"></i>
-          Layout: <a href="https://bolt.new/?rid=qsz5nv" target="_blank">bolt.new</a>
-        </li>
-        <li>
-          <i icon-name="boxes" class="tech-icon" aria-hidden="true"></i>
-          Codebase: <span class="tech-pill">React</span> + <span class="tech-pill">Vite</span>
-        </li>
-        <li>
-          <i icon-name="cloud" class="tech-icon" aria-hidden="true"></i>
-          Hosting: <span class="tech-pill">Vercel</span> + <span class="tech-pill">GoDaddy</span>
-        </li>
-      </ul>
+      <div class="tech-stack-header">
+        <p class="love-note">
+          <i icon-name="heart" class="tech-icon" aria-hidden="true"></i>
+          Like this contact info page?
+        </p>
+        <button class="expand-button" aria-label="Show tech stack details">
+          <i icon-name="chevron-down" class="tech-icon" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="tech-stack-details">
+        <p>
+          <i icon-name="code" class="tech-icon" aria-hidden="true"></i>
+          Built with a bespoke software stack in 2025
+        </p>
+        <ul>
+          <li>
+            <i icon-name="layout-template" class="tech-icon" aria-hidden="true"></i>
+            Layout: <a href="https://bolt.new/?rid=qsz5nv" target="_blank">bolt.new</a>
+          </li>
+          <li>
+            <i icon-name="boxes" class="tech-icon" aria-hidden="true"></i>
+            Codebase: <span class="tech-pill">React</span> + <span class="tech-pill">Vite</span>
+          </li>
+          <li>
+            <i icon-name="cloud" class="tech-icon" aria-hidden="true"></i>
+            Hosting: <span class="tech-pill">Vercel</span> + <span class="tech-pill">GoDaddy</span>
+          </li>
+        </ul>
+      </div>
     </footer>
   </div>
 `
@@ -130,4 +140,14 @@ try {
 // Add theme toggle functionality
 document.getElementById('theme-toggle')?.addEventListener('click', () => {
   document.documentElement.classList.toggle('dark');
+});
+
+// Add click handler for tech stack expansion
+document.querySelector('.expand-button')?.addEventListener('click', (e: Event) => {
+  const button = e.currentTarget as HTMLButtonElement;
+  const details = document.querySelector('.tech-stack-details');
+  const isExpanded = button.getAttribute('aria-expanded') === 'true';
+  
+  button.setAttribute('aria-expanded', (!isExpanded).toString());
+  details?.classList.toggle('expanded');
 });
