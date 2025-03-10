@@ -57,12 +57,12 @@ const content = `
       <a href="https://x.com/RyanRademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Twitter</h2>
         <i icon-name="twitter" class="link-icon" aria-hidden="true"></i>
-        <p>I retweet more technical software topics.</p>
+        <p>I retweet more technical <br>software topics.</p>
       </a>
       <a href="https://www.wipfli.com/about-wipfli/partners-and-associates/ryan-rademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Wipfli Bio</h2>
         <i icon-name="building-2" class="link-icon" aria-hidden="true"></i>
-        <p>Construction's tech, succession,<br> and transition powerhouse.</p>
+        <p>Construction's tech, succession, <br>and transition powerhouse.</p>
       </a>
       <a href="https://outlook.office.com/bookwithme/user/32a54d6a57dc459c9dd140df42f528d4%40wipfli.com?bookingcode=5bfcef0c-c41a-4af4-ac45-a82ca5adc519&anonymous&isanonymous=true&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Schedule a Meeting</h2>
@@ -80,9 +80,9 @@ const content = `
         <p>AI Agents on<br>For Construction Pros.</p>
       </a>
       <a href="https://fieldsity.com?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
-        <h2>Stealth Mode Side Project</h2>
+        <h2>Stealth Mode Project</h2>
         <i icon-name="rocket" class="link-icon" aria-hidden="true"></i>
-        <p>We are building in public<br>a SMB field ops play.</p>
+        <p>We are building in public<br>an SMB field ops play.</p>
       </a>
     </div>
     <div class="divider">
@@ -99,7 +99,7 @@ const content = `
         </button>
       </div>
       <div class="tech-stack-details">
-        <p>
+        <p class="text-xs">
           <i icon-name="code" class="tech-icon" aria-hidden="true"></i>
           Built with a bespoke software stack in 2025
         </p>

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -180,8 +184,8 @@ body {
 
 .link-card h2 {
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -395,11 +399,16 @@ body {
 }
 
 .tech-stack .love-note {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 500;
   letter-spacing: -0.01em;
   margin: 0;
   color: var(--card-foreground);
+}
+
+.tech-stack .love-note .tech-icon {
+  width: 0.9rem;
+  height: 0.9rem;
 }
 
 .tech-stack .tech-icon {
