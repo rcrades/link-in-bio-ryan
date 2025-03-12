@@ -615,3 +615,50 @@ body {
     padding: 0.75rem 1rem;
   }
 }
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  width: calc(100% - 2.5rem);
+}
+
+.social-card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: var(--card);
+  border-radius: 12px;
+  color: var(--card-foreground);
+  transition: all 0.3s ease;
+  border-top: 2px solid var(--border);
+}
+
+.social-card:hover {
+  transform: translateY(-2px);
+  background-color: var(--card-hover);
+  color: var(--card-hover-foreground);
+  box-shadow: 0 4px 12px rgba(0, 71, 204, 0.1);
+}
+
+.social-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+@media (max-width: 640px) {
+  .social-links {
+    width: calc(100% - 1.5rem);
+  }
+  
+  .social-card {
+    padding: 1rem;
+  }
+  
+  .social-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

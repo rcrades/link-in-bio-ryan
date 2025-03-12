@@ -49,16 +49,14 @@ const content = `
       <p>Technology Consultant at Wipfli</p>
     </div>
     <div class="links-container">
-      <a href="https://www.linkedin.com/in/ryanrademann/?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
-        <h2>LinkedIn</h2>
-        <i icon-name="linkedin" class="link-icon" aria-hidden="true"></i>
-        <p>Follow me on LinkedIn.</p>
-      </a>
-      <a href="https://x.com/RyanRademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
-        <h2>Twitter</h2>
-        <i icon-name="twitter" class="link-icon" aria-hidden="true"></i>
-        <p>I retweet more technical <br>software topics.</p>
-      </a>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/ryanrademann/?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="social-card" target="_blank">
+          <i icon-name="linkedin" class="social-icon" aria-hidden="true"></i>
+        </a>
+        <a href="https://x.com/RyanRademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="social-card" target="_blank">
+          <i icon-name="twitter" class="social-icon" aria-hidden="true"></i>
+        </a>
+      </div>
       <a href="https://www.wipfli.com/about-wipfli/partners-and-associates/ryan-rademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Wipfli Bio</h2>
         <i icon-name="building-2" class="link-icon" aria-hidden="true"></i>
@@ -82,7 +80,7 @@ const content = `
       <a href="https://fieldsity.com?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
         <h2>Stealth Mode Project</h2>
         <i icon-name="rocket" class="link-icon" aria-hidden="true"></i>
-        <p>We are building in public<br>an SMB field ops play.</p>
+        <p>I am an advisor to a startup<br>building field AI for SMB.</p>
       </a>
     </div>
     <div class="divider">

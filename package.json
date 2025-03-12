@@ -19,6 +19,7 @@
     "vite": "^5.4.8"
   },
   "dependencies": {
-    "lucide": "^0.358.0"
+    "lucide": "^0.358.0",
+    "vercel": "^41.4.0"
   }
 }

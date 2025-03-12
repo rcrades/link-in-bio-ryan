@@ -1,7 +1,11 @@
 {
   "version": 2,
   "buildCommand": "vite build",
-  "devCommand": "vite --port $PORT",
+  "devCommand": "vite",
   "outputDirectory": "dist",
-  "framework": "vite"
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/pages/:path*", "destination": "/pages/:path*" },
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
 } 
