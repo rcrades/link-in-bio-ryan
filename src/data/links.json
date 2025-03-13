@@ -1,0 +1,51 @@
+{
+  "socialLinks": [
+    {
+      "type": "social",
+      "icon": "linkedin",
+      "link": "https://www.linkedin.com/in/ryanrademann/?utm_source=linkinbio&utm_medium=social&utm_campaign=profile"
+    },
+    {
+      "type": "social",
+      "icon": "twitter",
+      "link": "https://x.com/RyanRademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile"
+    }
+  ],
+  "regularLinks": [
+    {
+      "type": "regular",
+      "icon": "building-2",
+      "header": "Wipfli Bio",
+      "description": "Construction's tech, succession,\nand transition powerhouse.",
+      "link": "https://www.wipfli.com/about-wipfli/partners-and-associates/ryan-rademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile"
+    },
+    {
+      "type": "regular",
+      "icon": "calendar",
+      "header": "Schedule a Meeting",
+      "description": "Book a teams, zoom, or phone call.",
+      "link": "https://outlook.office.com/bookwithme/user/32a54d6a57dc459c9dd140df42f528d4%40wipfli.com?bookingcode=5bfcef0c-c41a-4af4-ac45-a82ca5adc519&anonymous&isanonymous=true&utm_source=linkinbio&utm_medium=social&utm_campaign=profile"
+    },
+    {
+      "type": "regular",
+      "icon": "youtube",
+      "header": "Latest Podcast",
+      "description": "Constructive Podcast on YouTube\n2025 February.",
+      "link": "https://youtu.be/i8l8gEdD6fQ?si=3hOmM_x3Zedb-0I3&utm_source=linkinbio&utm_medium=social&utm_campaign=profile"
+    },
+    {
+      "type": "regular",
+      "icon": "newspaper",
+      "header": "Latest Article",
+      "description": "AI Agents on\nFor Construction Pros.",
+      "link": "https://www.forconstructionpros.com/construction-technology/project-management/article/22932667/wipfli-llp-how-ai-agents-are-leading-the-future-of-construction?utm_source=linkinbio&utm_medium=social&utm_campaign=profile"
+    },
+    {
+      "type": "regular",
+      "icon": "rocket",
+      "header": "Stealth Mode Project",
+      "description": "I am an advisor to a startup\nbuilding field AI for SMB.",
+      "link": "https://fieldsity.com?utm_source=linkinbio&utm_medium=social&utm_campaign=profile"
+    }
+  ]
+} 

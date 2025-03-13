@@ -14,7 +14,10 @@ A modern, responsive links page built with:
 │   ├── speaker.ts       # Speaker page logic
 │   ├── admin.ts         # Admin page logic
 │   ├── stealth.ts       # Stealth mode page logic
-│   └── style.css        # Global styles
+│   ├── style.css        # Global styles
+│   └── data/            # Data files
+│       ├── links.json   # Link configurations
+│       └── ICONS.md     # Icon usage guide
 │
 ├── public/              # Static assets
 │   ├── profile.jpg      # Profile image
@@ -35,6 +38,36 @@ A modern, responsive links page built with:
 ├── tsconfig.json        # TypeScript configuration
 └── package.json         # Project dependencies
 ```
+
+## Managing Links
+
+The site's links are managed through a JSON configuration file at `src/data/links.json`. This file contains two types of links:
+
+1. Social Links (half-width)
+```json
+{
+  "type": "social",
+  "icon": "linkedin",
+  "link": "https://example.com"
+}
+```
+
+2. Regular Links (full-width)
+```json
+{
+  "type": "regular",
+  "icon": "calendar",
+  "header": "Schedule a Meeting",
+  "description": "Book a meeting",
+  "link": "https://example.com"
+}
+```
+
+### Icons
+All icons are from the [Lucide Icons](https://lucide.dev/icons) library. See `src/data/ICONS.md` for:
+- Complete list of recommended icons by category
+- Usage instructions
+- Examples
 
 ## Development
 

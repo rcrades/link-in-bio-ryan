@@ -24,6 +24,7 @@ if (typeof localStorage !== 'undefined') {
 
 import './style.css'
 import * as lucide from 'lucide'
+import linksData from './data/links.json'
 
 // Initialize icons with all available icons
 try {
@@ -34,6 +35,26 @@ try {
   console.log('Icons initialized successfully')
 } catch (error) {
   console.error('Error initializing icons:', error)
+}
+
+// Function to generate social links HTML
+const generateSocialLinks = (socialLinks: any[]) => {
+  return socialLinks.map(link => `
+    <a href="${link.link}" class="social-card" target="_blank">
+      <i icon-name="${link.icon}" class="social-icon" aria-hidden="true"></i>
+    </a>
+  `).join('')
+}
+
+// Function to generate regular links HTML
+const generateRegularLinks = (regularLinks: any[]) => {
+  return regularLinks.map(link => `
+    <a href="${link.link}" class="link-card" target="_blank">
+      <h2>${link.header}</h2>
+      <i icon-name="${link.icon}" class="link-icon" aria-hidden="true"></i>
+      <p>${link.description}</p>
+    </a>
+  `).join('')
 }
 
 // Create HTML content
@@ -50,38 +71,9 @@ const content = `
     </div>
     <div class="links-container">
       <div class="social-links">
-        <a href="https://www.linkedin.com/in/ryanrademann/?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="social-card" target="_blank">
-          <i icon-name="linkedin" class="social-icon" aria-hidden="true"></i>
-        </a>
-        <a href="https://x.com/RyanRademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="social-card" target="_blank">
-          <i icon-name="twitter" class="social-icon" aria-hidden="true"></i>
-        </a>
+        ${generateSocialLinks(linksData.socialLinks)}
       </div>
-      <a href="https://www.wipfli.com/about-wipfli/partners-and-associates/ryan-rademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
-        <h2>Wipfli Bio</h2>
-        <i icon-name="building-2" class="link-icon" aria-hidden="true"></i>
-        <p>Construction's tech, succession, <br>and transition powerhouse.</p>
-      </a>
-      <a href="https://outlook.office.com/bookwithme/user/32a54d6a57dc459c9dd140df42f528d4%40wipfli.com?bookingcode=5bfcef0c-c41a-4af4-ac45-a82ca5adc519&anonymous&isanonymous=true&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
-        <h2>Schedule a Meeting</h2>
-        <i icon-name="calendar" class="link-icon" aria-hidden="true"></i>
-        <p>Book a teams, zoom, or phone call.</p>
-      </a>
-      <a href="https://youtu.be/i8l8gEdD6fQ?si=3hOmM_x3Zedb-0I3&utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
-        <h2>Latest Podcast</h2>
-        <i icon-name="youtube" class="link-icon" aria-hidden="true"></i>
-        <p>Constructive Podcast on YouTube<br>2025 February.</p>
-      </a>
-      <a href="https://www.forconstructionpros.com/construction-technology/project-management/article/22932667/wipfli-llp-how-ai-agents-are-leading-the-future-of-construction?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
-        <h2>Latest Article</h2>
-        <i icon-name="newspaper" class="link-icon" aria-hidden="true"></i>
-        <p>AI Agents on<br>For Construction Pros.</p>
-      </a>
-      <a href="https://fieldsity.com?utm_source=linkinbio&utm_medium=social&utm_campaign=profile" class="link-card" target="_blank">
-        <h2>Stealth Mode Project</h2>
-        <i icon-name="rocket" class="link-icon" aria-hidden="true"></i>
-        <p>I am an advisor to a startup<br>building field AI for SMB.</p>
-      </a>
+      ${generateRegularLinks(linksData.regularLinks)}
     </div>
     <div class="divider">
       <i icon-name="hard-hat" class="divider-icon" aria-hidden="true"></i>
