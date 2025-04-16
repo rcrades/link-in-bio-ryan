@@ -113,6 +113,35 @@ const content = `
         </a>
       </div>
     </footer>
+    <!-- Favorite Apps Accordion: Start -->
+    <footer class="tech-stack favorite-apps">
+      <div class="tech-stack-header">
+        <p class="love-note">
+          <i icon-name="star" class="tech-icon" aria-hidden="true"></i>
+          My favorite apps in 2025
+        </p>
+        <button class="expand-button" aria-label="Show favorite apps details">
+          <i icon-name="chevron-down" class="tech-icon" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="tech-stack-details">
+        <ul>
+          <li>
+            <i icon-name="presentation" class="tech-icon" aria-hidden="true"></i>
+            AI Slide Deck Creator: <a href="https://gamma.app/signup?r=3kue3y24828ihup" target="_blank">gamma.app <i icon-name="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            <i icon-name="layout-template" class="tech-icon" aria-hidden="true"></i>
+            AI Code Gen: <a href="https://bolt.new/?rid=qsz5nv" target="_blank">bolt.new <i icon-name="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            <i icon-name="layout-template" class="tech-icon" aria-hidden="true"></i>
+            Quickbooks Online: <a href="https://quickbooks.partnerlinks.io/ryanrademann" target="_blank">QBO Signup <i icon-name="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+    <!-- Favorite Apps Accordion: End -->
   </div>
 `
 
@@ -145,3 +174,17 @@ document.querySelector('.expand-button')?.addEventListener('click', (e: Event) =
   button.setAttribute('aria-expanded', (!isExpanded).toString());
   details?.classList.toggle('expanded');
 });
+
+// Add click handler for favorite apps accordion expansion
+// This targets the second expand button and its details section
+const expandButtons = document.querySelectorAll('.expand-button');
+const detailsSections = document.querySelectorAll('.tech-stack-details');
+if (expandButtons.length > 1 && detailsSections.length > 1) {
+  expandButtons[1].addEventListener('click', (e: Event) => {
+    const button = e.currentTarget as HTMLButtonElement;
+    const details = detailsSections[1];
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', (!isExpanded).toString());
+    details.classList.toggle('expanded');
+  });
+}
