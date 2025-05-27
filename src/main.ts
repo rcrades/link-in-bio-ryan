@@ -135,6 +135,10 @@ const content = `
             AI Code Gen: <a href="https://bolt.new/?rid=qsz5nv" target="_blank">bolt.new <i icon-name="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
           </li>
           <li>
+            <i icon-name="gift" class="tech-icon" aria-hidden="true"></i>
+            Win four months of Claude Max: <a href="https://claude.ai/referral/AmO81PvUJQ" target="_blank">Enter here <i icon-name="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+          </li>
+          <li>
             <i icon-name="layout-template" class="tech-icon" aria-hidden="true"></i>
             Quickbooks Online: <a href="https://quickbooks.partnerlinks.io/ryanrademann" target="_blank">QBO Signup <i icon-name="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
           </li>
