@@ -514,6 +514,8 @@ body {
   border: none;
 }
 
+
+
 @media (max-width: 640px) {
   .divider {
     margin: 1.5rem 0;

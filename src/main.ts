@@ -25,6 +25,8 @@ if (typeof localStorage !== 'undefined') {
 import './style.css'
 import * as lucide from 'lucide'
 import linksData from './data/links.json'
+import publicationsData from './data/publications.json'
+import { getProfileImageSrc } from './utils/profileImage'
 
 // Initialize icons with all available icons
 try {
@@ -57,24 +59,86 @@ const generateRegularLinks = (regularLinks: any[]) => {
   `).join('')
 }
 
-// Create HTML content
-const content = `
-  <div>
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-      <i icon-name="sun" class="theme-icon sun" aria-hidden="true"></i>
-      <i icon-name="moon" class="theme-icon moon" aria-hidden="true"></i>
-    </button>
-    <div class="profile">
-      <img src="/profile.jpg" alt="Ryan Rademann" />
-      <h1>Ryan Rademann</h1>
-      <p>Technology Consultant at Wipfli</p>
-    </div>
+// Function to generate publications HTML
+const generatePublications = (publications: any[]) => {
+  // Sort publications by date (newest first)
+  const sortedPublications = publications.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  
+  return sortedPublications.map(pub => {
+    const year = new Date(pub.date).getFullYear();
+    const typeIcon = pub.type === 'article' ? 'file-text' : 
+                    pub.type === 'video' ? 'video' : 
+                    pub.type === 'interview' ? 'mic' : 'file';
+    
+    return `
+      <li class="p-3 sm:p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:-translate-y-0.5 grid grid-rows-2 gap-3">
+        <div class="block">
+          <h4 class="text-sm font-semibold leading-tight mb-1 text-white block">${pub.title}</h4>
+          <p class="text-xs text-gray-400 font-medium block">${pub.source}</p>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="flex gap-2 items-center">
+            <span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-blue-600 text-white">
+              <i icon-name="${typeIcon}" class="w-3 h-3" aria-hidden="true"></i>
+              <span class="hidden sm:inline">${pub.type}</span>
+              <span class="sm:hidden">${pub.type.charAt(0).toUpperCase()}</span>
+            </span>
+            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white">
+              ${year}
+            </span>
+          </div>
+          <a href="${pub.url}" target="_blank" class="inline-flex items-center justify-center w-7 h-7 rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+            <i icon-name="arrow-up-right" class="w-3.5 h-3.5" aria-hidden="true"></i>
+          </a>
+        </div>
+      </li>
+    `;
+  }).join('')
+}
+
+// Initialize the app
+async function initializeApp() {
+  const profileImageSrc = await getProfileImageSrc();
+  
+  // Create HTML content
+  const content = `
+    <div>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <i icon-name="sun" class="theme-icon sun" aria-hidden="true"></i>
+        <i icon-name="moon" class="theme-icon moon" aria-hidden="true"></i>
+      </button>
+      <div class="profile">
+        <img src="${profileImageSrc}" alt="Ryan Rademann" />
+        <h1>Ryan Rademann</h1>
+        <p>Technology Consultant at Wipfli</p>
+      </div>
     <div class="links-container">
       <div class="social-links">
         ${generateSocialLinks(linksData.socialLinks)}
       </div>
       ${generateRegularLinks(linksData.regularLinks)}
     </div>
+    <!-- TEMPORARILY HIDDEN: Publications and Media section
+         Reason: Mobile layout is broken/ugly - pills appearing inline with title
+         See: tasks_style-cleanup.md for full details
+         TODO: Fix layout and re-enable this section
+    <footer class="tech-stack publications-media">
+      <div class="tech-stack-header">
+        <p class="love-note">
+          <i icon-name="newspaper" class="tech-icon" aria-hidden="true"></i>
+          Publications and Media
+        </p>
+        <button class="expand-button" aria-label="Show publications and media details">
+          <i icon-name="chevron-down" class="tech-icon" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="tech-stack-details">
+        <ul class="flex flex-col gap-3 mt-4">
+          ${generatePublications(publicationsData.publications)}
+        </ul>
+      </div>
+    </footer>
+    -->
     <div class="divider">
       <i icon-name="hard-hat" class="divider-icon" aria-hidden="true"></i>
     </div>
@@ -146,49 +210,44 @@ const content = `
       </div>
     </footer>
     <!-- Favorite Apps Accordion: End -->
-  </div>
-`
+    </div>
+  `
 
-// Add content to DOM and then initialize icons again
-document.querySelector('#app')!.innerHTML = content
-console.log('Content added to DOM')
+  // Add content to DOM and then initialize icons again
+  document.querySelector('#app')!.innerHTML = content
+  console.log('Content added to DOM')
 
-// Re-run createIcons after content is added
-try {
-  console.log('Re-initializing icons after content load...')
-  lucide.createIcons({
-    icons: lucide.icons
-  })
-  console.log('Icons re-initialized successfully')
-} catch (error) {
-  console.error('Error re-initializing icons:', error)
-}
+  // Re-run createIcons after content is added
+  try {
+    console.log('Re-initializing icons after content load...')
+    lucide.createIcons({
+      icons: lucide.icons
+    })
+    console.log('Icons re-initialized successfully')
+  } catch (error) {
+    console.error('Error re-initializing icons:', error)
+  }
 
-// Add theme toggle functionality
-document.getElementById('theme-toggle')?.addEventListener('click', () => {
-  document.documentElement.classList.toggle('dark');
-});
+  // Add theme toggle functionality
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+  });
 
-// Add click handler for tech stack expansion
-document.querySelector('.expand-button')?.addEventListener('click', (e: Event) => {
-  const button = e.currentTarget as HTMLButtonElement;
-  const details = document.querySelector('.tech-stack-details');
-  const isExpanded = button.getAttribute('aria-expanded') === 'true';
+  // Add click handlers for all expandable sections
+  const expandButtons = document.querySelectorAll('.expand-button');
+  const detailsSections = document.querySelectorAll('.tech-stack-details');
   
-  button.setAttribute('aria-expanded', (!isExpanded).toString());
-  details?.classList.toggle('expanded');
-});
-
-// Add click handler for favorite apps accordion expansion
-// This targets the second expand button and its details section
-const expandButtons = document.querySelectorAll('.expand-button');
-const detailsSections = document.querySelectorAll('.tech-stack-details');
-if (expandButtons.length > 1 && detailsSections.length > 1) {
-  expandButtons[1].addEventListener('click', (e: Event) => {
-    const button = e.currentTarget as HTMLButtonElement;
-    const details = detailsSections[1];
-    const isExpanded = button.getAttribute('aria-expanded') === 'true';
-    button.setAttribute('aria-expanded', (!isExpanded).toString());
-    details.classList.toggle('expanded');
+  expandButtons.forEach((button, index) => {
+    button.addEventListener('click', (e: Event) => {
+      const clickedButton = e.currentTarget as HTMLButtonElement;
+      const details = detailsSections[index];
+      const isExpanded = clickedButton.getAttribute('aria-expanded') === 'true';
+      
+      clickedButton.setAttribute('aria-expanded', (!isExpanded).toString());
+      details?.classList.toggle('expanded');
+    });
   });
 }
+
+// Initialize the app
+initializeApp();

@@ -1,5 +1,6 @@
 import './style.css'
 import * as lucide from 'lucide'
+import { getProfileImageSrc } from './utils/profileImage'
 
 // Initialize icons
 lucide.createIcons({
@@ -27,14 +28,17 @@ function updateImagePosition() {
 }
 
 // Initialize the page
-document.querySelector('#app')!.innerHTML = `
-  <div class="admin-container">
-    <div class="preview-section">
-      <h2>Preview</h2>
-      <div class="profile">
-        <img src="/profile.jpg" alt="Profile Preview" />
+async function initializeAdminPage() {
+  const profileImageSrc = await getProfileImageSrc();
+  
+  document.querySelector('#app')!.innerHTML = `
+    <div class="admin-container">
+      <div class="preview-section">
+        <h2>Preview</h2>
+        <div class="profile">
+          <img src="${profileImageSrc}" alt="Profile Preview" />
+        </div>
       </div>
-    </div>
     
     <div class="controls-section">
       <h2>Image Position Controls</h2>
@@ -66,46 +70,50 @@ document.querySelector('#app')!.innerHTML = `
       <button id="reset" class="reset-button">Reset to Default</button>
     </div>
   </div>
-`
+  `
 
-// Add event listeners
-document.getElementById('x-position')?.addEventListener('input', (e) => {
-  values.x = Number((e.target as HTMLInputElement).value)
-  document.getElementById('x-value')!.textContent = `${values.x}%`
+  // Add event listeners
+  document.getElementById('x-position')?.addEventListener('input', (e) => {
+    values.x = Number((e.target as HTMLInputElement).value)
+    document.getElementById('x-value')!.textContent = `${values.x}%`
+    updateImagePosition()
+  })
+
+  document.getElementById('y-position')?.addEventListener('input', (e) => {
+    values.y = Number((e.target as HTMLInputElement).value)
+    document.getElementById('y-value')!.textContent = `${values.y}%`
+    updateImagePosition()
+  })
+
+  document.getElementById('scale')?.addEventListener('input', (e) => {
+    values.scale = Number((e.target as HTMLInputElement).value)
+    document.getElementById('scale-value')!.textContent = `${values.scale}x`
+    updateImagePosition()
+  })
+
+  document.getElementById('reset')?.addEventListener('click', () => {
+    Object.assign(values, defaultValues)
+    
+    // Update slider positions
+    const xSlider = document.getElementById('x-position') as HTMLInputElement
+    const ySlider = document.getElementById('y-position') as HTMLInputElement
+    const scaleSlider = document.getElementById('scale') as HTMLInputElement
+    
+    xSlider.value = values.x.toString()
+    ySlider.value = values.y.toString()
+    scaleSlider.value = values.scale.toString()
+    
+    // Update display values
+    document.getElementById('x-value')!.textContent = `${values.x}%`
+    document.getElementById('y-value')!.textContent = `${values.y}%`
+    document.getElementById('scale-value')!.textContent = `${values.scale}x`
+    
+    updateImagePosition()
+  })
+
+  // Initial update
   updateImagePosition()
-})
+}
 
-document.getElementById('y-position')?.addEventListener('input', (e) => {
-  values.y = Number((e.target as HTMLInputElement).value)
-  document.getElementById('y-value')!.textContent = `${values.y}%`
-  updateImagePosition()
-})
-
-document.getElementById('scale')?.addEventListener('input', (e) => {
-  values.scale = Number((e.target as HTMLInputElement).value)
-  document.getElementById('scale-value')!.textContent = `${values.scale}x`
-  updateImagePosition()
-})
-
-document.getElementById('reset')?.addEventListener('click', () => {
-  Object.assign(values, defaultValues)
-  
-  // Update slider positions
-  const xSlider = document.getElementById('x-position') as HTMLInputElement
-  const ySlider = document.getElementById('y-position') as HTMLInputElement
-  const scaleSlider = document.getElementById('scale') as HTMLInputElement
-  
-  xSlider.value = values.x.toString()
-  ySlider.value = values.y.toString()
-  scaleSlider.value = values.scale.toString()
-  
-  // Update display values
-  document.getElementById('x-value')!.textContent = `${values.x}%`
-  document.getElementById('y-value')!.textContent = `${values.y}%`
-  document.getElementById('scale-value')!.textContent = `${values.scale}x`
-  
-  updateImagePosition()
-})
-
-// Initial update
-updateImagePosition() 
+// Initialize the admin page
+initializeAdminPage(); 
