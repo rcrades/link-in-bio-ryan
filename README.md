@@ -1,49 +1,71 @@
 # Personal Links Page
 
-A modern, responsive links page built with:
-- [Vite](https://vitejs.dev) - Next Generation Frontend Tooling
-- [TypeScript](https://www.typescriptlang.org) - JavaScript with syntax for types
-- [Tailwind CSS v4](https://tailwindcss.com) - A utility-first CSS framework
-- [Lucide Icons](https://lucide.dev) - Beautiful & consistent icons
+A modern, mobile-first bio page that centralizes all your important links in one place. Perfect for sharing in social media bios, email signatures, or anywhere you need a single link that leads to everything else.
+
+**Built with:** [Vite](https://vitejs.dev) • [TypeScript](https://www.typescriptlang.org) • [Tailwind CSS](https://tailwindcss.com) • [Lucide Icons](https://lucide.dev)
+
+## Features
+
+- **Multiple page types**: Main bio, speaker inquiries, admin controls, stealth mode
+- **Responsive design**: Looks great on mobile and desktop
+- **Easy content management**: JSON-based configuration
+- **Feature flagging**: Control experimental features
+- **Publications section**: Showcase articles, videos, and media appearances
+- **Dark/light theming**: Automatic theme switching
+
+## Page Routes
+
+- `/` - Main links page
+- `/speaker/` - Speaker inquiry form  
+- `/admin/` - Admin controls
+- `/stealth/` - Stealth mode page
 
 ## Directory Structure
 
 ```
-├── src/                  # Source files
-│   ├── main.ts          # Main page logic
-│   ├── speaker.ts       # Speaker page logic
-│   ├── admin.ts         # Admin page logic
-│   ├── stealth.ts       # Stealth mode page logic
-│   ├── style.css        # Global styles
-│   └── data/            # Data files
-│       ├── links.json   # Link configurations
-│       └── ICONS.md     # Icon usage guide
+├── src/                    # Source files
+│   ├── main.ts            # Main page logic
+│   ├── speaker.ts         # Speaker page logic
+│   ├── admin.ts           # Admin page logic
+│   ├── stealth.ts         # Stealth mode page logic
+│   ├── style.css          # Global styles
+│   ├── data/              # Data files
+│   │   ├── links.json     # Link configurations
+│   │   └── publications.json # Publications data
+│   └── utils/             # Utility functions
+│       └── profileImage.ts # Profile image handling
 │
-├── public/              # Static assets
-│   ├── profile.jpg      # Profile image
-│   └── favicon.ico      # Site favicon
+├── public/                # Static assets
+│   ├── profile.jpg        # Profile image
+│   ├── profile-backup.jpg # Backup profile image
+│   ├── favicon.ico        # Site favicon
+│   └── r-favicon-64.ico   # Alternative favicon
 │
-├── pages/               # Page directories
-│   ├── admin/          
-│   │   └── index.html   # Admin page
-│   ├── speaker/        
-│   │   └── index.html   # Speaker inquiry form
-│   └── stealth/        
-│       └── index.html   # Stealth mode page
+├── pages/                 # Page directories
+│   ├── admin/            
+│   │   └── index.html     # Admin page
+│   ├── speaker/          
+│   │   └── index.html     # Speaker inquiry form
+│   └── stealth/          
+│       └── index.html     # Stealth mode page
 │
-├── index.html           # Main page
-├── vite.config.ts       # Vite configuration
-├── tailwind.config.js   # Tailwind CSS configuration
-├── postcss.config.js    # PostCSS configuration
-├── tsconfig.json        # TypeScript configuration
-└── package.json         # Project dependencies
+├── index.html             # Main page
+├── vite.config.ts         # Vite configuration
+├── tailwind.config.cjs    # Tailwind CSS configuration
+├── postcss.config.cjs     # PostCSS configuration
+├── tsconfig.json          # TypeScript configuration
+├── CLAUDE.md              # Development notes
+└── package.json           # Project dependencies
 ```
 
 ## Managing Links
 
-The site's links are managed through a JSON configuration file at `src/data/links.json`. This file contains two types of links:
+The site's links are managed through JSON configuration files:
 
-1. Social Links (half-width)
+### Links Configuration (`src/data/links.json`)
+Two types of links are supported:
+
+**Social Links** (half-width)
 ```json
 {
   "type": "social",
@@ -52,7 +74,7 @@ The site's links are managed through a JSON configuration file at `src/data/link
 }
 ```
 
-2. Regular Links (full-width)
+**Regular Links** (full-width)
 ```json
 {
   "type": "regular",
@@ -63,11 +85,20 @@ The site's links are managed through a JSON configuration file at `src/data/link
 }
 ```
 
+### Publications (`src/data/publications.json`)
+Publications and media appearances with metadata:
+```json
+{
+  "title": "Article Title",
+  "source": "Publication Name",
+  "url": "https://example.com",
+  "date": "2025-01-01",
+  "type": "article"
+}
+```
+
 ### Icons
-All icons are from the [Lucide Icons](https://lucide.dev/icons) library. See `src/data/ICONS.md` for:
-- Complete list of recommended icons by category
-- Usage instructions
-- Examples
+All icons use the [Lucide Icons](https://lucide.dev/icons) library. Browse their catalog for available icons and use the icon name in your configuration.
 
 ## Development
 
@@ -80,18 +111,42 @@ npm run dev
 
 # Build for production
 npm run build
+
+# Preview build
+npm run preview
 ```
 
-## Page Routes
+### Feature Flags
 
-- `/` - Main links page
-- `/speaker/` - Speaker inquiry form
-- `/admin/` - Admin controls
-- `/stealth/` - Stealth mode page
+Lightweight feature flagging system for experimental features:
 
-## Tech Stack Details
+```typescript
+// src/main.ts
+const FEATURE_FLAGS = {
+  publications: true  // Toggle features on/off
+};
+```
 
-- **Vite**: Used for its fast HMR and optimized build process
-- **TypeScript**: Enables type-safe JavaScript development
-- **Tailwind CSS v4**: Latest version with improved performance and features
-- **Lucide**: Lightweight icon library with consistent design
+**Behavior:**
+- Features only appear in development environments (localhost, ports)
+- Production automatically hides all flagged features
+- Easy toggle: change flag value and refresh page
+
+**Current Flags:**
+- `publications`: Publications and Media section (disabled in prod due to layout issues)
+
+## License
+
+This project is licensed under the **MIT License** - you're free to use, modify, and distribute this code for any purpose, including commercial projects. No permission needed!
+
+See the full license terms below or in the [LICENSE](LICENSE) file.
+
+## Want to Build Your Own?
+
+Like this bio links page? Feel free to fork this repository and customize it for your own use! 
+
+If you'd like help setting up your own version or have questions about the code, reach out to Ryan:
+- **LinkedIn**: [Connect with Ryan](https://linkedin.com/in/ryanrademann)
+- **Twitter/X**: [@ryanrademann](https://twitter.com/ryanrademann)
+
+This project is open source and built to be easily customizable. Happy building! 🚀

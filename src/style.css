@@ -235,12 +235,12 @@ body {
   }
   
   #app {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem;
   }
   
   .link-card {
     padding: 1rem;
-    width: calc(100% - 1.5rem);
+    width: 100%;
     min-height: 90px;
   }
 
@@ -384,7 +384,7 @@ body {
 }
 
 .tech-stack-details.expanded {
-  max-height: 500px;
+  max-height: 2000px;
   opacity: 1;
   margin-top: 1.5rem;
 }
@@ -514,8 +514,6 @@ body {
   border: none;
 }
 
-
-
 @media (max-width: 640px) {
   .divider {
     margin: 1.5rem 0;
@@ -528,8 +526,8 @@ body {
 
   .tech-stack {
     margin-top: 1rem;
-    padding: 1.25rem;
-    width: calc(100% - 1.5rem);
+    padding: 1rem;
+    width: 100%;
     margin-bottom: 1rem;
   }
   
@@ -600,8 +598,8 @@ body {
 
   .tech-stack {
     margin-top: 1rem;
-    padding: 1.25rem;
-    width: calc(100% - 1.5rem);
+    padding: 1rem;
+    width: 100%;
     margin-bottom: 1rem;
   }
   

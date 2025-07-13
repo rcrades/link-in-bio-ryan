@@ -89,9 +89,24 @@ Despite multiple attempts with different CSS approaches, the publications cards 
 ## 🔧 **Current State**
 The fundamental layout structure was never successfully implemented despite multiple different CSS approaches. The publications section works functionally but has poor mobile UX due to layout issues.
 
-## 🚫 **SECTION TEMPORARILY HIDDEN**
+## 🚫 **SECTION FEATURE FLAGGED**
 **Date:** Current session  
-**Location:** `src/main.ts` lines 121-136 (commented out)  
+**Location:** `src/main.ts` lines 1-15 (feature flags) and lines 140+ (conditional rendering)  
 **Reason:** Mobile layout remains broken and ugly  
-**Action:** Entire Publications and Media section commented out to improve overall page UX  
-**TODO:** Fix layout issues and re-enable the section 
+**Action:** Publications section now controlled by feature flag system:
+- Shows in **development only** when `FEATURE_FLAGS.publications = true`
+- **Hidden in production** regardless of flag state
+- Easy to toggle for testing: change flag value and refresh
+
+**Implementation:**
+```typescript
+// Feature flag controls
+const FEATURE_FLAGS = { publications: true };
+const isDevelopment = () => { /* env detection */ };
+const isFeatureEnabled = (feature) => FEATURE_FLAGS[feature] && isDevelopment();
+
+// Conditional rendering
+${isFeatureEnabled('publications') ? `<footer>...</footer>` : '<!-- disabled -->'}
+```
+
+**TODO:** Fix layout issues, then can safely enable in production 

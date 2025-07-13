@@ -1,3 +1,21 @@
+// Feature Flags Configuration
+const FEATURE_FLAGS = {
+  publications: true  // Set to false to disable publications section
+};
+
+// Environment detection
+const isDevelopment = () => {
+  return import.meta.env?.DEV || 
+         window.location.hostname === 'localhost' || 
+         window.location.hostname === '127.0.0.1' ||
+         window.location.port !== '';
+};
+
+// Feature flag helper
+const isFeatureEnabled = (feature: keyof typeof FEATURE_FLAGS) => {
+  return FEATURE_FLAGS[feature];
+};
+
 // Theme handling
 const getThemePreference = () => {
   // First check localStorage
@@ -59,6 +77,34 @@ const generateRegularLinks = (regularLinks: any[]) => {
   `).join('')
 }
 
+// Function to generate year filter pills
+const generateYearFilters = (publications: any[]) => {
+  const years = [...new Set(publications.map(pub => new Date(pub.date).getFullYear()))].sort((a, b) => b - a);
+  
+  // Group years: keep 2022 and later separate, combine 2021 and earlier
+  const filterYears = [];
+  years.forEach(year => {
+    if (year >= 2022) {
+      filterYears.push({ label: year.toString(), value: year.toString() });
+    } else if (!filterYears.find(f => f.value === '2021-prior')) {
+      filterYears.push({ label: '2021 & Prior', value: '2021-prior' });
+    }
+  });
+  
+  return `
+    <div class="mb-4">
+      <span class="text-xs text-gray-400 font-medium block mb-2">Filter by year:</span>
+      <div class="flex gap-1.5 items-center flex-wrap">
+        ${filterYears.map(filter => `
+          <button class="year-filter inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-gray-600 text-white hover:bg-blue-600 transition-colors" data-year="${filter.value}">
+            ${filter.label}
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
 // Function to generate publications HTML
 const generatePublications = (publications: any[]) => {
   // Sort publications by date (newest first)
@@ -70,28 +116,31 @@ const generatePublications = (publications: any[]) => {
                     pub.type === 'video' ? 'video' : 
                     pub.type === 'interview' ? 'mic' : 'file';
     
+    // Color mapping for publication types
+    const typeColors = {
+      article: 'border-emerald-400 text-emerald-400',
+      video: 'border-purple-400 text-purple-400',
+      interview: 'border-orange-400 text-orange-400'
+    };
+    
+    const typeColorClass = typeColors[pub.type as keyof typeof typeColors] || 'border-gray-400 text-gray-400';
+    
     return `
-      <li class="p-3 sm:p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:-translate-y-0.5 grid grid-rows-2 gap-3">
-        <div class="block">
-          <h4 class="text-sm font-semibold leading-tight mb-1 text-white block">${pub.title}</h4>
-          <p class="text-xs text-gray-400 font-medium block">${pub.source}</p>
+      <div class="publication-item p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/8 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md flex flex-col min-h-[140px] justify-self-start w-full relative" data-year="${year}">
+        <div class="flex-1 pb-10 text-left">
+          <h4 class="text-sm font-semibold leading-tight mb-1.5 text-white text-left">${pub.title}</h4>
+          <p class="text-xs text-gray-400 font-medium text-left">${pub.source}</p>
         </div>
-        <div class="flex justify-between items-center">
-          <div class="flex gap-2 items-center">
-            <span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium bg-blue-600 text-white">
-              <i icon-name="${typeIcon}" class="w-3 h-3" aria-hidden="true"></i>
-              <span class="hidden sm:inline">${pub.type}</span>
-              <span class="sm:hidden">${pub.type.charAt(0).toUpperCase()}</span>
-            </span>
-            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white">
-              ${year}
-            </span>
-          </div>
-          <a href="${pub.url}" target="_blank" class="inline-flex items-center justify-center w-7 h-7 rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 hover:-translate-y-0.5 hover:shadow-lg">
-            <i icon-name="arrow-up-right" class="w-3.5 h-3.5" aria-hidden="true"></i>
-          </a>
+        <div class="absolute bottom-4 left-4">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border-2 ${typeColorClass} bg-transparent">
+            <i icon-name="${typeIcon}" class="w-3 h-3" aria-hidden="true"></i>
+            ${pub.type === 'interview' ? 'video interview' : pub.type}
+          </span>
         </div>
-      </li>
+        <a href="${pub.url}" target="_blank" class="absolute bottom-4 right-4 inline-flex items-center justify-center w-7 h-7 rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+          <i icon-name="arrow-up-right" class="w-3.5 h-3.5" aria-hidden="true"></i>
+        </a>
+      </div>
     `;
   }).join('')
 }
@@ -118,27 +167,27 @@ async function initializeApp() {
       </div>
       ${generateRegularLinks(linksData.regularLinks)}
     </div>
-    <!-- TEMPORARILY HIDDEN: Publications and Media section
-         Reason: Mobile layout is broken/ugly - pills appearing inline with title
-         See: tasks_style-cleanup.md for full details
-         TODO: Fix layout and re-enable this section
-    <footer class="tech-stack publications-media">
-      <div class="tech-stack-header">
-        <p class="love-note">
-          <i icon-name="newspaper" class="tech-icon" aria-hidden="true"></i>
-          Publications and Media
-        </p>
-        <button class="expand-button" aria-label="Show publications and media details">
-          <i icon-name="chevron-down" class="tech-icon" aria-hidden="true"></i>
+    ${isFeatureEnabled('publications') ? `
+    <div class="mt-4 mb-8 p-6 border-t border-white/20 bg-gray-800/50 text-white rounded-xl shadow-lg">
+      <div class="flex justify-between items-center gap-4 mb-0">
+        <div class="flex items-center gap-3">
+          <i icon-name="newspaper" class="w-5 h-5 text-blue-400" aria-hidden="true"></i>
+          <h2 class="text-lg font-semibold">Publications and Media</h2>
+        </div>
+        <button class="publications-expand-button flex items-center justify-center p-2 hover:bg-white/10 rounded-md transition-all duration-200" aria-label="Show publications and media details">
+          <i icon-name="chevron-down" class="w-5 h-5 text-blue-400 transition-transform duration-300" aria-hidden="true"></i>
         </button>
       </div>
-      <div class="tech-stack-details">
-        <ul class="flex flex-col gap-3 mt-4">
-          ${generatePublications(publicationsData.publications)}
-        </ul>
+      <div class="publications-details max-h-0 overflow-hidden opacity-0 transition-all duration-300">
+        <div class="pt-6">
+          ${generateYearFilters(publicationsData.publications)}
+          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+            ${generatePublications(publicationsData.publications)}
+          </div>
+        </div>
       </div>
-    </footer>
-    -->
+    </div>
+    ` : '<!-- Publications section disabled via feature flag -->'}
     <div class="divider">
       <i icon-name="hard-hat" class="divider-icon" aria-hidden="true"></i>
     </div>
@@ -245,6 +294,82 @@ async function initializeApp() {
       
       clickedButton.setAttribute('aria-expanded', (!isExpanded).toString());
       details?.classList.toggle('expanded');
+    });
+  });
+
+  // Add click handler for publications section
+  const publicationsButton = document.querySelector('.publications-expand-button');
+  const publicationsDetails = document.querySelector('.publications-details');
+  
+  if (publicationsButton && publicationsDetails) {
+    publicationsButton.addEventListener('click', (e: Event) => {
+      const button = e.currentTarget as HTMLButtonElement;
+      const chevron = button.querySelector('i');
+      const isExpanded = publicationsDetails.classList.contains('max-h-0');
+      
+      if (isExpanded) {
+        // Expand
+        publicationsDetails.classList.remove('max-h-0', 'opacity-0');
+        publicationsDetails.classList.add('max-h-[2000px]', 'opacity-100');
+        chevron?.classList.add('rotate-180');
+        button.setAttribute('aria-expanded', 'true');
+      } else {
+        // Collapse
+        publicationsDetails.classList.add('max-h-0', 'opacity-0');
+        publicationsDetails.classList.remove('max-h-[2000px]', 'opacity-100');
+        chevron?.classList.remove('rotate-180');
+        button.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  // Add year filter functionality
+  const yearFilters = document.querySelectorAll('.year-filter');
+  const publicationItems = document.querySelectorAll('.publication-item');
+  let activeFilter: HTMLButtonElement | null = null;
+  
+  yearFilters.forEach(filter => {
+    filter.addEventListener('click', (e: Event) => {
+      const clickedFilter = e.currentTarget as HTMLButtonElement;
+      const selectedYear = clickedFilter.getAttribute('data-year');
+      
+      // Toggle behavior: if clicking the same filter, deactivate it (show all)
+      if (activeFilter === clickedFilter) {
+        // Deactivate current filter - show all
+        activeFilter.classList.remove('bg-blue-600');
+        activeFilter.classList.add('bg-gray-600');
+        activeFilter = null;
+        
+        // Show all publications
+        publicationItems.forEach(item => {
+          (item as HTMLElement).style.display = 'flex';
+        });
+      } else {
+        // Deactivate previous filter
+        if (activeFilter) {
+          activeFilter.classList.remove('bg-blue-600');
+          activeFilter.classList.add('bg-gray-600');
+        }
+        
+        // Activate new filter
+        clickedFilter.classList.add('bg-blue-600');
+        clickedFilter.classList.remove('bg-gray-600');
+        activeFilter = clickedFilter;
+        
+        // Filter publications
+        publicationItems.forEach(item => {
+          const itemYear = parseInt(item.getAttribute('data-year') || '0');
+          let shouldShow = false;
+          
+          if (selectedYear === '2021-prior') {
+            shouldShow = itemYear <= 2021;
+          } else {
+            shouldShow = itemYear.toString() === selectedYear;
+          }
+          
+          (item as HTMLElement).style.display = shouldShow ? 'flex' : 'none';
+        });
+      }
     });
   });
 }
