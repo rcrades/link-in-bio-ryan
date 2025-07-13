@@ -3,14 +3,6 @@ const FEATURE_FLAGS = {
   publications: true  // Set to false to disable publications section
 };
 
-// Environment detection
-const isDevelopment = () => {
-  return import.meta.env?.DEV || 
-         window.location.hostname === 'localhost' || 
-         window.location.hostname === '127.0.0.1' ||
-         window.location.port !== '';
-};
-
 // Feature flag helper
 const isFeatureEnabled = (feature: keyof typeof FEATURE_FLAGS) => {
   return FEATURE_FLAGS[feature];
@@ -82,7 +74,7 @@ const generateYearFilters = (publications: any[]) => {
   const years = [...new Set(publications.map(pub => new Date(pub.date).getFullYear()))].sort((a, b) => b - a);
   
   // Group years: keep 2022 and later separate, combine 2021 and earlier
-  const filterYears = [];
+  const filterYears: { label: string; value: string }[] = [];
   years.forEach(year => {
     if (year >= 2022) {
       filterYears.push({ label: year.toString(), value: year.toString() });
@@ -246,6 +238,10 @@ async function initializeApp() {
           <li>
             <i icon-name="layout-template" class="tech-icon" aria-hidden="true"></i>
             AI Code Gen: <a href="https://bolt.new/?rid=qsz5nv" target="_blank">bolt.new <i icon-name="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            <i icon-name="sparkles" class="tech-icon" aria-hidden="true"></i>
+            4-months free - Google Gemini Pro: <a href="https://g.co/g1referral/K57Z7QMV" target="_blank">Google AI Pro <i icon-name="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
           </li>
           <li>
             <i icon-name="gift" class="tech-icon" aria-hidden="true"></i>
