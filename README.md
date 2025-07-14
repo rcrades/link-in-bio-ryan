@@ -133,7 +133,7 @@ const FEATURE_FLAGS = {
 - Easy toggle: change flag value and refresh page
 
 **Current Flags:**
-- `publications`: Publications and Media section (disabled in prod due to layout issues)
+- `publications`: Publications and Media section (currently enabled for dev)
 
 ## License
 
