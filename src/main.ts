@@ -241,7 +241,8 @@ async function initializeApp() {
           </li>
           <li>
             <i data-lucide="layout-template" class="tech-icon" aria-hidden="true"></i>
-            AI Code Gen: <a href="https://bolt.new/?rid=qsz5nv" target="_blank">bolt.new <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+            AI Code Gen: <a href="https://v0.app/ref/AH0995" target="_blank">v0.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+            <!-- Previous referral link: bolt.new/?rid=qsz5nv -->
           </li>
           <li>
             <i data-lucide="sparkles" class="tech-icon" aria-hidden="true"></i>
