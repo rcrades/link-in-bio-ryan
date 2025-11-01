@@ -8,7 +8,8 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         admin: resolve(__dirname, 'pages/admin/index.html'),
         speaker: resolve(__dirname, 'pages/speaker/index.html'),
-        stealth: resolve(__dirname, 'pages/stealth/index.html')
+        stealth: resolve(__dirname, 'pages/stealth/index.html'),
+        beta: resolve(__dirname, 'pages/beta/index.html')
       }
     }
   },

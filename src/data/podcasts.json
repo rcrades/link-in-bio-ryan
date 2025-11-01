@@ -1,0 +1,53 @@
+{
+  "playlists": [
+    {
+      "title": "Ryan's Tech Talks",
+      "creator": "Ryan Rademann",
+      "platform": "Spotify",
+      "thumbnails": [
+        "https://picsum.photos/seed/podcast1/200",
+        "https://picsum.photos/seed/podcast2/200",
+        "https://picsum.photos/seed/podcast3/200",
+        "https://picsum.photos/seed/podcast4/200"
+      ],
+      "link": "https://open.spotify.com"
+    }
+  ],
+  "appearances": [
+    {
+      "title": "Technology Consulting in 2025: AI, Automation & the Future",
+      "show": "The Digital Transformation Podcast",
+      "thumbnail": "https://picsum.photos/seed/tech1/400",
+      "audioUrl": "",
+      "date": "2025-10-15"
+    },
+    {
+      "title": "From Accounting to Technology: A Career Journey",
+      "show": "Career Pivot Stories",
+      "thumbnail": "https://picsum.photos/seed/career1/400",
+      "audioUrl": "",
+      "date": "2025-09-22"
+    },
+    {
+      "title": "Building Modern Web Applications with AI-First Thinking",
+      "show": "Developer Insights",
+      "thumbnail": "https://picsum.photos/seed/dev1/400",
+      "audioUrl": "",
+      "date": "2025-08-10"
+    },
+    {
+      "title": "The Role of Technology in Professional Services",
+      "show": "Wipfli Business Leaders",
+      "thumbnail": "https://picsum.photos/seed/wipfli1/400",
+      "audioUrl": "",
+      "date": "2025-07-05"
+    },
+    {
+      "title": "Implementing AI Tools in Your Workflow",
+      "show": "The Productivity Show",
+      "thumbnail": "https://picsum.photos/seed/prod1/400",
+      "audioUrl": "",
+      "date": "2025-06-18"
+    }
+  ]
+}
