@@ -146,8 +146,7 @@ See the full license terms below or in the [LICENSE](LICENSE) file.
 This site includes referral links for services and tools Ryan recommends:
 
 ### Active Referral Links
-- **v0.app**: `https://v0.app/ref/AH0995` - AI Code Gen (currently featured in Favorite Apps section)
-- **bolt.new**: `https://bolt.new/?rid=qsz5nv` - AI Code Gen (used for building this site, featured in Tech Stack section)
+- **v0.app**: `https://v0.app/ref/AH0995` - AI Code Gen (featured in Tech Stack and Favorite Apps sections)
 - **Gamma**: `https://gamma.app/signup?r=3kue3y24828ihup` - AI Slide Deck Creator
 - **Google Gemini Pro**: `https://g.co/g1referral/K57Z7QMV` - 4-months free
 - **Claude Max**: `https://claude.ai/referral/AmO81PvUJQ` - Win four months of Claude Max

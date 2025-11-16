@@ -205,7 +205,7 @@ async function initializeApp() {
         <ul>
           <li>
             <i data-lucide="layout-template" class="tech-icon" aria-hidden="true"></i>
-            Boilerplate & Prototype: <a href="https://bolt.new/?rid=qsz5nv" target="_blank">bolt.new <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+            Boilerplate & Prototype: <a href="https://v0.app/ref/AH0995" target="_blank">v0.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
           </li>
           <li>
             <i data-lucide="boxes" class="tech-icon" aria-hidden="true"></i>
