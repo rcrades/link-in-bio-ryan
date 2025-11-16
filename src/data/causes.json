@@ -1,0 +1,28 @@
+{
+  "causes": [
+    {
+      "name": "Office Hours",
+      "description": "Global mentorship community",
+      "url": "https://officehours.global",
+      "logo": "/logos/officehours.svg"
+    },
+    {
+      "name": "CFMA",
+      "description": "Construction Financial Management Association",
+      "url": "https://www.cfma.org",
+      "logo": "/logos/cfma.svg"
+    },
+    {
+      "name": "Strong Towns",
+      "description": "Building financially resilient communities",
+      "url": "https://www.strongtowns.org",
+      "logo": "/logos/strongtowns.svg"
+    },
+    {
+      "name": "WisARP",
+      "description": "Wisconsin Association of Railroad Passengers",
+      "url": "https://wisarp.wordpress.com/",
+      "logo": "/logos/wisarp.svg"
+    }
+  ]
+}

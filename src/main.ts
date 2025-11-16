@@ -36,6 +36,7 @@ import './style.css'
 import * as lucide from 'lucide'
 import linksData from './data/links.json'
 import publicationsData from './data/publications.json'
+import causesData from './data/causes.json'
 import { getProfileImageSrc } from './utils/profileImage'
 
 // Initialize icons with all available icons
@@ -51,11 +52,30 @@ try {
 
 // Function to generate social links HTML
 const generateSocialLinks = (socialLinks: any[]) => {
-  return socialLinks.map(link => `
-    <a href="${link.link}" class="social-card" target="_blank">
-      <i data-lucide="${link.icon}" class="social-icon" aria-hidden="true"></i>
-    </a>
-  `).join('')
+  return socialLinks.map(link => {
+    // Use custom SVG for X icon
+    if (link.icon === 'x') {
+      return `
+        <a href="${link.link}" class="social-card" target="_blank">
+          <img src="/logos/logo.svg" alt="X (Twitter)" class="social-icon x-logo" />
+        </a>
+      `
+    }
+    // Use custom images for LinkedIn icon (black for light mode, white for dark mode)
+    if (link.icon === 'linkedin') {
+      return `
+        <a href="${link.link}" class="social-card" target="_blank">
+          <img src="/logos/InBug-Black.png" alt="LinkedIn" class="social-icon linkedin-logo linkedin-light" />
+          <img src="/logos/InBug-White.png" alt="LinkedIn" class="social-icon linkedin-logo linkedin-dark" />
+        </a>
+      `
+    }
+    return `
+      <a href="${link.link}" class="social-card" target="_blank">
+        <i data-lucide="${link.icon}" class="social-icon" aria-hidden="true"></i>
+      </a>
+    `
+  }).join('')
 }
 
 // Function to generate regular links HTML
@@ -85,20 +105,41 @@ const generateYearFilters = (publications: any[]) => {
   
   return `
     <div class="mb-4">
-      <span class="text-xs text-gray-400 font-medium block mb-2">Filter by year:</span>
+      <div class="flex gap-4 items-center mb-3 flex-wrap">
+        <div class="wipfli-toggle-container">
+          <button class="wipfli-toggle" data-filter="wipfli">
+            <span class="wipfli-toggle-label">Show Wipfli Publications</span>
+            <div class="wipfli-toggle-switch">
+              <div class="wipfli-toggle-slider"></div>
+            </div>
+          </button>
+        </div>
+      </div>
       <div class="flex gap-1.5 items-center flex-wrap">
-        <button class="wipfli-filter inline-flex items-center gap-1.5 px-2 py-1 rounded text-xs font-semibold border-2 border-red-400 text-red-400 bg-transparent hover:bg-red-400/10 transition-colors" data-filter="wipfli">
-          <i data-lucide="eye-off" class="w-3 h-3" aria-hidden="true"></i>
-          Wipfli
-        </button>
         ${filterYears.map(filter => `
-          <button class="year-filter inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-gray-600 text-white hover:bg-blue-600 transition-colors" data-year="${filter.value}">
+          <button class="year-filter inline-flex items-center px-2 py-1 rounded text-xs font-semibold transition-colors" data-year="${filter.value}">
             ${filter.label}
           </button>
         `).join('')}
       </div>
     </div>
   `;
+}
+
+// Function to generate causes HTML
+const generateCauses = (causes: any[]) => {
+  return causes.map(cause => `
+    <a href="${cause.url}" class="cause-card" target="_blank">
+      <div class="cause-icon-wrapper">
+        <img src="${cause.logo}" alt="${cause.name} logo" class="cause-logo" />
+      </div>
+      <div class="cause-content">
+        <h3 class="cause-name">${cause.name}</h3>
+        <p class="cause-description">${cause.description}</p>
+      </div>
+      <i data-lucide="arrow-up-right" class="cause-link-icon" aria-hidden="true"></i>
+    </a>
+  `).join('')
 }
 
 // Function to generate publications HTML
@@ -133,7 +174,7 @@ const generatePublications = (publications: any[]) => {
             ${pub.type === 'interview' ? 'video interview' : pub.type}
           </span>
         </div>
-        <a href="${pub.url}" target="_blank" class="absolute bottom-2 right-2 inline-flex items-center justify-center w-7 h-7 rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 hover:-translate-y-0.5 hover:shadow-lg">
+        <a href="${pub.url}" target="_blank" class="publication-link-btn absolute bottom-2 right-2 inline-flex items-center justify-center w-7 h-7 rounded transition-all duration-200">
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5" aria-hidden="true"></i>
         </a>
       </div>
@@ -156,6 +197,10 @@ async function initializeApp() {
         <img src="${profileImageSrc}" alt="Ryan Rademann" />
         <h1>Ryan Rademann</h1>
         <p>Technology Consultant at Wipfli</p>
+        <p class="location">
+          <i data-lucide="map-pin" class="location-icon" aria-hidden="true"></i>
+          Chicago, IL
+        </p>
       </div>
     <div class="links-container">
       <div class="social-links">
@@ -166,12 +211,12 @@ async function initializeApp() {
     ${isFeatureEnabled('publications') ? `
     <div class="mt-4 mb-8 p-3 border-t border-white/20 bg-gray-800/50 text-white rounded-xl shadow-lg">
       <div class="flex justify-between items-center gap-4 mb-0">
-        <div class="flex items-center gap-3">
-          <i data-lucide="newspaper" class="w-5 h-5 text-blue-400" aria-hidden="true"></i>
-          <h2 class="text-lg font-semibold">Publications and Media</h2>
+        <div class="publications-header">
+          <i data-lucide="newspaper" class="publications-header-icon" aria-hidden="true"></i>
+          <h2>Publications and Media</h2>
         </div>
         <button class="publications-expand-button flex items-center justify-center p-2 hover:bg-white/10 rounded-md transition-all duration-200" aria-label="Show publications and media details">
-          <i data-lucide="chevron-down" class="w-5 h-5 text-blue-400 transition-transform duration-300" aria-hidden="true"></i>
+          <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" aria-hidden="true"></i>
         </button>
       </div>
       <div class="publications-details max-h-0 overflow-hidden opacity-0 transition-all duration-300">
@@ -184,6 +229,24 @@ async function initializeApp() {
       </div>
     </div>
     ` : '<!-- Publications section disabled via feature flag -->'}
+    <div class="causes-section">
+      <div class="flex justify-between items-center gap-4 mb-0">
+        <div class="causes-header">
+          <i data-lucide="heart" class="causes-header-icon" aria-hidden="true"></i>
+          <h2>Causes & Community Involvement</h2>
+        </div>
+        <button class="causes-expand-button flex items-center justify-center p-2 hover:bg-white/10 rounded-md transition-all duration-200" aria-label="Show causes and community details">
+          <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="causes-details max-h-0 overflow-hidden opacity-0 transition-all duration-300">
+        <div class="pt-3">
+          <div class="causes-grid">
+            ${generateCauses(causesData.causes)}
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="divider">
       <i data-lucide="hard-hat" class="divider-icon" aria-hidden="true"></i>
     </div>
@@ -209,11 +272,15 @@ async function initializeApp() {
           </li>
           <li>
             <i data-lucide="boxes" class="tech-icon" aria-hidden="true"></i>
-            Codebase: <span class="tech-pill">React</span> + <span class="tech-pill">Vite</span>
+            Front End: <span class="tech-pill">React</span> + <span class="tech-pill">Vite</span>
+          </li>
+          <li>
+            <i data-lucide="database" class="tech-icon" aria-hidden="true"></i>
+            Back End: <a href="https://convex.dev/referral/RCRADE2932" target="_blank">Convex <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
           </li>
           <li>
             <i data-lucide="cloud" class="tech-icon" aria-hidden="true"></i>
-            Hosting: <span class="tech-pill">Vercel</span> + <span class="tech-pill">GoDaddy</span>
+            Hosting: <span class="tech-pill">Vercel</span>
           </li>
         </ul>
         <a href="https://github.com/rcrades/link-in-bio-ryan" target="_blank" class="github-link">
@@ -236,24 +303,20 @@ async function initializeApp() {
       <div class="tech-stack-details">
         <ul>
           <li>
-            <i data-lucide="presentation" class="tech-icon" aria-hidden="true"></i>
-            AI Slide Deck Creator: <a href="https://gamma.app/signup?r=3kue3y24828ihup" target="_blank">gamma.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
-          </li>
-          <li>
             <i data-lucide="layout-template" class="tech-icon" aria-hidden="true"></i>
             AI Code Gen: <a href="https://v0.app/ref/AH0995" target="_blank">v0.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
             <!-- Previous referral link: bolt.new/?rid=qsz5nv -->
           </li>
           <li>
-            <i data-lucide="sparkles" class="tech-icon" aria-hidden="true"></i>
-            4-months free - Google Gemini Pro: <a href="https://g.co/g1referral/K57Z7QMV" target="_blank">Google AI Pro <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+            <i data-lucide="database" class="tech-icon" aria-hidden="true"></i>
+            Easy backend for vibe-coded apps: <a href="https://convex.dev/referral/RCRADE2932" target="_blank">Convex <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
           </li>
           <li>
-            <i data-lucide="gift" class="tech-icon" aria-hidden="true"></i>
-            Win four months of Claude Max: <a href="https://claude.ai/referral/AmO81PvUJQ" target="_blank">Enter here <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+            <i data-lucide="presentation" class="tech-icon" aria-hidden="true"></i>
+            AI Slide Deck Creator: <a href="https://gamma.app/signup?r=3kue3y24828ihup" target="_blank">gamma.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
           </li>
           <li>
-            <i data-lucide="layout-template" class="tech-icon" aria-hidden="true"></i>
+            <i data-lucide="briefcase" class="tech-icon" aria-hidden="true"></i>
             Quickbooks Online: <a href="https://quickbooks.partnerlinks.io/ryanrademann" target="_blank">QBO Signup <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
           </li>
         </ul>
@@ -301,13 +364,13 @@ async function initializeApp() {
   // Add click handler for publications section
   const publicationsButton = document.querySelector('.publications-expand-button');
   const publicationsDetails = document.querySelector('.publications-details');
-  
+
   if (publicationsButton && publicationsDetails) {
     publicationsButton.addEventListener('click', (e: Event) => {
       const button = e.currentTarget as HTMLButtonElement;
       const chevron = button.querySelector('i');
       const isExpanded = publicationsDetails.classList.contains('max-h-0');
-      
+
       if (isExpanded) {
         // Expand
         publicationsDetails.classList.remove('max-h-0', 'opacity-0');
@@ -324,12 +387,44 @@ async function initializeApp() {
     });
   }
 
+  // Add click handler for causes section
+  const causesButton = document.querySelector('.causes-expand-button');
+  const causesDetails = document.querySelector('.causes-details');
+
+  if (causesButton && causesDetails) {
+    causesButton.addEventListener('click', (e: Event) => {
+      const button = e.currentTarget as HTMLButtonElement;
+      const chevron = button.querySelector('i');
+      const isExpanded = causesDetails.classList.contains('max-h-0');
+
+      if (isExpanded) {
+        // Expand
+        causesDetails.classList.remove('max-h-0', 'opacity-0');
+        causesDetails.classList.add('max-h-[2000px]', 'opacity-100');
+        chevron?.classList.add('rotate-180');
+        button.setAttribute('aria-expanded', 'true');
+      } else {
+        // Collapse
+        causesDetails.classList.add('max-h-0', 'opacity-0');
+        causesDetails.classList.remove('max-h-[2000px]', 'opacity-100');
+        chevron?.classList.remove('rotate-180');
+        button.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   // Add filter functionality
   const yearFilters = document.querySelectorAll('.year-filter');
-  const wipfliFilter = document.querySelector('.wipfli-filter') as HTMLButtonElement;
+  const wipfliFilter = document.querySelector('.wipfli-toggle') as HTMLButtonElement;
   const publicationItems = document.querySelectorAll('.publication-item');
   let activeYearFilter: HTMLButtonElement | null = null;
   let wipfliHidden = true; // Hide Wipfli by default
+
+  // Count Wipfli publications
+  const wipfliCount = Array.from(publicationItems).filter(item => {
+    const source = item.getAttribute('data-source') || '';
+    return source.includes('wipfli');
+  }).length;
   
   // Apply initial Wipfli filter (hide by default)
   const applyFilters = () => {
@@ -364,28 +459,25 @@ async function initializeApp() {
   
   // Wipfli filter toggle
   if (wipfliFilter) {
+    // Set initial label with count
+    const label = wipfliFilter.querySelector('.wipfli-toggle-label');
+    if (label) label.textContent = `Show Wipfli Publications (${wipfliCount})`;
+
     wipfliFilter.addEventListener('click', (e: Event) => {
       wipfliHidden = !wipfliHidden;
       const button = e.currentTarget as HTMLButtonElement;
-      const icon = button.querySelector('i');
-      
+      const label = button.querySelector('.wipfli-toggle-label');
+
       if (wipfliHidden) {
-        // Hidden state - red border, eye-off icon
-        button.classList.remove('border-gray-400', 'text-gray-400');
-        button.classList.add('border-red-400', 'text-red-400');
-        icon?.setAttribute('data-lucide', 'eye-off');
+        // Hidden state - show "Show Wipfli Publications"
+        button.classList.remove('active');
+        if (label) label.textContent = `Show Wipfli Publications (${wipfliCount})`;
       } else {
-        // Visible state - gray border, eye icon
-        button.classList.remove('border-red-400', 'text-red-400');
-        button.classList.add('border-gray-400', 'text-gray-400');
-        icon?.setAttribute('data-lucide', 'eye');
+        // Visible state - show "Hide Wipfli Publications"
+        button.classList.add('active');
+        if (label) label.textContent = `Hide Wipfli Publications (${wipfliCount})`;
       }
-      
-      // Re-initialize icons after changing icon names
-      lucide.createIcons({
-        icons: lucide.icons
-      });
-      
+
       applyFilters();
     });
   }
@@ -398,19 +490,16 @@ async function initializeApp() {
       // Toggle behavior: if clicking the same filter, deactivate it
       if (activeYearFilter === clickedFilter) {
         // Deactivate current filter
-        activeYearFilter.classList.remove('bg-blue-600');
-        activeYearFilter.classList.add('bg-gray-600');
+        activeYearFilter.classList.remove('active-filter');
         activeYearFilter = null;
       } else {
         // Deactivate previous filter
         if (activeYearFilter) {
-          activeYearFilter.classList.remove('bg-blue-600');
-          activeYearFilter.classList.add('bg-gray-600');
+          activeYearFilter.classList.remove('active-filter');
         }
-        
+
         // Activate new filter
-        clickedFilter.classList.add('bg-blue-600');
-        clickedFilter.classList.remove('bg-gray-600');
+        clickedFilter.classList.add('active-filter');
         activeYearFilter = clickedFilter;
       }
       

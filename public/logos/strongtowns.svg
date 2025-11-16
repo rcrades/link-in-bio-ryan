@@ -1,0 +1,13 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Strong Towns "ST" logo -->
+  <g fill="white">
+    <!-- Background square (optional, can be removed for more transparency) -->
+    <!-- <rect x="10" y="10" width="80" height="80" rx="8" fill="white"/> -->
+
+    <!-- "S" letter -->
+    <path d="M 25 30 L 40 30 Q 45 30 45 35 Q 45 40 40 42 L 30 42 Q 25 42 25 47 Q 25 52 30 52 L 45 52 L 45 57 L 30 57 Q 20 57 20 47 Q 20 42 25 40 L 35 40 Q 40 40 40 35 Q 40 30 35 30 L 25 30 Z" fill="white"/>
+
+    <!-- "T" letter -->
+    <path d="M 55 30 L 80 30 L 80 35 L 70 35 L 70 70 L 65 70 L 65 35 L 55 35 Z" fill="white"/>
+  </g>
+</svg>

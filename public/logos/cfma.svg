@@ -1,0 +1,14 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gear/cog design for CFMA -->
+  <g fill="white">
+    <!-- Outer gear teeth -->
+    <path d="M 50 5 L 55 15 L 60 5 L 65 15 Q 70 18 73 22 L 85 15 L 82 22 L 92 28 L 85 32 Q 87 37 87 42 L 98 45 L 95 50 L 98 55 L 87 58 Q 87 63 85 68 L 92 72 L 85 78 L 82 85 L 73 78 Q 68 82 63 85 L 65 95 L 60 95 L 55 85 L 50 95 L 45 85 L 40 95 L 35 85 Q 30 82 25 78 L 15 85 L 18 78 L 8 72 L 15 68 Q 13 63 13 58 L 2 55 L 5 50 L 2 45 L 13 42 Q 13 37 15 32 L 8 28 L 15 22 L 18 15 L 27 22 Q 32 18 37 15 L 35 5 L 40 5 L 45 15 Z"/>
+
+    <!-- Inner circle with triangle -->
+    <circle cx="50" cy="50" r="25" fill="black"/>
+
+    <!-- Warning/caution triangle -->
+    <path d="M 50 30 L 65 60 L 35 60 Z" fill="white"/>
+    <path d="M 50 35 L 62 58 L 38 58 Z" fill="black"/>
+  </g>
+</svg>
