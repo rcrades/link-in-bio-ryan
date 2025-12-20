@@ -1,13 +1,17 @@
 # Personal Links Page
 
-A modern, mobile-first bio page that centralizes all your important links in one place. Perfect for sharing in social media bios, email signatures, or anywhere you need a single link that leads to everything else.
+A modern bio page that centralizes all your important links in one place. Perfect for sharing in social media bios, email signatures, or anywhere you need a single link that leads to everything else.
 
 **Built with:** [Vite](https://vitejs.dev) • [TypeScript](https://www.typescriptlang.org) • [Tailwind CSS](https://tailwindcss.com) • [Lucide Icons](https://lucide.dev)
+
+## Related Documentation
+- [CLAUDE.md](CLAUDE.md) - Development commands, feature flags, and layout strategy
+- [AGENTS.md](AGENTS.md) - AI agent guidelines and conventions
 
 ## Features
 
 - **Multiple page types**: Main bio, speaker inquiries, admin controls, stealth mode
-- **Responsive design**: Looks great on mobile and desktop
+- **Desktop/Mobile layouts**: Two-column desktop (≥1000px) with Recent Activity above the fold; single-column mobile
 - **Easy content management**: JSON-based configuration
 - **Feature flagging**: Control experimental features
 - **Publications section**: Showcase articles, videos, and media appearances
@@ -39,7 +43,11 @@ A modern, mobile-first bio page that centralizes all your important links in one
 │   ├── profile.jpg        # Profile image
 │   ├── profile-backup.jpg # Backup profile image
 │   ├── favicon.ico        # Site favicon
-│   └── r-favicon-64.ico   # Alternative favicon
+│   ├── favicon-32x32.png  # 32x32 favicon
+│   ├── favicon-16x16.png  # 16x16 favicon
+│   ├── apple-touch-icon.png    # iOS home screen icon
+│   ├── android-chrome-192x192.png  # Android icon
+│   └── android-chrome-512x512.png  # Android icon (large)
 │
 ├── pages/                 # Page directories
 │   ├── admin/            

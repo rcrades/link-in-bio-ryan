@@ -1,0 +1,29 @@
+
+{
+  "activities": [
+    {
+      "title": "Office Hours Global",
+      "description": "Friday December 19th appearance",
+      "date": "2025-12-19",
+      "type": "video",
+      "url": "https://www.youtube.com/watch?v=0obMGwqO7jc",
+      "thumbnailId": "0obMGwqO7jc"
+    },
+    {
+      "title": "Constructive Podcast",
+      "description": "February 2025 episode",
+      "date": "2025-02-01",
+      "type": "video",
+      "url": "https://youtu.be/i8l8gEdD6fQ?si=3hOmM_x3Zedb-0I3&utm_source=linkinbio&utm_medium=social&utm_campaign=profile",
+      "thumbnailId": "i8l8gEdD6fQ"
+    },
+    {
+      "title": "AI Agents in Construction",
+      "description": "For Construction Pros",
+      "date": "2025-01-15",
+      "type": "article",
+      "url": "https://www.forconstructionpros.com/construction-technology/project-management/article/22932667/wipfli-llp-how-ai-agents-are-leading-the-future-of-construction?utm_source=linkinbio&utm_medium=social&utm_campaign=profile",
+      "logo": "/logos/for_construction_pros_site_logo.avif"
+    }
+  ]
+}

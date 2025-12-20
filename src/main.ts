@@ -37,6 +37,7 @@ import * as lucide from 'lucide'
 import linksData from './data/links.json'
 import publicationsData from './data/publications.json'
 import causesData from './data/causes.json'
+import activityData from './data/activity.json'
 import { getProfileImageSrc } from './utils/profileImage'
 
 // Initialize icons with all available icons
@@ -67,6 +68,14 @@ const generateSocialLinks = (socialLinks: any[]) => {
         <a href="${link.link}" class="social-card" target="_blank">
           <img src="/logos/InBug-Black.png" alt="LinkedIn" class="social-icon linkedin-logo linkedin-light" />
           <img src="/logos/InBug-White.png" alt="LinkedIn" class="social-icon linkedin-logo linkedin-dark" />
+        </a>
+      `
+    }
+    // Use custom SVG for v0 icon
+    if (link.icon === 'v0') {
+      return `
+        <a href="${link.link}" class="social-card" target="_blank">
+          <img src="/logos/v0-logo-dark.svg" alt="v0" class="social-icon v0-logo" />
         </a>
       `
     }
@@ -124,6 +133,46 @@ const generateYearFilters = (publications: any[]) => {
       </div>
     </div>
   `;
+}
+
+// Function to generate recent activity HTML
+const generateRecentActivity = (activities: any[]) => {
+  if (!activities || activities.length === 0) return '';
+
+  return activities.map(activity => {
+    const thumbnailUrl = activity.thumbnailId
+      ? `https://img.youtube.com/vi/${activity.thumbnailId}/mqdefault.jpg`
+      : '';
+
+    const formattedDate = new Date(activity.date).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+
+    // For articles, use logo if available, otherwise icon placeholder
+    const isArticle = activity.type === 'article';
+    let mediaElement = '';
+    if (thumbnailUrl) {
+      mediaElement = `<img src="${thumbnailUrl}" alt="${activity.title}" class="activity-thumbnail" />`;
+    } else if (activity.logo) {
+      mediaElement = `<div class="activity-logo-placeholder"><img src="${activity.logo}" alt="${activity.description}" class="activity-logo" /></div>`;
+    } else if (isArticle) {
+      mediaElement = `<div class="activity-icon-placeholder"><i data-lucide="newspaper" class="activity-placeholder-icon" aria-hidden="true"></i></div>`;
+    }
+
+    return `
+      <a href="${activity.url}" class="activity-item ${isArticle ? 'activity-item-article' : ''}" target="_blank">
+        ${mediaElement}
+        <div class="activity-content">
+          <h3 class="activity-title">${activity.title}</h3>
+          <p class="activity-description">${activity.description}</p>
+          <span class="activity-date">${formattedDate}</span>
+        </div>
+        <i data-lucide="arrow-up-right" class="activity-external-icon" aria-hidden="true"></i>
+      </a>
+    `;
+  }).join('');
 }
 
 // Function to generate causes HTML
@@ -195,31 +244,50 @@ async function initializeApp() {
       </button>
       <div class="profile">
         <img src="${profileImageSrc}" alt="Ryan Rademann" />
-        <h1>Ryan Rademann</h1>
-        <p>Technology Consultant at Wipfli</p>
-        <p class="location">
-          <i data-lucide="map-pin" class="location-icon" aria-hidden="true"></i>
-          Chicago, IL
-        </p>
+        <div class="profile-text">
+          <h1>Ryan Rademann</h1>
+          <p>Technology Consultant at Wipfli</p>
+          <p class="location">
+            <i data-lucide="map-pin" class="location-icon" aria-hidden="true"></i>
+            Chicago, IL
+          </p>
+        </div>
       </div>
-    <div class="links-container">
-      <div class="social-links">
-        ${generateSocialLinks(linksData.socialLinks)}
+    <div class="desktop-grid">
+      <div class="grid-header-left">
+        <div class="social-links">
+          ${generateSocialLinks(linksData.socialLinks)}
+        </div>
       </div>
-      ${generateRegularLinks(linksData.regularLinks)}
+      <div class="grid-header-right">
+        <div class="recent-activity-header">
+          <i data-lucide="activity" class="recent-activity-header-icon" aria-hidden="true"></i>
+          <h2>Recent Activity</h2>
+        </div>
+      </div>
+      <div class="grid-content-left">
+        <div class="links-container">
+          ${generateRegularLinks(linksData.regularLinks)}
+        </div>
+      </div>
+      <div class="grid-content-right">
+        <div class="recent-activity">
+          ${generateRecentActivity(activityData.activities)}
+        </div>
+      </div>
     </div>
     ${isFeatureEnabled('publications') ? `
     <div class="mt-4 mb-8 p-3 border-t border-white/20 bg-gray-800/50 text-white rounded-xl shadow-lg">
-      <div class="flex justify-between items-center gap-4 mb-0">
+      <div class="expandable-header-row publications-header-row flex justify-between items-center gap-4 mb-0" role="button" tabindex="0" aria-expanded="false" aria-controls="publications-details">
         <div class="publications-header">
           <i data-lucide="newspaper" class="publications-header-icon" aria-hidden="true"></i>
           <h2>Publications and Media</h2>
         </div>
-        <button class="publications-expand-button flex items-center justify-center p-2 hover:bg-white/10 rounded-md transition-all duration-200" aria-label="Show publications and media details">
+        <span class="expand-indicator flex items-center justify-center p-2">
           <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" aria-hidden="true"></i>
-        </button>
+        </span>
       </div>
-      <div class="publications-details max-h-0 overflow-hidden opacity-0 transition-all duration-300">
+      <div id="publications-details" class="publications-details max-h-0 overflow-hidden opacity-0 transition-all duration-300">
         <div class="pt-3">
           ${generateYearFilters(publicationsData.publications)}
           <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2.5">
@@ -230,16 +298,16 @@ async function initializeApp() {
     </div>
     ` : '<!-- Publications section disabled via feature flag -->'}
     <div class="causes-section">
-      <div class="flex justify-between items-center gap-4 mb-0">
+      <div class="expandable-header-row flex justify-between items-center gap-4 mb-0" role="button" tabindex="0" aria-expanded="false" aria-controls="causes-details">
         <div class="causes-header">
           <i data-lucide="heart" class="causes-header-icon" aria-hidden="true"></i>
           <h2>Causes & Community Involvement</h2>
         </div>
-        <button class="causes-expand-button flex items-center justify-center p-2 hover:bg-white/10 rounded-md transition-all duration-200" aria-label="Show causes and community details">
+        <span class="expand-indicator flex items-center justify-center p-2">
           <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" aria-hidden="true"></i>
-        </button>
+        </span>
       </div>
-      <div class="causes-details max-h-0 overflow-hidden opacity-0 transition-all duration-300">
+      <div id="causes-details" class="causes-details max-h-0 overflow-hidden opacity-0 transition-all duration-300">
         <div class="pt-3">
           <div class="causes-grid">
             ${generateCauses(causesData.causes)}
@@ -251,16 +319,16 @@ async function initializeApp() {
       <i data-lucide="hard-hat" class="divider-icon" aria-hidden="true"></i>
     </div>
     <footer class="tech-stack">
-      <div class="tech-stack-header">
+      <div class="tech-stack-header expandable-header-row" role="button" tabindex="0" aria-expanded="false" aria-controls="tech-stack-details-1">
         <p class="love-note">
           <i data-lucide="heart" class="tech-icon" aria-hidden="true"></i>
           Like this contact info page?
         </p>
-        <button class="expand-button" aria-label="Show tech stack details">
+        <span class="expand-indicator">
           <i data-lucide="chevron-down" class="tech-icon" aria-hidden="true"></i>
-        </button>
+        </span>
       </div>
-      <div class="tech-stack-details">
+      <div id="tech-stack-details-1" class="tech-stack-details">
         <p class="text-xs">
           <i data-lucide="code" class="tech-icon" aria-hidden="true"></i>
           Built with a bespoke software stack in 2025
@@ -291,16 +359,16 @@ async function initializeApp() {
     </footer>
     <!-- Favorite Apps Accordion: Start -->
     <footer class="tech-stack favorite-apps">
-      <div class="tech-stack-header">
+      <div class="tech-stack-header expandable-header-row" role="button" tabindex="0" aria-expanded="false" aria-controls="tech-stack-details-2">
         <p class="love-note">
           <i data-lucide="star" class="tech-icon" aria-hidden="true"></i>
           My favorite apps in 2025
         </p>
-        <button class="expand-button" aria-label="Show favorite apps details">
+        <span class="expand-indicator">
           <i data-lucide="chevron-down" class="tech-icon" aria-hidden="true"></i>
-        </button>
+        </span>
       </div>
-      <div class="tech-stack-details">
+      <div id="tech-stack-details-2" class="tech-stack-details">
         <ul>
           <li>
             <i data-lucide="layout-template" class="tech-icon" aria-hidden="true"></i>
@@ -346,72 +414,57 @@ async function initializeApp() {
     document.documentElement.classList.toggle('dark');
   });
 
-  // Add click handlers for all expandable sections
-  const expandButtons = document.querySelectorAll('.expand-button');
-  const detailsSections = document.querySelectorAll('.tech-stack-details');
-  
-  expandButtons.forEach((button, index) => {
-    button.addEventListener('click', (e: Event) => {
-      const clickedButton = e.currentTarget as HTMLButtonElement;
-      const details = detailsSections[index];
-      const isExpanded = clickedButton.getAttribute('aria-expanded') === 'true';
-      
-      clickedButton.setAttribute('aria-expanded', (!isExpanded).toString());
-      details?.classList.toggle('expanded');
+  // Add click handlers for all expandable sections (entire header row clickable on desktop)
+  const expandableHeaders = document.querySelectorAll('.expandable-header-row');
+
+  expandableHeaders.forEach((header) => {
+    const toggleExpand = () => {
+      const controlsId = header.getAttribute('aria-controls');
+      const details = controlsId ? document.getElementById(controlsId) : null;
+      const chevron = header.querySelector('.expand-indicator i');
+      const isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      if (details) {
+        // Check if this is a max-h style section (publications, causes) or toggle class style (tech-stack)
+        if (details.classList.contains('max-h-0') || details.classList.contains('max-h-[2000px]')) {
+          if (!isExpanded) {
+            // Expand
+            details.classList.remove('max-h-0', 'opacity-0');
+            details.classList.add('max-h-[2000px]', 'opacity-100');
+          } else {
+            // Collapse
+            details.classList.add('max-h-0', 'opacity-0');
+            details.classList.remove('max-h-[2000px]', 'opacity-100');
+          }
+        } else {
+          // Toggle expanded class for tech-stack style
+          details.classList.toggle('expanded');
+        }
+      }
+
+      // Update aria-expanded and rotate chevron
+      header.setAttribute('aria-expanded', (!isExpanded).toString());
+      if (chevron) {
+        if (!isExpanded) {
+          chevron.classList.add('rotate-180');
+        } else {
+          chevron.classList.remove('rotate-180');
+        }
+      }
+    };
+
+    // Click handler
+    header.addEventListener('click', toggleExpand);
+
+    // Keyboard handler for accessibility
+    header.addEventListener('keydown', (e: Event) => {
+      const keyEvent = e as KeyboardEvent;
+      if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
+        e.preventDefault();
+        toggleExpand();
+      }
     });
   });
-
-  // Add click handler for publications section
-  const publicationsButton = document.querySelector('.publications-expand-button');
-  const publicationsDetails = document.querySelector('.publications-details');
-
-  if (publicationsButton && publicationsDetails) {
-    publicationsButton.addEventListener('click', (e: Event) => {
-      const button = e.currentTarget as HTMLButtonElement;
-      const chevron = button.querySelector('i');
-      const isExpanded = publicationsDetails.classList.contains('max-h-0');
-
-      if (isExpanded) {
-        // Expand
-        publicationsDetails.classList.remove('max-h-0', 'opacity-0');
-        publicationsDetails.classList.add('max-h-[2000px]', 'opacity-100');
-        chevron?.classList.add('rotate-180');
-        button.setAttribute('aria-expanded', 'true');
-      } else {
-        // Collapse
-        publicationsDetails.classList.add('max-h-0', 'opacity-0');
-        publicationsDetails.classList.remove('max-h-[2000px]', 'opacity-100');
-        chevron?.classList.remove('rotate-180');
-        button.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-
-  // Add click handler for causes section
-  const causesButton = document.querySelector('.causes-expand-button');
-  const causesDetails = document.querySelector('.causes-details');
-
-  if (causesButton && causesDetails) {
-    causesButton.addEventListener('click', (e: Event) => {
-      const button = e.currentTarget as HTMLButtonElement;
-      const chevron = button.querySelector('i');
-      const isExpanded = causesDetails.classList.contains('max-h-0');
-
-      if (isExpanded) {
-        // Expand
-        causesDetails.classList.remove('max-h-0', 'opacity-0');
-        causesDetails.classList.add('max-h-[2000px]', 'opacity-100');
-        chevron?.classList.add('rotate-180');
-        button.setAttribute('aria-expanded', 'true');
-      } else {
-        // Collapse
-        causesDetails.classList.add('max-h-0', 'opacity-0');
-        causesDetails.classList.remove('max-h-[2000px]', 'opacity-100');
-        chevron?.classList.remove('rotate-180');
-        button.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
 
   // Add filter functionality
   const yearFilters = document.querySelectorAll('.year-filter');

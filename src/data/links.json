@@ -9,6 +9,11 @@
       "type": "social",
       "icon": "x",
       "link": "https://x.com/RyanRademann?utm_source=linkinbio&utm_medium=social&utm_campaign=profile"
+    },
+    {
+      "type": "social",
+      "icon": "v0",
+      "link": "https://v0.app/@rcrades"
     }
   ],
   "regularLinks": [
@@ -25,20 +30,6 @@
       "header": "Schedule a Meeting",
       "description": "Book a teams, zoom, or phone call.",
       "link": "https://outlook.office.com/bookwithme/user/32a54d6a57dc459c9dd140df42f528d4%40wipfli.com?bookingcode=5bfcef0c-c41a-4af4-ac45-a82ca5adc519&anonymous&isanonymous=true&utm_source=linkinbio&utm_medium=social&utm_campaign=profile"
-    },
-    {
-      "type": "regular",
-      "icon": "youtube",
-      "header": "Latest Podcast",
-      "description": "Constructive Podcast on YouTube\n2025 February.",
-      "link": "https://youtu.be/i8l8gEdD6fQ?si=3hOmM_x3Zedb-0I3&utm_source=linkinbio&utm_medium=social&utm_campaign=profile"
-    },
-    {
-      "type": "regular",
-      "icon": "newspaper",
-      "header": "Latest Article",
-      "description": "AI Agents on\nFor Construction Pros.",
-      "link": "https://www.forconstructionpros.com/construction-technology/project-management/article/22932667/wipfli-llp-how-ai-agents-are-leading-the-future-of-construction?utm_source=linkinbio&utm_medium=social&utm_campaign=profile"
     },
     {
       "type": "regular",
