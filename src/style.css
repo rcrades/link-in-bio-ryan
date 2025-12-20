@@ -237,18 +237,6 @@ body::before {
 
 .links-container {
   margin-top: 2rem;
-  animation: slideInLinks 0.8s ease-out 0.4s backwards;
-}
-
-@keyframes slideInLinks {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .link-card {
@@ -271,24 +259,7 @@ body::before {
   overflow: hidden;
 }
 
-/* Staggered animation for link cards */
-.link-card:nth-child(1) { animation: slideInCard 0.6s ease-out 0.5s backwards; }
-.link-card:nth-child(2) { animation: slideInCard 0.6s ease-out 0.6s backwards; }
-.link-card:nth-child(3) { animation: slideInCard 0.6s ease-out 0.7s backwards; }
-.link-card:nth-child(4) { animation: slideInCard 0.6s ease-out 0.8s backwards; }
-.link-card:nth-child(5) { animation: slideInCard 0.6s ease-out 0.9s backwards; }
-.link-card:nth-child(6) { animation: slideInCard 0.6s ease-out 1s backwards; }
-
-@keyframes slideInCard {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
+/* Link cards appear immediately - no animation */
 
 /* Accent gradient on hover */
 .link-card::before {
@@ -1845,6 +1816,26 @@ body::before {
   color: var(--foreground);
   margin: 0;
   letter-spacing: -0.01em;
+}
+
+/* Staggered animation for activity items - bottom loads first, top (newest) loads last */
+/* Each new card appears at top and pushes previous cards down */
+.activity-item:nth-child(1) { animation: slideInActivity 0.6s ease-out 1s backwards; }
+.activity-item:nth-child(2) { animation: slideInActivity 0.6s ease-out 0.8s backwards; }
+.activity-item:nth-child(3) { animation: slideInActivity 0.6s ease-out 0.6s backwards; }
+.activity-item:nth-child(4) { animation: slideInActivity 0.6s ease-out 0.4s backwards; }
+.activity-item:nth-child(5) { animation: slideInActivity 0.6s ease-out 0.2s backwards; }
+.activity-item:nth-child(6) { animation: slideInActivity 0.6s ease-out 0s backwards; }
+
+@keyframes slideInActivity {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .activity-item {
