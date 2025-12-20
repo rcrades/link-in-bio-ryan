@@ -761,6 +761,37 @@ body::before {
   color: var(--foreground);
 }
 
+/* Desktop: Compact horizontal layout for "Like this contact info page?" */
+@media (min-width: 1000px) {
+  .tech-stack:not(.favorite-apps) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .tech-stack:not(.favorite-apps) .tech-stack-header {
+    flex-shrink: 0;
+  }
+
+  .tech-stack:not(.favorite-apps) .tech-stack-buttons {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0;
+    gap: 1.5rem;
+  }
+
+  .tech-stack:not(.favorite-apps) .create-your-own-btn {
+    padding: 0.75rem 1.25rem;
+    white-space: nowrap;
+  }
+
+  .tech-stack:not(.favorite-apps) .show-tech-stack-btn {
+    white-space: nowrap;
+  }
+}
+
 /* Tech Stack Modal Overlay */
 .tech-stack-modal {
   position: fixed;

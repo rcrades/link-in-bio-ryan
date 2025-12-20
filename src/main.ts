@@ -140,9 +140,12 @@ const generateRecentActivity = (activities: any[]) => {
   if (!activities || activities.length === 0) return '';
 
   return activities.map(activity => {
-    const thumbnailUrl = activity.thumbnailId
-      ? `https://img.youtube.com/vi/${activity.thumbnailId}/mqdefault.jpg`
-      : '';
+    // Support custom thumbnail path or YouTube auto-generated thumbnail
+    const thumbnailUrl = activity.thumbnail
+      ? activity.thumbnail
+      : activity.thumbnailId
+        ? `https://img.youtube.com/vi/${activity.thumbnailId}/mqdefault.jpg`
+        : '';
 
     const formattedDate = new Date(activity.date).toLocaleDateString('en-US', {
       month: 'short',

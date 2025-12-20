@@ -7,7 +7,7 @@
       "date": "2025-12-19",
       "type": "video",
       "url": "https://www.youtube.com/watch?v=0obMGwqO7jc",
-      "thumbnailId": "0obMGwqO7jc"
+      "thumbnail": "/oh-thumb-xmas.png"
     },
     {
       "title": "Constructive Podcast",
@@ -24,6 +24,14 @@
       "type": "article",
       "url": "https://www.forconstructionpros.com/construction-technology/project-management/article/22932667/wipfli-llp-how-ai-agents-are-leading-the-future-of-construction?utm_source=linkinbio&utm_medium=social&utm_campaign=profile",
       "logo": "/logos/for_construction_pros_site_logo.avif"
+    },
+    {
+      "title": "Bricks & Bytes",
+      "description": "November 2024 episode",
+      "date": "2024-11-28",
+      "type": "video",
+      "url": "https://youtu.be/2Cd3oNo3G3Y?si=G8Bh38MhyHV2tHhC",
+      "thumbnail": "/ryan-b-and-b-youtube-thumb.jpg"
     }
   ]
 }
