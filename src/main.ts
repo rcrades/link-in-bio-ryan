@@ -238,10 +238,13 @@ async function initializeApp() {
   // Create HTML content
   const content = `
     <div>
+      <!-- Theme toggle - positioned via CSS (top-right on desktop, bottom on mobile) -->
       <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
         <i data-lucide="sun" class="theme-icon sun" aria-hidden="true"></i>
         <i data-lucide="moon" class="theme-icon moon" aria-hidden="true"></i>
       </button>
+
+      <!-- Profile section - compact on mobile (side by side), horizontal on desktop -->
       <div class="profile">
         <img src="${profileImageSrc}" alt="Ryan Rademann" />
         <div class="profile-text">
@@ -253,6 +256,37 @@ async function initializeApp() {
           </p>
         </div>
       </div>
+
+      <!-- Mobile-only: Social links row -->
+      <div class="mobile-social-links">
+        ${generateSocialLinks(linksData.socialLinks)}
+      </div>
+
+      <!-- Mobile-only: Schedule a Meeting button (prominent CTA) -->
+      <div class="mobile-cta">
+        <a href="${linksData.regularLinks.find(l => l.header === 'Schedule a Meeting')?.link || '#'}" class="mobile-cta-button" target="_blank">
+          <i data-lucide="calendar" class="mobile-cta-icon" aria-hidden="true"></i>
+          <span>Schedule a Meeting</span>
+        </a>
+      </div>
+
+      <!-- Mobile-only: Recent Activity -->
+      <div class="mobile-recent-activity">
+        <div class="recent-activity-header">
+          <i data-lucide="activity" class="recent-activity-header-icon" aria-hidden="true"></i>
+          <h2>Recent Activity</h2>
+        </div>
+        <div class="recent-activity">
+          ${generateRecentActivity(activityData.activities)}
+        </div>
+      </div>
+
+      <!-- Mobile-only: Rest of the links (excluding Schedule a Meeting) -->
+      <div class="mobile-links-container">
+        ${generateRegularLinks(linksData.regularLinks.filter(l => l.header !== 'Schedule a Meeting'))}
+      </div>
+
+    <!-- Desktop grid layout -->
     <div class="desktop-grid">
       <div class="grid-header-left">
         <div class="social-links">
@@ -301,7 +335,7 @@ async function initializeApp() {
       <div class="expandable-header-row flex justify-between items-center gap-4 mb-0" role="button" tabindex="0" aria-expanded="false" aria-controls="causes-details">
         <div class="causes-header">
           <i data-lucide="heart" class="causes-header-icon" aria-hidden="true"></i>
-          <h2>Causes & Community Involvement</h2>
+          <h2>Community Involvement</h2>
         </div>
         <span class="expand-indicator flex items-center justify-center p-2">
           <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" aria-hidden="true"></i>
@@ -319,44 +353,65 @@ async function initializeApp() {
       <i data-lucide="hard-hat" class="divider-icon" aria-hidden="true"></i>
     </div>
     <footer class="tech-stack">
-      <div class="tech-stack-header expandable-header-row" role="button" tabindex="0" aria-expanded="false" aria-controls="tech-stack-details-1">
+      <div class="tech-stack-header">
         <p class="love-note">
           <i data-lucide="heart" class="tech-icon" aria-hidden="true"></i>
           Like this contact info page?
         </p>
-        <span class="expand-indicator">
-          <i data-lucide="chevron-down" class="tech-icon" aria-hidden="true"></i>
-        </span>
       </div>
-      <div id="tech-stack-details-1" class="tech-stack-details">
-        <p class="text-xs">
+      <div class="tech-stack-buttons">
+        <a href="https://v0.link/ryan-rademann" target="_blank" class="create-your-own-btn">
+          <i data-lucide="sparkles" class="btn-icon" aria-hidden="true"></i>
+          Create your own with v0
+          <i data-lucide="arrow-up-right" class="btn-icon-external" aria-hidden="true"></i>
+        </a>
+        <button id="show-tech-stack-btn" class="show-tech-stack-btn">
+          Show me this thing's tech stack
+        </button>
+      </div>
+    </footer>
+
+    <!-- Tech Stack Modal Overlay -->
+    <div id="tech-stack-modal" class="tech-stack-modal" aria-hidden="true">
+      <div class="tech-stack-modal-backdrop"></div>
+      <div class="tech-stack-modal-content">
+        <button id="close-tech-stack-modal" class="tech-stack-modal-close" aria-label="Close">
+          <i data-lucide="x" aria-hidden="true"></i>
+        </button>
+        <h2 class="tech-stack-modal-title">
           <i data-lucide="code" class="tech-icon" aria-hidden="true"></i>
-          Built with a bespoke software stack in 2025
-        </p>
-        <ul>
+          Tech Stack
+        </h2>
+        <p class="tech-stack-modal-subtitle">Built with a bespoke software stack in 2025</p>
+        <ul class="tech-stack-modal-list">
           <li>
             <i data-lucide="layout-template" class="tech-icon" aria-hidden="true"></i>
-            Boilerplate & Prototype: <a href="https://v0.app/ref/AH0995" target="_blank">v0.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+            <span>Boilerplate & Prototype:</span>
+            <a href="https://v0.link/ryan-rademann" target="_blank">v0.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
           </li>
           <li>
             <i data-lucide="boxes" class="tech-icon" aria-hidden="true"></i>
-            Front End: <span class="tech-pill">React</span> + <span class="tech-pill">Vite</span>
+            <span>Front End:</span>
+            <span class="tech-pill">React</span> + <span class="tech-pill">Vite</span>
           </li>
           <li>
             <i data-lucide="database" class="tech-icon" aria-hidden="true"></i>
-            Back End: <a href="https://convex.dev/referral/RCRADE2932" target="_blank">Convex <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+            <span>Back End:</span>
+            <a href="https://convex.dev/referral/RCRADE2932" target="_blank">Convex <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
           </li>
           <li>
             <i data-lucide="cloud" class="tech-icon" aria-hidden="true"></i>
-            Hosting: <span class="tech-pill">Vercel</span>
+            <span>Hosting:</span>
+            <span class="tech-pill">Vercel</span>
           </li>
         </ul>
         <a href="https://github.com/rcrades/link-in-bio-ryan" target="_blank" class="github-link">
           <i data-lucide="github" class="tech-icon" aria-hidden="true"></i>
-          rcrades <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i>
+          View on GitHub
+          <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i>
         </a>
       </div>
-    </footer>
+    </div>
     <!-- Favorite Apps Accordion: Start -->
     <footer class="tech-stack favorite-apps">
       <div class="tech-stack-header expandable-header-row" role="button" tabindex="0" aria-expanded="false" aria-controls="tech-stack-details-2">
@@ -372,7 +427,7 @@ async function initializeApp() {
         <ul>
           <li>
             <i data-lucide="layout-template" class="tech-icon" aria-hidden="true"></i>
-            AI Code Gen: <a href="https://v0.app/ref/AH0995" target="_blank">v0.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+            AI Code Gen: <a href="https://v0.link/ryan-rademann" target="_blank">v0.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
             <!-- Previous referral link: bolt.new/?rid=qsz5nv -->
           </li>
           <li>
@@ -391,6 +446,15 @@ async function initializeApp() {
       </div>
     </footer>
     <!-- Favorite Apps Accordion: End -->
+
+    <!-- Mobile-only: Theme toggle at bottom -->
+    <div class="mobile-theme-toggle">
+      <button id="theme-toggle-mobile" class="theme-toggle-bottom" aria-label="Toggle theme">
+        <i data-lucide="sun" class="theme-icon sun" aria-hidden="true"></i>
+        <i data-lucide="moon" class="theme-icon moon" aria-hidden="true"></i>
+        <span class="theme-label">Switch Theme</span>
+      </button>
+    </div>
     </div>
   `
 
@@ -409,9 +473,47 @@ async function initializeApp() {
     console.error('Error re-initializing icons:', error)
   }
 
-  // Add theme toggle functionality
+  // Add theme toggle functionality (both desktop and mobile buttons)
   document.getElementById('theme-toggle')?.addEventListener('click', () => {
     document.documentElement.classList.toggle('dark');
+  });
+  document.getElementById('theme-toggle-mobile')?.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+  });
+
+  // Tech Stack Modal functionality
+  const techStackModal = document.getElementById('tech-stack-modal');
+  const showTechStackBtn = document.getElementById('show-tech-stack-btn');
+  const closeTechStackBtn = document.getElementById('close-tech-stack-modal');
+  const modalBackdrop = techStackModal?.querySelector('.tech-stack-modal-backdrop');
+
+  const openModal = () => {
+    if (techStackModal) {
+      techStackModal.classList.add('open');
+      techStackModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      // Re-initialize icons in modal
+      lucide.createIcons({ icons: lucide.icons });
+    }
+  };
+
+  const closeModal = () => {
+    if (techStackModal) {
+      techStackModal.classList.remove('open');
+      techStackModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  };
+
+  showTechStackBtn?.addEventListener('click', openModal);
+  closeTechStackBtn?.addEventListener('click', closeModal);
+  modalBackdrop?.addEventListener('click', closeModal);
+
+  // Close modal on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && techStackModal?.classList.contains('open')) {
+      closeModal();
+    }
   });
 
   // Add click handlers for all expandable sections (entire header row clickable on desktop)

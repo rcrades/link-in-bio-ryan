@@ -11,22 +11,42 @@
 ## Responsive Layout Strategy
 
 ### Breakpoints
-- **Mobile/Tablet**: Under 1000px width - single column, stacked layout
+- **Mobile/Tablet**: Under 1000px width - compact layout with Recent Activity
 - **Desktop**: 1000px and above - two-column layout with Recent Activity prominent
 
 ### Design Philosophy
 No "fully responsive" gymnastics. Two clear layouts:
-1. **Mobile** (< 1000px): Current vertical stack. Tablet users get this too (they're ~1% of traffic)
-2. **Desktop** (≥ 1000px): Two-column grid with Recent Activity in the left column (above the fold)
+1. **Mobile** (< 1000px): Compact header (photo+text side-by-side), horizontal social row, CTA button, Recent Activity, then remaining links. Theme toggle at bottom.
+2. **Desktop** (≥ 1000px): Two-column grid with Recent Activity in the right column (above the fold). Theme toggle top-right.
+
+### Mobile Layout Structure
+```
+┌─────────────────────────────────────────────────┐
+│  [Photo] [Name, Role, Location]                 │
+├─────────────────────────────────────────────────┤
+│  [LinkedIn] [X] [v0] (compact social row)       │
+├─────────────────────────────────────────────────┤
+│  [Schedule a Meeting - prominent CTA button]    │
+├─────────────────────────────────────────────────┤
+│  Recent Activity (video thumbnails, articles)   │
+├─────────────────────────────────────────────────┤
+│  [Remaining Links: Wipfli Bio, Stealth Mode]    │
+├─────────────────────────────────────────────────┤
+│  [Publications, Causes, Tech Stack sections]    │
+├─────────────────────────────────────────────────┤
+│  [Switch Theme button at bottom]                │
+└─────────────────────────────────────────────────┘
+```
 
 ### Desktop Layout Structure
 ```
 ┌─────────────────────────────────────────────────┐
-│  [Profile Header - centered, spans both cols]   │
+│  [Profile Header - horizontal, left-aligned]    │
 ├─────────────────────┬───────────────────────────┤
-│  Recent Activity    │  Links & Social           │
-│  (prominent, video  │  (regular links,          │
-│   thumbnails)       │   social cards)           │
+│  Social Links       │  Recent Activity Header   │
+├─────────────────────┼───────────────────────────┤
+│  Links & Cards      │  Recent Activity Items    │
+│  (all regular links)│  (video thumbnails)       │
 ├─────────────────────┴───────────────────────────┤
 │  [Publications, Causes, Tech Stack - full width]│
 └─────────────────────────────────────────────────┘

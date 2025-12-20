@@ -11,7 +11,7 @@ A modern bio page that centralizes all your important links in one place. Perfec
 ## Features
 
 - **Multiple page types**: Main bio, speaker inquiries, admin controls, stealth mode
-- **Desktop/Mobile layouts**: Two-column desktop (≥1000px) with Recent Activity above the fold; single-column mobile
+- **Desktop/Mobile layouts**: Two-column desktop (≥1000px) with Recent Activity; compact mobile layout with photo/text side-by-side, social row, CTA, and Recent Activity
 - **Easy content management**: JSON-based configuration
 - **Feature flagging**: Control experimental features
 - **Publications section**: Showcase articles, videos, and media appearances
