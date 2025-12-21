@@ -34,11 +34,15 @@ if (typeof localStorage !== 'undefined') {
 
 import './style.css'
 import * as lucide from 'lucide'
+import { inject } from '@vercel/analytics'
 import linksData from './data/links.json'
 import publicationsData from './data/publications.json'
 import causesData from './data/causes.json'
 import activityData from './data/activity.json'
 import { getProfileImageSrc } from './utils/profileImage'
+
+// Initialize Vercel Analytics
+inject()
 
 // Initialize icons with all available icons
 try {
