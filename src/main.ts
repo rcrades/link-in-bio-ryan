@@ -94,10 +94,10 @@ const generateSocialLinks = (socialLinks: any[]) => {
 // Function to generate regular links HTML
 const generateRegularLinks = (regularLinks: any[]) => {
   return regularLinks.map(link => `
-    <a href="${link.link}" class="link-card block relative w-full py-7 px-6 my-5 min-h-[110px] rounded-2xl overflow-hidden no-underline cursor-pointer bg-card text-card-foreground border border-card-border" target="_blank">
-      <h2>${link.header}</h2>
-      <i data-lucide="${link.icon}" class="link-icon" aria-hidden="true"></i>
-      <p>${link.description}</p>
+    <a href="${link.link}" class="link-card group block relative w-full py-7 px-6 my-5 min-h-[110px] rounded-2xl overflow-hidden no-underline cursor-pointer bg-card text-card-foreground border border-card-border border-l-4 border-l-primary shadow-card transition-all duration-400 ease-bounce-in hover:translate-x-2 hover:-translate-y-1 hover:shadow-card-hover hover:border-l-[6px]" target="_blank">
+      <h2 class="m-0 text-xl font-semibold tracking-tight whitespace-nowrap overflow-hidden text-ellipsis pr-12 relative z-10">${link.header}</h2>
+      <i data-lucide="${link.icon}" class="link-icon absolute top-7 right-6 w-6 h-6 opacity-50 text-primary z-10 transition-all duration-400 ease-bounce-in group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-[5deg] group-hover:text-primary-dark" aria-hidden="true"></i>
+      <p class="mt-2 mb-0 text-sm opacity-85 font-normal pr-12 leading-relaxed h-12 block text-left overflow-hidden text-foreground-muted relative z-10">${link.description}</p>
     </a>
   `).join('')
 }
@@ -169,14 +169,14 @@ const generateRecentActivity = (activities: any[]) => {
     }
 
     return `
-      <a href="${activity.url}" class="activity-item flex gap-4 p-4 rounded-xl relative overflow-hidden no-underline mb-4 last:mb-0 bg-background-secondary text-foreground border border-card-border ${isArticle ? 'activity-item-article' : ''}" target="_blank">
+      <a href="${activity.url}" class="activity-item group flex gap-4 p-4 rounded-xl relative overflow-hidden no-underline mb-4 last:mb-0 bg-background-secondary text-foreground border border-card-border transition-all duration-300 ease-bounce-in hover:-translate-y-1 hover:shadow-strong hover:border-primary ${isArticle ? 'activity-item-article' : ''}" target="_blank">
         ${mediaElement}
-        <div class="activity-content">
-          <h3 class="activity-title">${activity.title}</h3>
-          <p class="activity-description">${activity.description}</p>
-          <span class="activity-date">${formattedDate}</span>
+        <div class="activity-content flex-1 min-w-0 flex flex-col justify-center relative z-10">
+          <h3 class="activity-title text-base font-semibold text-foreground m-0 mb-1 leading-tight">${activity.title}</h3>
+          <p class="activity-description text-sm text-foreground-muted m-0 leading-snug">${activity.description}</p>
+          <span class="activity-date text-xs text-foreground-muted mt-1 opacity-70">${formattedDate}</span>
         </div>
-        <i data-lucide="arrow-up-right" class="activity-external-icon" aria-hidden="true"></i>
+        <i data-lucide="arrow-up-right" class="activity-external-icon w-4 h-4 text-primary opacity-50 flex-shrink-0 self-start mt-1 transition-all duration-300 ease-bounce-in relative z-10 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true"></i>
       </a>
     `;
   }).join('');
@@ -185,15 +185,15 @@ const generateRecentActivity = (activities: any[]) => {
 // Function to generate causes HTML
 const generateCauses = (causes: any[]) => {
   return causes.map(cause => `
-    <a href="${cause.url}" class="cause-card" target="_blank">
-      <div class="cause-icon-wrapper">
-        <img src="${cause.logo}" alt="${cause.name} logo" class="cause-logo" />
+    <a href="${cause.url}" class="cause-card group flex items-center gap-4 py-5 px-4 bg-background-secondary border border-card-border rounded-xl no-underline text-card-foreground transition-all duration-400 ease-bounce-in relative overflow-hidden hover:translate-x-1.5 hover:shadow-strong hover:border-primary" target="_blank">
+      <div class="cause-icon-wrapper flex items-center justify-center w-12 h-12 bg-card rounded-[10px] border-2 border-card-border flex-shrink-0 transition-all duration-400 ease-bounce-in relative z-10 group-hover:border-primary group-hover:bg-primary group-hover:-rotate-[5deg] group-hover:scale-105">
+        <img src="${cause.logo}" alt="${cause.name} logo" class="cause-logo w-8 h-8 object-contain transition-[filter] duration-400" />
       </div>
-      <div class="cause-content">
-        <h3 class="cause-name">${cause.name}</h3>
-        <p class="cause-description">${cause.description}</p>
+      <div class="cause-content flex-1 min-w-0 relative z-10">
+        <h3 class="cause-name text-lg font-semibold text-foreground m-0 mb-1 tracking-tight">${cause.name}</h3>
+        <p class="cause-description text-sm text-foreground-muted m-0 leading-snug">${cause.description}</p>
       </div>
-      <i data-lucide="arrow-up-right" class="cause-link-icon" aria-hidden="true"></i>
+      <i data-lucide="arrow-up-right" class="cause-link-icon w-5 h-5 text-primary opacity-50 flex-shrink-0 relative z-10 transition-all duration-400 ease-bounce-in group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-[5deg]" aria-hidden="true"></i>
     </a>
   `).join('')
 }
@@ -246,19 +246,19 @@ async function initializeApp() {
   const content = `
     <div>
       <!-- Theme toggle - positioned via CSS (top-right on desktop, bottom on mobile) -->
-      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-        <i data-lucide="sun" class="theme-icon sun" aria-hidden="true"></i>
-        <i data-lucide="moon" class="theme-icon moon" aria-hidden="true"></i>
+      <button id="theme-toggle" class="theme-toggle absolute top-6 right-6 w-12 h-12 rounded-full border-2 border-card-border bg-card text-primary cursor-pointer p-2 flex items-center justify-center transition-all duration-400 ease-bounce-in z-10 shadow-soft animate-slide-in-toggle hover:-translate-y-1 hover:shadow-strong hover:border-primary" aria-label="Toggle theme">
+        <i data-lucide="sun" class="theme-icon sun w-5 h-5" aria-hidden="true"></i>
+        <i data-lucide="moon" class="theme-icon moon w-5 h-5" aria-hidden="true"></i>
       </button>
 
       <!-- Profile section - compact on mobile (side by side), horizontal on desktop -->
-      <div class="profile mb-12 text-center">
-        <img src="${profileImageSrc}" alt="Ryan Rademann" class="w-40 h-40 rounded-full mb-6 object-cover" />
+      <div class="profile mb-12 text-center animate-slide-in-profile">
+        <img src="${profileImageSrc}" alt="Ryan Rademann" class="profile-img w-40 h-40 rounded-full mb-6 object-cover border-4 border-primary shadow-elevated transition-all duration-400 ease-bounce-in hover:scale-105" />
         <div class="profile-text">
           <h1 class="font-display text-6xl font-normal m-0 mb-1 leading-tight tracking-tight text-foreground">Ryan Rademann</h1>
           <p class="m-0 font-medium text-lg text-foreground-muted">Technology Consultant at Wipfli</p>
           <p class="location flex items-center justify-center gap-2 mt-2 text-sm font-normal text-foreground-muted">
-            <i data-lucide="map-pin" class="location-icon w-4 h-4 text-primary" aria-hidden="true"></i>
+            <i data-lucide="map-pin" class="w-4 h-4 text-primary" aria-hidden="true"></i>
             Chicago, IL
           </p>
         </div>
@@ -317,105 +317,144 @@ async function initializeApp() {
         </div>
       </div>
     </div>
-    ${isFeatureEnabled('publications') ? `
-    <div class="mt-4 mb-8 p-3 border-t border-white/20 bg-gray-800/50 text-white rounded-xl shadow-lg">
-      <div class="expandable-header-row publications-header-row flex justify-between items-center gap-4 mb-0" role="button" tabindex="0" aria-expanded="false" aria-controls="publications-details">
-        <div class="publications-header">
-          <i data-lucide="newspaper" class="publications-header-icon" aria-hidden="true"></i>
-          <h2>Publications and Media</h2>
+    <!-- Paired Accordion: Publications & Causes -->
+    <div class="accordion-pair flex flex-col lg:flex-row gap-4 mt-8 mb-8" data-accordion-group>
+      ${isFeatureEnabled('publications') ? `
+      <!-- Publications Card -->
+      <div class="accordion-card flex-1 bg-card border border-card-border rounded-2xl overflow-hidden transition-all duration-500 ease-out" data-accordion-card="publications">
+        <div class="accordion-header p-5 cursor-pointer" role="button" tabindex="0" aria-expanded="false" aria-controls="publications-details">
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <i data-lucide="newspaper" class="w-5 h-5 text-primary" aria-hidden="true"></i>
+              <h2 class="font-display text-xl font-normal text-foreground m-0">Publications</h2>
+            </div>
+            <span class="expand-indicator p-2">
+              <i data-lucide="chevron-down" class="w-5 h-5 text-primary transition-transform duration-300" aria-hidden="true"></i>
+            </span>
+          </div>
+          <!-- Teaser: counts + ghost previews -->
+          <div class="accordion-teaser mt-4 transition-all duration-300">
+            <div class="flex items-center gap-4 text-sm text-foreground-muted mb-3">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="file-text" class="w-4 h-4" aria-hidden="true"></i>
+                ${publicationsData.publications.filter((p: {type: string}) => p.type === 'article').length} Articles
+              </span>
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="mic" class="w-4 h-4" aria-hidden="true"></i>
+                ${publicationsData.publications.filter((p: {type: string}) => p.type === 'interview').length} Interviews
+              </span>
+            </div>
+            <div class="flex gap-2">
+              ${publicationsData.publications.slice(0, 3).map(() => `
+                <div class="h-2 bg-primary/20 rounded-full flex-1"></div>
+              `).join('')}
+            </div>
+          </div>
         </div>
-        <span class="expand-indicator flex items-center justify-center p-2">
-          <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" aria-hidden="true"></i>
-        </span>
+        <div id="publications-details" class="accordion-content max-h-0 overflow-hidden opacity-0 transition-all duration-500">
+          <div class="px-5 pb-5">
+            ${generateYearFilters(publicationsData.publications)}
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2.5 mt-4">
+              ${generatePublications(publicationsData.publications)}
+            </div>
+          </div>
+        </div>
       </div>
-      <div id="publications-details" class="publications-details max-h-0 overflow-hidden opacity-0 transition-all duration-300">
-        <div class="pt-3">
-          ${generateYearFilters(publicationsData.publications)}
-          <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2.5">
-            ${generatePublications(publicationsData.publications)}
+      ` : '<!-- Publications section disabled via feature flag -->'}
+
+      <!-- Causes Card -->
+      <div class="accordion-card flex-1 bg-card border border-card-border rounded-2xl overflow-hidden transition-all duration-500 ease-out" data-accordion-card="causes">
+        <div class="accordion-header p-5 cursor-pointer" role="button" tabindex="0" aria-expanded="false" aria-controls="causes-details">
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <i data-lucide="heart" class="w-5 h-5 text-primary" aria-hidden="true"></i>
+              <h2 class="font-display text-xl font-normal text-foreground m-0">Community</h2>
+            </div>
+            <span class="expand-indicator p-2">
+              <i data-lucide="chevron-down" class="w-5 h-5 text-primary transition-transform duration-300" aria-hidden="true"></i>
+            </span>
+          </div>
+          <!-- Teaser: organization logos -->
+          <div class="accordion-teaser mt-4 transition-all duration-300">
+            <p class="text-sm text-foreground-muted mb-3">${causesData.causes.length} organizations I support</p>
+            <div class="flex gap-3">
+              ${causesData.causes.map((cause: {name: string; logo: string}) => `
+                <div class="w-10 h-10 rounded-lg bg-background-secondary border border-card-border flex items-center justify-center overflow-hidden" title="${cause.name}">
+                  <img src="${cause.logo}" alt="" class="w-6 h-6 object-contain cause-logo-preview" />
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+        <div id="causes-details" class="accordion-content max-h-0 overflow-hidden opacity-0 transition-all duration-500">
+          <div class="px-5 pb-5">
+            <div class="causes-grid">
+              ${generateCauses(causesData.causes)}
+            </div>
           </div>
         </div>
       </div>
     </div>
-    ` : '<!-- Publications section disabled via feature flag -->'}
-    <div class="causes-section">
-      <div class="expandable-header-row flex justify-between items-center gap-4 mb-0" role="button" tabindex="0" aria-expanded="false" aria-controls="causes-details">
-        <div class="causes-header">
-          <i data-lucide="heart" class="causes-header-icon" aria-hidden="true"></i>
-          <h2>Community Involvement</h2>
-        </div>
-        <span class="expand-indicator flex items-center justify-center p-2">
-          <i data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" aria-hidden="true"></i>
-        </span>
-      </div>
-      <div id="causes-details" class="causes-details max-h-0 overflow-hidden opacity-0 transition-all duration-300">
-        <div class="pt-3">
-          <div class="causes-grid">
-            ${generateCauses(causesData.causes)}
-          </div>
-        </div>
-      </div>
+    <div class="divider flex items-center justify-center my-12 opacity-40 animate-fade-in-divider group">
+      <i data-lucide="hard-hat" class="divider-icon w-12 h-12 text-accent transition-all duration-400 group-hover:rotate-[15deg] group-hover:scale-110 group-hover:opacity-80" aria-hidden="true"></i>
     </div>
-    <div class="divider">
-      <i data-lucide="hard-hat" class="divider-icon" aria-hidden="true"></i>
-    </div>
-    <footer class="tech-stack mt-4 py-8 px-7 rounded-2xl w-full mb-8 relative overflow-hidden bg-card text-card-foreground border border-card-border">
+    <footer class="tech-stack mt-4 py-8 px-7 rounded-2xl w-full mb-8 relative overflow-hidden bg-card text-card-foreground border border-card-border shadow-card animate-slide-in-tech">
       <div class="tech-stack-header flex justify-between items-center gap-4">
-        <p class="love-note m-0 flex items-center gap-3">
-          <i data-lucide="heart" class="tech-icon w-4 h-4" aria-hidden="true"></i>
+        <p class="love-note m-0 flex items-center gap-3 text-sm font-medium tracking-tight text-card-foreground">
+          <i data-lucide="heart" class="w-4 h-4 text-card-foreground" aria-hidden="true"></i>
           Like this contact info page?
         </p>
       </div>
       <div class="tech-stack-buttons flex flex-col gap-3 mt-4">
-        <a href="https://v0.link/ryan-rademann" target="_blank" class="create-your-own-btn">
-          <i data-lucide="sparkles" class="btn-icon" aria-hidden="true"></i>
+        <a href="https://v0.link/ryan-rademann" target="_blank" class="create-your-own-btn flex items-center justify-center gap-2 py-3.5 px-5 bg-primary text-white border-none rounded-[10px] no-underline text-base font-semibold cursor-pointer transition-all duration-300 ease-bounce-in shadow-medium hover:-translate-y-0.5 hover:shadow-strong hover:bg-primary-dark">
+          <i data-lucide="sparkles" class="w-4 h-4" aria-hidden="true"></i>
           Create your own with v0
-          <i data-lucide="arrow-up-right" class="btn-icon-external" aria-hidden="true"></i>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 opacity-80" aria-hidden="true"></i>
         </a>
-        <button id="show-tech-stack-btn" class="show-tech-stack-btn">
+        <button id="show-tech-stack-btn" class="show-tech-stack-btn bg-transparent border-none p-2 text-foreground-muted text-sm cursor-pointer underline underline-offset-2 transition-colors duration-200 hover:text-foreground">
           Show me this thing's tech stack
         </button>
       </div>
     </footer>
 
     <!-- Tech Stack Modal Overlay -->
-    <div id="tech-stack-modal" class="tech-stack-modal" aria-hidden="true">
-      <div class="tech-stack-modal-backdrop"></div>
-      <div class="tech-stack-modal-content">
-        <button id="close-tech-stack-modal" class="tech-stack-modal-close" aria-label="Close">
-          <i data-lucide="x" aria-hidden="true"></i>
+    <div id="tech-stack-modal" class="tech-stack-modal fixed inset-0 z-[1000] flex items-center justify-center opacity-0 invisible transition-all duration-300" aria-hidden="true">
+      <div class="tech-stack-modal-backdrop absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
+      <div class="tech-stack-modal-content relative w-[90%] max-w-[500px] max-h-[85vh] overflow-y-auto bg-card border border-card-border rounded-[20px] p-8 shadow-modal scale-90 translate-y-5 transition-transform duration-300 ease-bounce-in">
+        <button id="close-tech-stack-modal" class="tech-stack-modal-close absolute top-4 right-4 w-10 h-10 border-none bg-background-secondary rounded-full cursor-pointer flex items-center justify-center text-foreground-muted transition-all duration-200 hover:bg-primary hover:text-white hover:rotate-90" aria-label="Close">
+          <i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i>
         </button>
-        <h2 class="tech-stack-modal-title">
-          <i data-lucide="code" class="tech-icon" aria-hidden="true"></i>
+        <h2 class="tech-stack-modal-title flex items-center gap-3 font-display text-3xl font-normal m-0 mb-2 text-foreground">
+          <i data-lucide="code" class="w-6 h-6 text-primary" aria-hidden="true"></i>
           Tech Stack
         </h2>
-        <p class="tech-stack-modal-subtitle">Built with a bespoke software stack in 2025</p>
-        <ul class="tech-stack-modal-list">
-          <li>
-            <i data-lucide="layout-template" class="tech-icon" aria-hidden="true"></i>
-            <span>Boilerplate & Prototype:</span>
-            <a href="https://v0.link/ryan-rademann" target="_blank">v0.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+        <p class="tech-stack-modal-subtitle text-foreground-muted text-sm m-0 mb-6">Built with a bespoke software stack in 2025</p>
+        <ul class="tech-stack-modal-list list-none p-0 m-0 mb-6 flex flex-col gap-4">
+          <li class="flex items-center gap-3 p-4 bg-background-secondary rounded-xl text-sm">
+            <i data-lucide="layout-template" class="w-5 h-5 text-primary flex-shrink-0" aria-hidden="true"></i>
+            <span class="text-foreground-muted">Boilerplate & Prototype:</span>
+            <a href="https://v0.link/ryan-rademann" target="_blank" class="text-primary no-underline font-semibold inline-flex items-center gap-1 transition-colors duration-200 hover:text-primary-dark">v0.app <i data-lucide="arrow-up-right" class="w-3 h-3" aria-hidden="true"></i></a>
           </li>
-          <li>
-            <i data-lucide="boxes" class="tech-icon" aria-hidden="true"></i>
-            <span>Front End:</span>
-            <span class="tech-pill">React</span> + <span class="tech-pill">Vite</span>
+          <li class="flex items-center gap-3 p-4 bg-background-secondary rounded-xl text-sm">
+            <i data-lucide="boxes" class="w-5 h-5 text-primary flex-shrink-0" aria-hidden="true"></i>
+            <span class="text-foreground-muted">Front End:</span>
+            <span class="tech-pill inline-block py-1.5 px-3 rounded-md bg-background-secondary border border-card-border text-foreground font-semibold text-sm transition-all duration-300 hover:bg-accent-light hover:border-accent hover:-translate-y-0.5">React</span> + <span class="tech-pill inline-block py-1.5 px-3 rounded-md bg-background-secondary border border-card-border text-foreground font-semibold text-sm transition-all duration-300 hover:bg-accent-light hover:border-accent hover:-translate-y-0.5">Vite</span>
           </li>
-          <li>
-            <i data-lucide="database" class="tech-icon" aria-hidden="true"></i>
-            <span>Back End:</span>
-            <a href="https://convex.dev/referral/RCRADE2932" target="_blank">Convex <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+          <li class="flex items-center gap-3 p-4 bg-background-secondary rounded-xl text-sm">
+            <i data-lucide="database" class="w-5 h-5 text-primary flex-shrink-0" aria-hidden="true"></i>
+            <span class="text-foreground-muted">Back End:</span>
+            <a href="https://convex.dev/referral/RCRADE2932" target="_blank" class="text-primary no-underline font-semibold inline-flex items-center gap-1 transition-colors duration-200 hover:text-primary-dark">Convex <i data-lucide="arrow-up-right" class="w-3 h-3" aria-hidden="true"></i></a>
           </li>
-          <li>
-            <i data-lucide="cloud" class="tech-icon" aria-hidden="true"></i>
-            <span>Hosting:</span>
-            <span class="tech-pill">Vercel</span>
+          <li class="flex items-center gap-3 p-4 bg-background-secondary rounded-xl text-sm">
+            <i data-lucide="cloud" class="w-5 h-5 text-primary flex-shrink-0" aria-hidden="true"></i>
+            <span class="text-foreground-muted">Hosting:</span>
+            <span class="tech-pill inline-block py-1.5 px-3 rounded-md bg-background-secondary border border-card-border text-foreground font-semibold text-sm transition-all duration-300 hover:bg-accent-light hover:border-accent hover:-translate-y-0.5">Vercel</span>
           </li>
         </ul>
-        <a href="https://github.com/rcrades/link-in-bio-ryan" target="_blank" class="github-link">
-          <i data-lucide="github" class="tech-icon" aria-hidden="true"></i>
+        <a href="https://github.com/rcrades/link-in-bio-ryan" target="_blank" class="github-link flex items-center gap-3 mt-0 p-4 rounded-[10px] border-2 border-primary bg-primary text-card no-underline text-sm font-semibold transition-all duration-300 ease-bounce-in shadow-medium hover:-translate-y-1 hover:scale-[1.02] hover:shadow-elevated hover:bg-primary-dark hover:border-primary-dark">
+          <i data-lucide="github" class="w-5 h-5" aria-hidden="true"></i>
           View on GitHub
-          <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i>
+          <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 ml-1" aria-hidden="true"></i>
         </a>
       </div>
     </div>
@@ -523,7 +562,68 @@ async function initializeApp() {
     }
   });
 
-  // Add click handlers for all expandable sections (entire header row clickable on desktop)
+  // Add click handlers for accordion-pair cards (Publications & Causes)
+  const accordionGroup = document.querySelector('[data-accordion-group]');
+  const accordionCards = document.querySelectorAll('[data-accordion-card]');
+
+  accordionCards.forEach((card) => {
+    const header = card.querySelector('.accordion-header');
+
+    const toggleAccordion = () => {
+      const content = card.querySelector('.accordion-content');
+      const chevron = card.querySelector('.expand-indicator i');
+      const teaser = card.querySelector('.accordion-teaser');
+      const isExpanded = header?.getAttribute('aria-expanded') === 'true';
+
+      if (!isExpanded) {
+        // Collapse all other cards in this group
+        accordionCards.forEach((otherCard) => {
+          if (otherCard !== card) {
+            const otherContent = otherCard.querySelector('.accordion-content');
+            const otherChevron = otherCard.querySelector('.expand-indicator i');
+            const otherHeader = otherCard.querySelector('.accordion-header');
+            const otherTeaser = otherCard.querySelector('.accordion-teaser');
+
+            otherContent?.classList.add('max-h-0', 'opacity-0');
+            otherContent?.classList.remove('max-h-[2000px]', 'opacity-100');
+            otherChevron?.classList.remove('rotate-180');
+            otherHeader?.setAttribute('aria-expanded', 'false');
+            otherTeaser?.classList.remove('opacity-0', 'h-0', 'mt-0', 'overflow-hidden');
+            otherCard.classList.remove('accordion-expanded');
+          }
+        });
+
+        // Expand this card
+        content?.classList.remove('max-h-0', 'opacity-0');
+        content?.classList.add('max-h-[2000px]', 'opacity-100');
+        chevron?.classList.add('rotate-180');
+        teaser?.classList.add('opacity-0', 'h-0', 'mt-0', 'overflow-hidden');
+        card.classList.add('accordion-expanded');
+        accordionGroup?.classList.add('has-expanded');
+      } else {
+        // Collapse this card
+        content?.classList.add('max-h-0', 'opacity-0');
+        content?.classList.remove('max-h-[2000px]', 'opacity-100');
+        chevron?.classList.remove('rotate-180');
+        teaser?.classList.remove('opacity-0', 'h-0', 'mt-0', 'overflow-hidden');
+        card.classList.remove('accordion-expanded');
+        accordionGroup?.classList.remove('has-expanded');
+      }
+
+      header?.setAttribute('aria-expanded', (!isExpanded).toString());
+    };
+
+    header?.addEventListener('click', toggleAccordion);
+    header?.addEventListener('keydown', (e: Event) => {
+      const keyEvent = e as KeyboardEvent;
+      if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
+        e.preventDefault();
+        toggleAccordion();
+      }
+    });
+  });
+
+  // Add click handlers for other expandable sections (tech-stack, favorite-apps)
   const expandableHeaders = document.querySelectorAll('.expandable-header-row');
 
   expandableHeaders.forEach((header) => {
@@ -534,24 +634,20 @@ async function initializeApp() {
       const isExpanded = header.getAttribute('aria-expanded') === 'true';
 
       if (details) {
-        // Check if this is a max-h style section (publications, causes) or toggle class style (tech-stack)
+        // Check if this is a max-h style section or toggle class style (tech-stack)
         if (details.classList.contains('max-h-0') || details.classList.contains('max-h-[2000px]')) {
           if (!isExpanded) {
-            // Expand
             details.classList.remove('max-h-0', 'opacity-0');
             details.classList.add('max-h-[2000px]', 'opacity-100');
           } else {
-            // Collapse
             details.classList.add('max-h-0', 'opacity-0');
             details.classList.remove('max-h-[2000px]', 'opacity-100');
           }
         } else {
-          // Toggle expanded class for tech-stack style
           details.classList.toggle('expanded');
         }
       }
 
-      // Update aria-expanded and rotate chevron
       header.setAttribute('aria-expanded', (!isExpanded).toString());
       if (chevron) {
         if (!isExpanded) {
@@ -562,10 +658,7 @@ async function initializeApp() {
       }
     };
 
-    // Click handler
     header.addEventListener('click', toggleExpand);
-
-    // Keyboard handler for accessibility
     header.addEventListener('keydown', (e: Event) => {
       const keyEvent = e as KeyboardEvent;
       if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
