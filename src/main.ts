@@ -61,7 +61,7 @@ const generateSocialLinks = (socialLinks: any[]) => {
     // Use custom SVG for X icon
     if (link.icon === 'x') {
       return `
-        <a href="${link.link}" class="social-card" target="_blank">
+        <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
           <img src="/logos/logo.svg" alt="X (Twitter)" class="social-icon x-logo" />
         </a>
       `
@@ -69,7 +69,7 @@ const generateSocialLinks = (socialLinks: any[]) => {
     // Use custom images for LinkedIn icon (black for light mode, white for dark mode)
     if (link.icon === 'linkedin') {
       return `
-        <a href="${link.link}" class="social-card" target="_blank">
+        <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
           <img src="/logos/InBug-Black.png" alt="LinkedIn" class="social-icon linkedin-logo linkedin-light" />
           <img src="/logos/InBug-White.png" alt="LinkedIn" class="social-icon linkedin-logo linkedin-dark" />
         </a>
@@ -78,13 +78,13 @@ const generateSocialLinks = (socialLinks: any[]) => {
     // Use custom SVG for v0 icon
     if (link.icon === 'v0') {
       return `
-        <a href="${link.link}" class="social-card" target="_blank">
+        <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
           <img src="/logos/v0-logo-dark.svg" alt="v0" class="social-icon v0-logo" />
         </a>
       `
     }
     return `
-      <a href="${link.link}" class="social-card" target="_blank">
+      <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
         <i data-lucide="${link.icon}" class="social-icon" aria-hidden="true"></i>
       </a>
     `
@@ -94,7 +94,7 @@ const generateSocialLinks = (socialLinks: any[]) => {
 // Function to generate regular links HTML
 const generateRegularLinks = (regularLinks: any[]) => {
   return regularLinks.map(link => `
-    <a href="${link.link}" class="link-card" target="_blank">
+    <a href="${link.link}" class="link-card block relative w-full py-7 px-6 my-5 min-h-[110px] rounded-2xl overflow-hidden no-underline cursor-pointer bg-card text-card-foreground border border-card-border" target="_blank">
       <h2>${link.header}</h2>
       <i data-lucide="${link.icon}" class="link-icon" aria-hidden="true"></i>
       <p>${link.description}</p>
@@ -169,7 +169,7 @@ const generateRecentActivity = (activities: any[]) => {
     }
 
     return `
-      <a href="${activity.url}" class="activity-item ${isArticle ? 'activity-item-article' : ''}" target="_blank">
+      <a href="${activity.url}" class="activity-item flex gap-4 p-4 rounded-xl relative overflow-hidden no-underline mb-4 last:mb-0 bg-background-secondary text-foreground border border-card-border ${isArticle ? 'activity-item-article' : ''}" target="_blank">
         ${mediaElement}
         <div class="activity-content">
           <h3 class="activity-title">${activity.title}</h3>
@@ -252,13 +252,13 @@ async function initializeApp() {
       </button>
 
       <!-- Profile section - compact on mobile (side by side), horizontal on desktop -->
-      <div class="profile">
-        <img src="${profileImageSrc}" alt="Ryan Rademann" />
+      <div class="profile mb-12 text-center">
+        <img src="${profileImageSrc}" alt="Ryan Rademann" class="w-40 h-40 rounded-full mb-6 object-cover" />
         <div class="profile-text">
-          <h1>Ryan Rademann</h1>
-          <p>Technology Consultant at Wipfli</p>
-          <p class="location">
-            <i data-lucide="map-pin" class="location-icon" aria-hidden="true"></i>
+          <h1 class="font-display text-6xl font-normal m-0 mb-1 leading-tight tracking-tight text-foreground">Ryan Rademann</h1>
+          <p class="m-0 font-medium text-lg text-foreground-muted">Technology Consultant at Wipfli</p>
+          <p class="location flex items-center justify-center gap-2 mt-2 text-sm font-normal text-foreground-muted">
+            <i data-lucide="map-pin" class="location-icon w-4 h-4 text-primary" aria-hidden="true"></i>
             Chicago, IL
           </p>
         </div>
@@ -296,7 +296,7 @@ async function initializeApp() {
     <!-- Desktop grid layout -->
     <div class="desktop-grid">
       <div class="grid-header-left">
-        <div class="social-links">
+        <div class="social-links flex gap-4 mb-6 w-full">
           ${generateSocialLinks(linksData.socialLinks)}
         </div>
       </div>
@@ -359,14 +359,14 @@ async function initializeApp() {
     <div class="divider">
       <i data-lucide="hard-hat" class="divider-icon" aria-hidden="true"></i>
     </div>
-    <footer class="tech-stack">
-      <div class="tech-stack-header">
-        <p class="love-note">
-          <i data-lucide="heart" class="tech-icon" aria-hidden="true"></i>
+    <footer class="tech-stack mt-4 py-8 px-7 rounded-2xl w-full mb-8 relative overflow-hidden bg-card text-card-foreground border border-card-border">
+      <div class="tech-stack-header flex justify-between items-center gap-4">
+        <p class="love-note m-0 flex items-center gap-3">
+          <i data-lucide="heart" class="tech-icon w-4 h-4" aria-hidden="true"></i>
           Like this contact info page?
         </p>
       </div>
-      <div class="tech-stack-buttons">
+      <div class="tech-stack-buttons flex flex-col gap-3 mt-4">
         <a href="https://v0.link/ryan-rademann" target="_blank" class="create-your-own-btn">
           <i data-lucide="sparkles" class="btn-icon" aria-hidden="true"></i>
           Create your own with v0
@@ -420,14 +420,14 @@ async function initializeApp() {
       </div>
     </div>
     <!-- Favorite Apps Accordion: Start -->
-    <footer class="tech-stack favorite-apps">
-      <div class="tech-stack-header expandable-header-row" role="button" tabindex="0" aria-expanded="false" aria-controls="tech-stack-details-2">
-        <p class="love-note">
-          <i data-lucide="star" class="tech-icon" aria-hidden="true"></i>
+    <footer class="tech-stack favorite-apps mt-4 py-8 px-7 rounded-2xl w-full mb-8 relative overflow-hidden bg-card text-card-foreground border border-card-border">
+      <div class="tech-stack-header expandable-header-row flex justify-between items-center gap-4" role="button" tabindex="0" aria-expanded="false" aria-controls="tech-stack-details-2">
+        <p class="love-note m-0 flex items-center gap-3">
+          <i data-lucide="star" class="tech-icon w-4 h-4" aria-hidden="true"></i>
           My favorite apps in 2025
         </p>
         <span class="expand-indicator">
-          <i data-lucide="chevron-down" class="tech-icon" aria-hidden="true"></i>
+          <i data-lucide="chevron-down" class="tech-icon w-5 h-5" aria-hidden="true"></i>
         </span>
       </div>
       <div id="tech-stack-details-2" class="tech-stack-details">

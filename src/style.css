@@ -166,8 +166,7 @@ body::before {
 }
 
 .profile {
-  margin-bottom: 3rem;
-  text-align: center;
+  /* Layout handled by Tailwind: mb-12 text-center */
   animation: slideInProfile 0.8s ease-out 0.2s backwards;
 }
 
@@ -183,13 +182,9 @@ body::before {
 }
 
 .profile img {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  margin-bottom: 1.5rem;
+  /* Layout handled by Tailwind: w-40 h-40 rounded-full mb-6 object-cover */
   border: 4px solid var(--primary);
   box-shadow: 0 8px 24px var(--shadow-strong), 0 0 0 8px var(--accent-light);
-  object-fit: cover;
   object-position: var(--img-position-x) var(--img-position-y);
   transform: scale(var(--img-scale));
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
@@ -201,38 +196,21 @@ body::before {
 }
 
 .profile h1 {
-  font-family: var(--font-display);
-  font-size: 3.5em;
-  font-weight: 400;
-  color: var(--foreground);
-  margin: 0 0 0.25rem 0;
+  /* Layout handled by Tailwind: font-display text-6xl font-normal m-0 mb-1 leading-tight tracking-tight text-foreground */
   letter-spacing: -0.02em;
-  line-height: 1.1;
 }
 
 .profile p {
-  color: var(--foreground-muted);
-  margin: 0;
-  font-weight: 500;
-  font-size: 1.1rem;
+  /* Layout handled by Tailwind: m-0 font-medium text-lg text-foreground-muted */
   letter-spacing: 0.01em;
 }
 
 .profile .location {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  font-size: 0.95rem;
-  color: var(--foreground-muted);
-  font-weight: 400;
+  /* Layout handled by Tailwind: flex items-center justify-center gap-2 mt-2 text-sm font-normal text-foreground-muted */
 }
 
 .location-icon {
-  width: 1rem;
-  height: 1rem;
-  color: var(--primary);
+  /* Layout handled by Tailwind: w-4 h-4 text-primary */
 }
 
 .links-container {
@@ -240,23 +218,9 @@ body::before {
 }
 
 .link-card {
-  background: var(--card);
-  border: 1px solid var(--card-border);
   border-left: 4px solid var(--primary);
-  border-radius: 16px;
-  padding: 1.75rem 1.5rem;
-  margin: 1.25rem 0;
-  display: block;
-  position: relative;
-  text-decoration: none;
-  color: var(--card-foreground);
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  cursor: pointer;
-  width: 100%;
-  box-sizing: border-box;
-  min-height: 110px;
   box-shadow: 0 2px 8px var(--shadow), 0 1px 2px var(--shadow);
-  overflow: hidden;
 }
 
 /* Link cards appear immediately - no animation */
@@ -354,7 +318,6 @@ body::before {
   
   .link-card {
     padding: 1rem;
-    width: 100%;
     min-height: 90px;
   }
 
@@ -460,19 +423,9 @@ body::before {
 }
 
 .tech-stack {
-  margin-top: 1rem;
-  padding: 2rem 1.75rem;
-  border: 1px solid var(--card-border);
+  /* Layout handled by Tailwind: mt-4 py-8 px-7 rounded-2xl w-full mb-8 relative overflow-hidden bg-card text-card-foreground border border-card-border */
   font-size: 0.9rem;
-  background: var(--card);
-  color: var(--card-foreground);
-  border-radius: 16px;
-  width: 100%;
-  box-sizing: border-box;
-  margin-bottom: 2rem;
   box-shadow: 0 2px 8px var(--shadow), 0 1px 2px var(--shadow);
-  position: relative;
-  overflow: hidden;
   animation: slideInTech 0.8s ease-out 1.3s backwards;
 }
 
@@ -488,10 +441,7 @@ body::before {
 }
 
 .tech-stack-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+  /* Layout handled by Tailwind: flex justify-between items-center gap-4 */
 }
 
 .expand-button {
@@ -704,10 +654,7 @@ body::before {
 
 /* Tech Stack Buttons (Create your own / Show tech stack) */
 .tech-stack-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-top: 1rem;
+  /* Layout handled by Tailwind: flex flex-col gap-3 mt-4 */
 }
 
 .create-your-own-btn {
@@ -977,26 +924,13 @@ body::before {
 }
 
 .social-links {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  width: 100%;
+  /* Layout handled by Tailwind: flex gap-4 mb-6 w-full */
 }
 
 .social-card {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.25rem;
-  background: var(--card);
-  border-radius: 12px;
-  color: var(--primary);
+  /* Layout handled by Tailwind: flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border */
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  border: 1px solid var(--card-border);
   box-shadow: 0 2px 6px var(--shadow);
-  position: relative;
-  overflow: hidden;
 }
 
 .social-card::before {
@@ -1870,22 +1804,8 @@ body::before {
 }
 
 .activity-item {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  background: var(--background-secondary);
-  border: 1px solid var(--card-border);
-  border-radius: 12px;
-  text-decoration: none;
-  color: var(--foreground);
+  /* Layout handled by Tailwind: flex gap-4 p-4 rounded-xl relative overflow-hidden no-underline mb-4 last:mb-0 bg-background-secondary text-foreground border border-card-border */
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative;
-  overflow: hidden;
-  margin-bottom: 1rem;
-}
-
-.activity-item:last-child {
-  margin-bottom: 0;
 }
 
 .activity-item::before {
