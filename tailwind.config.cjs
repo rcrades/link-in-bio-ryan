@@ -7,6 +7,9 @@ module.exports = {
   ],
   darkMode: 'class',
   theme: {
+    screens: {
+      'desktop': '1000px', // Single breakpoint: mobile < 1000px, desktop >= 1000px
+    },
     extend: {
       colors: {
         background: 'var(--background)',

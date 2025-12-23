@@ -52,6 +52,14 @@ No "fully responsive" gymnastics. Two clear layouts:
 └─────────────────────────────────────────────────┘
 ```
 
+### Desktop Grid Alignment
+The desktop layout uses a 2-column CSS grid. To ensure the left and right columns align at the top:
+- Grid content cells use `self-start` to align to top of their grid area
+- Cards use `mb-*` (bottom margin only), NOT `my-*` (top + bottom margin)
+- The first card in each column must have no top margin to align properly
+
+**Critical**: Using `my-5` on cards will misalign columns because the first card gets pushed down. Always use `mb-5` instead.
+
 ## Feature Flags
 Simple lightweight feature flagging system in `src/main.ts`:
 

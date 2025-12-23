@@ -94,7 +94,7 @@ const generateSocialLinks = (socialLinks: any[]) => {
 // Function to generate regular links HTML
 const generateRegularLinks = (regularLinks: any[]) => {
   return regularLinks.map(link => `
-    <a href="${link.link}" class="link-card group block relative w-full py-7 px-6 my-5 min-h-[110px] rounded-2xl overflow-hidden no-underline cursor-pointer bg-card text-card-foreground border border-card-border border-l-4 border-l-primary shadow-card transition-all duration-400 ease-bounce-in hover:translate-x-2 hover:-translate-y-1 hover:shadow-card-hover hover:border-l-[6px]" target="_blank">
+    <a href="${link.link}" class="link-card group block relative w-full py-7 px-6 mb-5 min-h-[110px] rounded-2xl overflow-hidden no-underline cursor-pointer bg-card text-card-foreground border border-card-border border-l-4 border-l-primary shadow-card transition-all duration-400 ease-bounce-in hover:translate-x-2 hover:-translate-y-1 hover:shadow-card-hover hover:border-l-[6px]" target="_blank">
       <h2 class="m-0 text-xl font-semibold tracking-tight whitespace-nowrap overflow-hidden text-ellipsis pr-12 relative z-10">${link.header}</h2>
       <i data-lucide="${link.icon}" class="link-icon absolute top-7 right-6 w-6 h-6 opacity-50 text-primary z-10 transition-all duration-400 ease-bounce-in group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:-rotate-[5deg] group-hover:text-primary-dark" aria-hidden="true"></i>
       <p class="mt-2 mb-0 text-sm opacity-85 font-normal pr-12 leading-relaxed h-12 block text-left overflow-hidden text-foreground-muted relative z-10">${link.description}</p>
@@ -121,7 +121,7 @@ const generateYearFilters = (publications: any[]) => {
       <div class="flex gap-4 items-center mb-3 flex-wrap">
         <div class="wipfli-toggle-container">
           <button class="wipfli-toggle" data-filter="wipfli">
-            <span class="wipfli-toggle-label">Show Wipfli Publications</span>
+            <span class="wipfli-toggle-label">Show Wipfli Media</span>
             <div class="wipfli-toggle-switch">
               <div class="wipfli-toggle-slider"></div>
             </div>
@@ -207,7 +207,7 @@ const generatePublications = (publications: any[]) => {
     const year = new Date(pub.date).getFullYear();
     const typeIcon = pub.type === 'article' ? 'file-text' : 
                     pub.type === 'video' ? 'video' : 
-                    pub.type === 'interview' ? 'mic' : 'file';
+                    pub.type === 'interview' ? 'tv' : 'file';
     
     // Color mapping for publication types
     const typeColors = {
@@ -219,18 +219,18 @@ const generatePublications = (publications: any[]) => {
     const typeColorClass = typeColors[pub.type as keyof typeof typeColors] || 'border-gray-400 text-gray-400';
     
     return `
-      <div class="publication-item p-2 rounded-lg border border-white/10 bg-white/5 hover:bg-white/8 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md flex flex-col min-h-[140px] justify-self-start w-full relative" data-year="${year}" data-source="${pub.source.toLowerCase()}">
-        <div class="flex-1 pb-10 text-left">
-          <h4 class="text-sm font-semibold leading-tight mb-1.5 text-white text-left">${pub.title}</h4>
-          <p class="text-xs text-gray-400 font-medium text-left">${pub.source}</p>
+      <div class="publication-item p-2 flex flex-col min-h-[140px] justify-self-start w-full" data-year="${year}" data-source="${pub.source.toLowerCase()}">
+        <div class="flex-1 pb-10 text-left relative z-[1]">
+          <h4 class="text-sm font-semibold leading-tight mb-1.5 text-foreground text-left">${pub.title}</h4>
+          <p class="text-xs text-foreground-muted font-medium text-left">${pub.source}</p>
         </div>
-        <div class="absolute bottom-2 left-2">
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border-2 ${typeColorClass} bg-transparent">
+        <div class="absolute bottom-2 left-2 z-[1]">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border-2 ${typeColorClass}">
             <i data-lucide="${typeIcon}" class="w-3 h-3" aria-hidden="true"></i>
             ${pub.type === 'interview' ? 'video interview' : pub.type}
           </span>
         </div>
-        <a href="${pub.url}" target="_blank" class="publication-link-btn absolute bottom-2 right-2 inline-flex items-center justify-center w-7 h-7 rounded transition-all duration-200">
+        <a href="${pub.url}" target="_blank" class="publication-link-btn absolute bottom-2 right-2 z-[2] inline-flex items-center justify-center w-7 h-7 rounded-md bg-primary text-card transition-all duration-300 ease-bounce-in">
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5" aria-hidden="true"></i>
         </a>
       </div>
@@ -245,80 +245,84 @@ async function initializeApp() {
   // Create HTML content
   const content = `
     <div>
-      <!-- Theme toggle - positioned via CSS (top-right on desktop, bottom on mobile) -->
-      <button id="theme-toggle" class="theme-toggle absolute top-6 right-6 w-12 h-12 rounded-full border-2 border-card-border bg-card text-primary cursor-pointer p-2 flex items-center justify-center transition-all duration-400 ease-bounce-in z-10 shadow-soft animate-slide-in-toggle hover:-translate-y-1 hover:shadow-strong hover:border-primary" aria-label="Toggle theme">
+      <!-- Theme toggle - desktop only -->
+      <button id="theme-toggle" class="theme-toggle hidden desktop:flex absolute top-6 right-6 w-12 h-12 rounded-full border-2 border-card-border bg-card text-primary cursor-pointer p-2 items-center justify-center transition-all duration-400 ease-bounce-in z-10 shadow-soft animate-slide-in-toggle hover:-translate-y-1 hover:shadow-strong hover:border-primary" aria-label="Toggle theme">
         <i data-lucide="sun" class="theme-icon sun w-5 h-5" aria-hidden="true"></i>
         <i data-lucide="moon" class="theme-icon moon w-5 h-5" aria-hidden="true"></i>
       </button>
 
-      <!-- Profile section - compact on mobile (side by side), horizontal on desktop -->
-      <div class="profile mb-12 text-center animate-slide-in-profile">
-        <img src="${profileImageSrc}" alt="Ryan Rademann" class="profile-img w-40 h-40 rounded-full mb-6 object-cover border-4 border-primary shadow-elevated transition-all duration-400 ease-bounce-in hover:scale-105" />
-        <div class="profile-text">
-          <h1 class="font-display text-6xl font-normal m-0 mb-1 leading-tight tracking-tight text-foreground">Ryan Rademann</h1>
-          <p class="m-0 font-medium text-lg text-foreground-muted">Technology Consultant at Wipfli</p>
-          <p class="location flex items-center justify-center gap-2 mt-2 text-sm font-normal text-foreground-muted">
-            <i data-lucide="map-pin" class="w-4 h-4 text-primary" aria-hidden="true"></i>
+      <!-- Profile section - horizontal on mobile, larger on desktop -->
+      <div class="profile flex items-center gap-4 text-left mb-6 desktop:items-start desktop:gap-7 desktop:mb-10 animate-slide-in-profile">
+        <img src="${profileImageSrc}" alt="Ryan Rademann" class="profile-img w-20 h-20 desktop:w-40 desktop:h-40 rounded-full object-cover border-4 border-primary shadow-elevated transition-all duration-400 ease-bounce-in hover:scale-105 flex-shrink-0" />
+        <div class="profile-text flex-1 min-w-0 desktop:pt-3">
+          <h1 class="font-display text-[1.75rem] desktop:text-5xl font-normal m-0 mb-0.5 leading-tight tracking-tight text-foreground">Ryan Rademann</h1>
+          <p class="m-0 font-medium text-sm desktop:text-lg text-foreground-muted">Technology Consultant at Wipfli</p>
+          <p class="location flex items-center gap-2 mt-1 text-xs desktop:text-sm font-normal text-foreground-muted">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 desktop:w-4 desktop:h-4 text-primary" aria-hidden="true"></i>
             Chicago, IL
           </p>
         </div>
       </div>
 
       <!-- Mobile-only: Social links row -->
-      <div class="mobile-social-links">
+      <div class="mobile-social-links flex justify-center gap-3 mb-4 desktop:hidden">
         ${generateSocialLinks(linksData.socialLinks)}
       </div>
 
-      <!-- Mobile-only: Schedule a Meeting button (prominent CTA) -->
-      <div class="mobile-cta">
-        <a href="${linksData.regularLinks.find(l => l.header === 'Schedule a Meeting')?.link || '#'}" class="mobile-cta-button" target="_blank">
-          <i data-lucide="calendar" class="mobile-cta-icon" aria-hidden="true"></i>
+      <!-- Mobile-only: Schedule a Meeting button -->
+      <div class="mobile-cta mb-5 desktop:hidden">
+        <a href="${linksData.regularLinks.find(l => l.header === 'Schedule a Meeting')?.link || '#'}" class="mobile-cta-button flex items-center justify-center gap-3 w-full py-4 px-6 bg-card text-foreground border-[3px] border-primary rounded-xl no-underline font-semibold text-base transition-all duration-300 ease-bounce-in shadow-soft hover:-translate-y-0.5 hover:shadow-strong hover:border-primary-dark hover:bg-background-secondary" target="_blank">
+          <i data-lucide="calendar" class="w-5 h-5 text-primary" aria-hidden="true"></i>
           <span>Schedule a Meeting</span>
         </a>
       </div>
 
       <!-- Mobile-only: Recent Activity -->
-      <div class="mobile-recent-activity">
-        <div class="recent-activity-header">
-          <i data-lucide="activity" class="recent-activity-header-icon" aria-hidden="true"></i>
-          <h2>Recent Activity</h2>
+      <div class="mobile-recent-activity mb-6 desktop:hidden">
+        <div class="recent-activity-header flex items-center gap-3 mb-3">
+          <i data-lucide="activity" class="w-5 h-5 text-primary" aria-hidden="true"></i>
+          <h2 class="font-display text-xl font-normal text-foreground m-0">Recent Activity</h2>
         </div>
         <div class="recent-activity">
           ${generateRecentActivity(activityData.activities)}
         </div>
       </div>
 
-      <!-- Mobile-only: Rest of the links (excluding Schedule a Meeting) -->
-      <div class="mobile-links-container">
+      <!-- Mobile-only: Rest of the links -->
+      <div class="mobile-links-container mb-6 desktop:hidden">
+        <div class="flex items-center gap-3 mb-3">
+          <i data-lucide="briefcase" class="w-5 h-5 text-primary" aria-hidden="true"></i>
+          <h2 class="font-display text-xl font-normal text-foreground m-0">My Work</h2>
+        </div>
         ${generateRegularLinks(linksData.regularLinks.filter(l => l.header !== 'Schedule a Meeting'))}
       </div>
 
     <!-- Desktop grid layout -->
-    <div class="desktop-grid">
-      <div class="grid-header-left">
-        <div class="social-links flex gap-4 mb-6 w-full">
+    <div class="desktop-grid hidden desktop:grid desktop:grid-cols-2 desktop:gap-x-8">
+      <div class="grid-header-left col-span-1 row-span-1">
+        <div class="social-links flex gap-4 mb-5 w-full">
           ${generateSocialLinks(linksData.socialLinks)}
         </div>
       </div>
-      <div class="grid-header-right">
-        <div class="recent-activity-header">
-          <i data-lucide="activity" class="recent-activity-header-icon" aria-hidden="true"></i>
-          <h2>Recent Activity</h2>
+      <div class="grid-header-right col-span-1 row-span-1 flex items-end pb-5">
+        <div class="recent-activity-header flex items-center gap-3 mb-0">
+          <i data-lucide="activity" class="w-5 h-5 text-primary" aria-hidden="true"></i>
+          <h2 class="font-display text-[1.35rem] font-normal text-foreground m-0 tracking-tight">Recent Activity</h2>
         </div>
       </div>
-      <div class="grid-content-left">
-        <div class="links-container">
+      <div class="grid-content-left col-span-1 row-span-1 self-start">
+        <div class="links-container mt-0">
           ${generateRegularLinks(linksData.regularLinks)}
         </div>
       </div>
-      <div class="grid-content-right">
+      <div class="grid-content-right col-span-1 row-span-1 relative z-[2] self-start">
         <div class="recent-activity">
           ${generateRecentActivity(activityData.activities)}
         </div>
       </div>
     </div>
     <!-- Paired Accordion: Publications & Causes -->
-    <div class="accordion-pair flex flex-col lg:flex-row gap-4 mt-8 mb-8" data-accordion-group>
+    <div class="accordion-pair relative z-[1] flex flex-col lg:flex-row gap-4 mt-8 mb-8" data-accordion-group>
       ${isFeatureEnabled('publications') ? `
       <!-- Publications Card -->
       <div class="accordion-card flex-1 bg-card border border-card-border rounded-2xl overflow-hidden transition-all duration-500 ease-out" data-accordion-card="publications">
@@ -326,7 +330,7 @@ async function initializeApp() {
           <div class="flex items-center justify-between gap-4">
             <div class="flex items-center gap-3">
               <i data-lucide="newspaper" class="w-5 h-5 text-primary" aria-hidden="true"></i>
-              <h2 class="font-display text-xl font-normal text-foreground m-0">Publications</h2>
+              <h2 class="font-display text-xl font-normal text-foreground m-0">Media Appearances</h2>
             </div>
             <span class="expand-indicator p-2">
               <i data-lucide="chevron-down" class="w-5 h-5 text-primary transition-transform duration-300" aria-hidden="true"></i>
@@ -340,7 +344,7 @@ async function initializeApp() {
                 ${publicationsData.publications.filter((p: {type: string}) => p.type === 'article').length} Articles
               </span>
               <span class="flex items-center gap-1.5">
-                <i data-lucide="mic" class="w-4 h-4" aria-hidden="true"></i>
+                <i data-lucide="tv" class="w-4 h-4" aria-hidden="true"></i>
                 ${publicationsData.publications.filter((p: {type: string}) => p.type === 'interview').length} Interviews
               </span>
             </div>
@@ -398,20 +402,20 @@ async function initializeApp() {
     <div class="divider flex items-center justify-center my-12 opacity-40 animate-fade-in-divider group">
       <i data-lucide="hard-hat" class="divider-icon w-12 h-12 text-accent transition-all duration-400 group-hover:rotate-[15deg] group-hover:scale-110 group-hover:opacity-80" aria-hidden="true"></i>
     </div>
-    <footer class="tech-stack mt-4 py-8 px-7 rounded-2xl w-full mb-8 relative overflow-hidden bg-card text-card-foreground border border-card-border shadow-card animate-slide-in-tech">
-      <div class="tech-stack-header flex justify-between items-center gap-4">
+    <footer class="tech-stack mt-4 py-8 px-7 desktop:py-5 desktop:px-6 rounded-2xl w-full mb-8 relative overflow-hidden bg-card text-card-foreground border border-card-border shadow-card animate-slide-in-tech desktop:flex desktop:items-center desktop:justify-between desktop:gap-6">
+      <div class="tech-stack-header flex justify-between items-center gap-4 desktop:flex-shrink-0">
         <p class="love-note m-0 flex items-center gap-3 text-sm font-medium tracking-tight text-card-foreground">
           <i data-lucide="heart" class="w-4 h-4 text-card-foreground" aria-hidden="true"></i>
           Like this contact info page?
         </p>
       </div>
-      <div class="tech-stack-buttons flex flex-col gap-3 mt-4">
-        <a href="https://v0.link/ryan-rademann" target="_blank" class="create-your-own-btn flex items-center justify-center gap-2 py-3.5 px-5 bg-primary text-white border-none rounded-[10px] no-underline text-base font-semibold cursor-pointer transition-all duration-300 ease-bounce-in shadow-medium hover:-translate-y-0.5 hover:shadow-strong hover:bg-primary-dark">
+      <div class="tech-stack-buttons flex flex-col gap-3 mt-4 desktop:flex-row desktop:items-center desktop:mt-0 desktop:gap-6">
+        <a href="https://v0.link/ryan-rademann" target="_blank" class="create-your-own-btn flex items-center justify-center gap-2 py-3.5 px-5 desktop:py-3 desktop:px-5 bg-primary text-white border-none rounded-[10px] no-underline text-base font-semibold cursor-pointer transition-all duration-300 ease-bounce-in shadow-medium hover:-translate-y-0.5 hover:shadow-strong hover:bg-primary-dark desktop:whitespace-nowrap">
           <i data-lucide="sparkles" class="w-4 h-4" aria-hidden="true"></i>
           Create your own with v0
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 opacity-80" aria-hidden="true"></i>
         </a>
-        <button id="show-tech-stack-btn" class="show-tech-stack-btn bg-transparent border-none p-2 text-foreground-muted text-sm cursor-pointer underline underline-offset-2 transition-colors duration-200 hover:text-foreground">
+        <button id="show-tech-stack-btn" class="show-tech-stack-btn bg-transparent border-none p-2 text-foreground-muted text-sm cursor-pointer underline underline-offset-2 transition-colors duration-200 hover:text-foreground desktop:whitespace-nowrap">
           Show me this thing's tech stack
         </button>
       </div>
@@ -460,33 +464,32 @@ async function initializeApp() {
     </div>
     <!-- Favorite Apps Accordion: Start -->
     <footer class="tech-stack favorite-apps mt-4 py-8 px-7 rounded-2xl w-full mb-8 relative overflow-hidden bg-card text-card-foreground border border-card-border">
-      <div class="tech-stack-header expandable-header-row flex justify-between items-center gap-4" role="button" tabindex="0" aria-expanded="false" aria-controls="tech-stack-details-2">
-        <p class="love-note m-0 flex items-center gap-3">
-          <i data-lucide="star" class="tech-icon w-4 h-4" aria-hidden="true"></i>
+      <div class="tech-stack-header expandable-header-row flex justify-between items-center gap-4 cursor-pointer rounded-lg py-2 px-3 -my-2 -mx-3 transition-colors duration-200 desktop:hover:bg-background-secondary" role="button" tabindex="0" aria-expanded="false" aria-controls="tech-stack-details-2">
+        <p class="love-note m-0 flex items-center gap-3 text-sm font-medium tracking-tight text-card-foreground">
+          <i data-lucide="star" class="tech-icon w-4 h-4 text-card-foreground" aria-hidden="true"></i>
           My favorite apps in 2025
         </p>
-        <span class="expand-indicator">
-          <i data-lucide="chevron-down" class="tech-icon w-5 h-5" aria-hidden="true"></i>
+        <span class="expand-indicator transition-all duration-200 desktop:hover:text-primary desktop:hover:scale-110">
+          <i data-lucide="chevron-down" class="tech-icon w-5 h-5 text-card-foreground transition-transform duration-300" aria-hidden="true"></i>
         </span>
       </div>
       <div id="tech-stack-details-2" class="tech-stack-details">
-        <ul>
-          <li>
-            <i data-lucide="layout-template" class="tech-icon" aria-hidden="true"></i>
-            AI Code Gen: <a href="https://v0.link/ryan-rademann" target="_blank">v0.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
-            <!-- Previous referral link: bolt.new/?rid=qsz5nv -->
+        <ul class="list-none p-0 mt-4 mb-0 flex flex-col gap-3">
+          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+            <i data-lucide="layout-template" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
+            AI Code Gen: <a href="https://v0.link/ryan-rademann" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">v0.app <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
           </li>
-          <li>
-            <i data-lucide="database" class="tech-icon" aria-hidden="true"></i>
-            Easy backend for vibe-coded apps: <a href="https://convex.dev/referral/RCRADE2932" target="_blank">Convex <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+            <i data-lucide="database" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
+            Easy backend for vibe-coded apps: <a href="https://convex.dev/referral/RCRADE2932" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">Convex <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
           </li>
-          <li>
-            <i data-lucide="presentation" class="tech-icon" aria-hidden="true"></i>
-            AI Slide Deck Creator: <a href="https://gamma.app/signup?r=3kue3y24828ihup" target="_blank">gamma.app <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+            <i data-lucide="presentation" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
+            AI Slide Deck Creator: <a href="https://gamma.app/signup?r=3kue3y24828ihup" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">gamma.app <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
           </li>
-          <li>
-            <i data-lucide="briefcase" class="tech-icon" aria-hidden="true"></i>
-            Quickbooks Online: <a href="https://quickbooks.partnerlinks.io/ryanrademann" target="_blank">QBO Signup <i data-lucide="arrow-up-right" class="tech-icon" aria-hidden="true"></i></a>
+          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+            <i data-lucide="briefcase" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
+            Quickbooks Online: <a href="https://quickbooks.partnerlinks.io/ryanrademann" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">QBO Signup <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
           </li>
         </ul>
       </div>
@@ -494,10 +497,10 @@ async function initializeApp() {
     <!-- Favorite Apps Accordion: End -->
 
     <!-- Mobile-only: Theme toggle at bottom -->
-    <div class="mobile-theme-toggle">
-      <button id="theme-toggle-mobile" class="theme-toggle-bottom" aria-label="Toggle theme">
-        <i data-lucide="sun" class="theme-icon sun" aria-hidden="true"></i>
-        <i data-lucide="moon" class="theme-icon moon" aria-hidden="true"></i>
+    <div class="mobile-theme-toggle mt-8 pt-6 border-t border-card-border desktop:hidden">
+      <button id="theme-toggle-mobile" class="theme-toggle-bottom flex items-center justify-center gap-3 w-full py-3.5 px-4 bg-card border border-card-border rounded-xl text-foreground-muted cursor-pointer text-[0.9rem] font-medium transition-all duration-300 hover:border-primary hover:text-foreground" aria-label="Toggle theme">
+        <i data-lucide="sun" class="theme-icon sun w-[1.1rem] h-[1.1rem] text-primary" aria-hidden="true"></i>
+        <i data-lucide="moon" class="theme-icon moon w-[1.1rem] h-[1.1rem] text-primary" aria-hidden="true"></i>
         <span class="theme-label">Switch Theme</span>
       </button>
     </div>
@@ -716,7 +719,7 @@ async function initializeApp() {
   if (wipfliFilter) {
     // Set initial label with count
     const label = wipfliFilter.querySelector('.wipfli-toggle-label');
-    if (label) label.textContent = `Show Wipfli Publications (${wipfliCount})`;
+    if (label) label.textContent = `Show Wipfli Media (${wipfliCount})`;
 
     wipfliFilter.addEventListener('click', (e: Event) => {
       wipfliHidden = !wipfliHidden;
@@ -726,11 +729,11 @@ async function initializeApp() {
       if (wipfliHidden) {
         // Hidden state - show "Show Wipfli Publications"
         button.classList.remove('active');
-        if (label) label.textContent = `Show Wipfli Publications (${wipfliCount})`;
+        if (label) label.textContent = `Show Wipfli Media (${wipfliCount})`;
       } else {
         // Visible state - show "Hide Wipfli Publications"
         button.classList.add('active');
-        if (label) label.textContent = `Hide Wipfli Publications (${wipfliCount})`;
+        if (label) label.textContent = `Hide Wipfli Media (${wipfliCount})`;
       }
 
       applyFilters();

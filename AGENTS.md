@@ -17,10 +17,18 @@ Guidelines for AI agents working on this codebase.
 - Keep types inline unless shared across multiple files
 - Prefer explicit typing over `any`
 
-### CSS
+### CSS & Tailwind
 - Use CSS custom properties defined in `:root` and `.dark`
 - Follow the existing naming conventions (`.link-card`, `.social-card`, etc.)
 - Use `var(--property-name)` for all colors and spacing where possible
+- Prefer Tailwind utility classes over adding new CSS rules
+- Single custom breakpoint: `desktop:` (1000px) - no other breakpoints
+
+### Grid Alignment Rules
+When working with the desktop two-column grid:
+- Use `self-start` on grid content cells to ensure top alignment
+- Use `mb-*` for card spacing, NOT `my-*` (avoids first-card top margin misalignment)
+- Example: `link-card` uses `mb-5` not `my-5` so columns align at top
 
 ### Layout
 Two layouts only - no intermediate breakpoints:
