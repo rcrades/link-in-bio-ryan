@@ -532,3 +532,114 @@ body::before {
   opacity: 1;
   margin-top: 1.5rem;
 }
+
+/* ============================================
+   Start with v0 Page
+   ============================================ */
+.v0-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 4rem);
+}
+
+.v0-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+@media (min-width: 1000px) {
+  .v0-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.v0-card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  background: var(--card);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.v0-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px var(--shadow-strong);
+}
+
+.v0-thumb-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.v0-thumb {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transition: filter 0.3s ease;
+}
+
+.v0-card:hover .v0-thumb {
+  filter: blur(6px);
+}
+
+.v0-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.v0-card:hover .v0-overlay {
+  opacity: 1;
+}
+
+.v0-overlay-text {
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+}
+
+.v0-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+}
+
+.v0-card-title {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--foreground-muted);
+}
+
+.v0-launch-btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--card);
+  background: var(--primary);
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.v0-launch-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
