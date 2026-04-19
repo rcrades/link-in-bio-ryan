@@ -139,6 +139,44 @@ const generateYearFilters = (publications: any[]) => {
   `;
 }
 
+// Activity type metadata — icon, label, and pill color for each format
+const ACTIVITY_TYPES: Record<string, { label: string; icon: string; colorClass: string }> = {
+  'in-person': { label: 'In-Person', icon: 'mic', colorClass: 'border-amber-400 text-amber-400' },
+  'article': { label: 'Article', icon: 'newspaper', colorClass: 'border-emerald-400 text-emerald-400' },
+  'video': { label: 'Video', icon: 'video', colorClass: 'border-purple-400 text-purple-400' }
+};
+
+const getActivityTypeMeta = (type: string) =>
+  ACTIVITY_TYPES[type] || { label: type, icon: 'circle', colorClass: 'border-gray-400 text-gray-400' };
+
+// Function to generate activity type filter chips
+const generateActivityFilters = (activities: any[], scopeId: string) => {
+  const types = [...new Set(activities.map(a => a.type))];
+  if (types.length < 2) return '';
+
+  const counts = activities.reduce((acc: Record<string, number>, a) => {
+    acc[a.type] = (acc[a.type] || 0) + 1;
+    return acc;
+  }, {});
+
+  return `
+    <div class="activity-filter-chips flex gap-1.5 flex-wrap mb-3" data-activity-filter-scope="${scopeId}">
+      <button class="activity-chip active-filter inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-colors" data-activity-type="all">
+        All (${activities.length})
+      </button>
+      ${types.map(type => {
+        const meta = getActivityTypeMeta(type);
+        return `
+          <button class="activity-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-colors" data-activity-type="${type}">
+            <i data-lucide="${meta.icon}" class="w-3 h-3" aria-hidden="true"></i>
+            ${meta.label} (${counts[type]})
+          </button>
+        `;
+      }).join('')}
+    </div>
+  `;
+};
+
 // Function to generate recent activity HTML
 const generateRecentActivity = (activities: any[]) => {
   if (!activities || activities.length === 0) return '';
@@ -154,27 +192,37 @@ const generateRecentActivity = (activities: any[]) => {
     const formattedDate = new Date(activity.date).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
-      year: 'numeric'
+      year: 'numeric',
+      timeZone: 'UTC'
     });
 
-    // For articles, use logo if available, otherwise icon placeholder
+    const typeMeta = getActivityTypeMeta(activity.type);
     const isArticle = activity.type === 'article';
+
+    // Media element: thumbnail image, logo wrapper, or type-icon placeholder fallback
     let mediaElement = '';
     if (thumbnailUrl) {
       mediaElement = `<img src="${thumbnailUrl}" alt="${activity.title}" class="activity-thumbnail" />`;
     } else if (activity.logo) {
-      mediaElement = `<div class="activity-logo-placeholder"><img src="${activity.logo}" alt="${activity.description}" class="activity-logo" /></div>`;
-    } else if (isArticle) {
-      mediaElement = `<div class="activity-icon-placeholder"><i data-lucide="newspaper" class="activity-placeholder-icon" aria-hidden="true"></i></div>`;
+      const bgClass = activity.logoBg === 'light' ? 'activity-logo-placeholder activity-logo-placeholder-light' : 'activity-logo-placeholder';
+      mediaElement = `<div class="${bgClass}"><img src="${activity.logo}" alt="${activity.description}" class="activity-logo" /></div>`;
+    } else {
+      mediaElement = `<div class="activity-icon-placeholder"><i data-lucide="${typeMeta.icon}" class="activity-placeholder-icon" aria-hidden="true"></i></div>`;
     }
 
     return `
-      <a href="${activity.url}" class="activity-item group flex gap-4 p-4 rounded-xl relative overflow-hidden no-underline mb-4 last:mb-0 bg-background-secondary text-foreground border border-card-border transition-all duration-300 ease-bounce-in hover:-translate-y-1 hover:shadow-strong hover:border-primary ${isArticle ? 'activity-item-article' : ''}" target="_blank">
+      <a href="${activity.url}" class="activity-item group flex gap-4 p-4 rounded-xl relative overflow-hidden no-underline mb-4 last:mb-0 bg-background-secondary text-foreground border border-card-border transition-all duration-300 ease-bounce-in hover:-translate-y-1 hover:shadow-strong hover:border-primary ${isArticle ? 'activity-item-article' : ''}" target="_blank" data-activity-type="${activity.type}">
         ${mediaElement}
         <div class="activity-content flex-1 min-w-0 flex flex-col justify-center relative z-10">
           <h3 class="activity-title text-base font-semibold text-foreground m-0 mb-1 leading-tight">${activity.title}</h3>
           <p class="activity-description text-sm text-foreground-muted m-0 leading-snug">${activity.description}</p>
-          <span class="activity-date text-xs text-foreground-muted mt-1 opacity-70">${formattedDate}</span>
+          <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+            <span class="activity-type-badge inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6875rem] font-medium border ${typeMeta.colorClass}">
+              <i data-lucide="${typeMeta.icon}" class="w-2.5 h-2.5" aria-hidden="true"></i>
+              ${typeMeta.label}
+            </span>
+            <span class="activity-date text-xs text-foreground-muted opacity-70">${formattedDate}</span>
+          </div>
         </div>
         <i data-lucide="arrow-up-right" class="activity-external-icon w-4 h-4 text-primary opacity-50 flex-shrink-0 self-start mt-1 transition-all duration-300 ease-bounce-in relative z-10 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true"></i>
       </a>
@@ -283,6 +331,7 @@ async function initializeApp() {
           <i data-lucide="activity" class="w-5 h-5 text-primary" aria-hidden="true"></i>
           <h2 class="font-display text-xl font-normal text-foreground m-0">Recent Activity</h2>
         </div>
+        ${generateActivityFilters(activityData.activities, 'mobile')}
         <div class="recent-activity">
           ${generateRecentActivity(activityData.activities)}
         </div>
@@ -316,6 +365,7 @@ async function initializeApp() {
         </div>
       </div>
       <div class="grid-content-right col-span-1 row-span-1 relative z-[2] self-start">
+        ${generateActivityFilters(activityData.activities, 'desktop')}
         <div class="recent-activity">
           ${generateRecentActivity(activityData.activities)}
         </div>
@@ -744,7 +794,7 @@ async function initializeApp() {
   yearFilters.forEach(filter => {
     filter.addEventListener('click', (e: Event) => {
       const clickedFilter = e.currentTarget as HTMLButtonElement;
-      
+
       // Toggle behavior: if clicking the same filter, deactivate it
       if (activeYearFilter === clickedFilter) {
         // Deactivate current filter
@@ -760,8 +810,26 @@ async function initializeApp() {
         clickedFilter.classList.add('active-filter');
         activeYearFilter = clickedFilter;
       }
-      
+
       applyFilters();
+    });
+  });
+
+  // Activity type filter chips — mirror state across mobile + desktop chip groups
+  const activityChips = document.querySelectorAll('.activity-chip');
+  activityChips.forEach(chip => {
+    chip.addEventListener('click', (e: Event) => {
+      const clicked = e.currentTarget as HTMLButtonElement;
+      const selectedType = clicked.getAttribute('data-activity-type') || 'all';
+
+      document.querySelectorAll('.activity-chip').forEach(c => c.classList.remove('active-filter'));
+      document.querySelectorAll(`.activity-chip[data-activity-type="${selectedType}"]`).forEach(c => c.classList.add('active-filter'));
+
+      document.querySelectorAll('.activity-item').forEach(item => {
+        const itemType = item.getAttribute('data-activity-type') || '';
+        const shouldShow = selectedType === 'all' || itemType === selectedType;
+        (item as HTMLElement).style.display = shouldShow ? 'flex' : 'none';
+      });
     });
   });
 }
