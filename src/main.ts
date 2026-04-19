@@ -102,10 +102,17 @@ const generateRegularLinks = (regularLinks: any[]) => {
   `).join('')
 }
 
-// Function to generate year filter pills
+// Publication type metadata — mirrors the per-card pill colors in generatePublications
+const PUBLICATION_TYPES: Record<string, { label: string; icon: string }> = {
+  article: { label: 'Article', icon: 'file-text' },
+  video: { label: 'Video', icon: 'video' },
+  interview: { label: 'Video Interview', icon: 'tv' }
+};
+
+// Function to generate publication filter pills (year + format chips + Wipfli toggle)
 const generateYearFilters = (publications: any[]) => {
   const years = [...new Set(publications.map(pub => new Date(pub.date).getFullYear()))].sort((a, b) => b - a);
-  
+
   // Group years: keep 2022 and later separate, combine 2021 and earlier
   const filterYears: { label: string; value: string }[] = [];
   years.forEach(year => {
@@ -115,7 +122,15 @@ const generateYearFilters = (publications: any[]) => {
       filterYears.push({ label: '2021 & Prior', value: '2021-prior' });
     }
   });
-  
+
+  // Format (type) chips — only types present in the data
+  const presentTypes = [...new Set(publications.map(p => p.type))];
+  const typeCounts = publications.reduce((acc: Record<string, number>, p) => {
+    acc[p.type] = (acc[p.type] || 0) + 1;
+    return acc;
+  }, {});
+  const showTypeChips = presentTypes.length >= 2;
+
   return `
     <div class="mb-4">
       <div class="flex gap-4 items-center mb-3 flex-wrap">
@@ -128,6 +143,22 @@ const generateYearFilters = (publications: any[]) => {
           </button>
         </div>
       </div>
+      ${showTypeChips ? `
+        <div class="flex gap-1.5 items-center flex-wrap mb-2">
+          <button class="publication-type-filter activity-chip active-filter inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-colors" data-publication-type="all">
+            All (${publications.length})
+          </button>
+          ${presentTypes.map(type => {
+            const meta = PUBLICATION_TYPES[type] || { label: type, icon: 'file' };
+            return `
+              <button class="publication-type-filter activity-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-colors" data-publication-type="${type}">
+                <i data-lucide="${meta.icon}" class="w-3 h-3" aria-hidden="true"></i>
+                ${meta.label} (${typeCounts[type]})
+              </button>
+            `;
+          }).join('')}
+        </div>
+      ` : ''}
       <div class="flex gap-1.5 items-center flex-wrap">
         ${filterYears.map(filter => `
           <button class="year-filter inline-flex items-center px-2 py-1 rounded text-xs font-semibold transition-colors" data-year="${filter.value}">
@@ -267,7 +298,7 @@ const generatePublications = (publications: any[]) => {
     const typeColorClass = typeColors[pub.type as keyof typeof typeColors] || 'border-gray-400 text-gray-400';
     
     return `
-      <div class="publication-item p-2 flex flex-col min-h-[140px] justify-self-start w-full" data-year="${year}" data-source="${pub.source.toLowerCase()}">
+      <div class="publication-item p-2 flex flex-col min-h-[140px] justify-self-start w-full" data-year="${year}" data-source="${pub.source.toLowerCase()}" data-type="${pub.type}">
         <div class="flex-1 pb-10 text-left relative z-[1]">
           <h4 class="text-sm font-semibold leading-tight mb-1.5 text-foreground text-left">${pub.title}</h4>
           <p class="text-xs text-foreground-muted font-medium text-left">${pub.source}</p>
@@ -724,8 +755,10 @@ async function initializeApp() {
   // Add filter functionality
   const yearFilters = document.querySelectorAll('.year-filter');
   const wipfliFilter = document.querySelector('.wipfli-toggle') as HTMLButtonElement;
+  const publicationTypeChips = document.querySelectorAll('.publication-type-filter');
   const publicationItems = document.querySelectorAll('.publication-item');
   let activeYearFilter: HTMLButtonElement | null = null;
+  let activePublicationType = 'all';
   let wipfliHidden = true; // Hide Wipfli by default
 
   // Count Wipfli publications
@@ -733,21 +766,27 @@ async function initializeApp() {
     const source = item.getAttribute('data-source') || '';
     return source.includes('wipfli');
   }).length;
-  
+
   // Apply initial Wipfli filter (hide by default)
   const applyFilters = () => {
     publicationItems.forEach(item => {
       const itemYear = parseInt(item.getAttribute('data-year') || '0');
       const itemSource = item.getAttribute('data-source') || '';
+      const itemType = item.getAttribute('data-type') || '';
       const isWipfli = itemSource.includes('wipfli');
-      
+
       let shouldShow = true;
-      
+
       // Apply Wipfli filter
       if (wipfliHidden && isWipfli) {
         shouldShow = false;
       }
-      
+
+      // Apply type filter
+      if (shouldShow && activePublicationType !== 'all') {
+        shouldShow = itemType === activePublicationType;
+      }
+
       // Apply year filter if active
       if (activeYearFilter && shouldShow) {
         const selectedYear = activeYearFilter.getAttribute('data-year');
@@ -757,7 +796,7 @@ async function initializeApp() {
           shouldShow = itemYear.toString() === selectedYear;
         }
       }
-      
+
       (item as HTMLElement).style.display = shouldShow ? 'flex' : 'none';
     });
   };
@@ -816,13 +855,13 @@ async function initializeApp() {
   });
 
   // Activity type filter chips — mirror state across mobile + desktop chip groups
-  const activityChips = document.querySelectorAll('.activity-chip');
+  const activityChips = document.querySelectorAll('.activity-chip[data-activity-type]');
   activityChips.forEach(chip => {
     chip.addEventListener('click', (e: Event) => {
       const clicked = e.currentTarget as HTMLButtonElement;
       const selectedType = clicked.getAttribute('data-activity-type') || 'all';
 
-      document.querySelectorAll('.activity-chip').forEach(c => c.classList.remove('active-filter'));
+      document.querySelectorAll('.activity-chip[data-activity-type]').forEach(c => c.classList.remove('active-filter'));
       document.querySelectorAll(`.activity-chip[data-activity-type="${selectedType}"]`).forEach(c => c.classList.add('active-filter'));
 
       document.querySelectorAll('.activity-item').forEach(item => {
@@ -830,6 +869,20 @@ async function initializeApp() {
         const shouldShow = selectedType === 'all' || itemType === selectedType;
         (item as HTMLElement).style.display = shouldShow ? 'flex' : 'none';
       });
+    });
+  });
+
+  // Publication type filter chips — single-group filter inside the Media Appearances accordion
+  publicationTypeChips.forEach(chip => {
+    chip.addEventListener('click', (e: Event) => {
+      const clicked = e.currentTarget as HTMLButtonElement;
+      const selectedType = clicked.getAttribute('data-publication-type') || 'all';
+
+      publicationTypeChips.forEach(c => c.classList.remove('active-filter'));
+      clicked.classList.add('active-filter');
+
+      activePublicationType = selectedType;
+      applyFilters();
     });
   });
 }
