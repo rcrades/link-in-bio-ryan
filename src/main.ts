@@ -111,15 +111,17 @@ const PUBLICATION_TYPES: Record<string, { label: string; icon: string }> = {
 
 // Function to generate publication filter pills (year + format chips + Wipfli toggle)
 const generateYearFilters = (publications: any[]) => {
-  const years = [...new Set(publications.map(pub => new Date(pub.date).getFullYear()))].sort((a, b) => b - a);
+  // Always surface 2026 even if there are no 2026 publications yet
+  const dataYears = publications.map(pub => new Date(pub.date).getFullYear());
+  const years = [...new Set([2026, ...dataYears])].sort((a, b) => b - a);
 
-  // Group years: keep 2022 and later separate, combine 2021 and earlier
+  // Group years: 2023 and later get individual chips, 2022 and earlier collapse
   const filterYears: { label: string; value: string }[] = [];
   years.forEach(year => {
-    if (year >= 2022) {
+    if (year >= 2023) {
       filterYears.push({ label: year.toString(), value: year.toString() });
-    } else if (!filterYears.find(f => f.value === '2021-prior')) {
-      filterYears.push({ label: '2021 & Prior', value: '2021-prior' });
+    } else if (!filterYears.find(f => f.value === '2022-prior')) {
+      filterYears.push({ label: '2022 & Prior', value: '2022-prior' });
     }
   });
 
@@ -179,34 +181,6 @@ const ACTIVITY_TYPES: Record<string, { label: string; icon: string; colorClass: 
 
 const getActivityTypeMeta = (type: string) =>
   ACTIVITY_TYPES[type] || { label: type, icon: 'circle', colorClass: 'border-gray-400 text-gray-400' };
-
-// Function to generate activity type filter chips
-const generateActivityFilters = (activities: any[], scopeId: string) => {
-  const types = [...new Set(activities.map(a => a.type))];
-  if (types.length < 2) return '';
-
-  const counts = activities.reduce((acc: Record<string, number>, a) => {
-    acc[a.type] = (acc[a.type] || 0) + 1;
-    return acc;
-  }, {});
-
-  return `
-    <div class="activity-filter-chips flex gap-1.5 flex-wrap mb-3" data-activity-filter-scope="${scopeId}">
-      <button class="activity-chip active-filter inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-colors" data-activity-type="all">
-        All (${activities.length})
-      </button>
-      ${types.map(type => {
-        const meta = getActivityTypeMeta(type);
-        return `
-          <button class="activity-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-colors" data-activity-type="${type}">
-            <i data-lucide="${meta.icon}" class="w-3 h-3" aria-hidden="true"></i>
-            ${meta.label} (${counts[type]})
-          </button>
-        `;
-      }).join('')}
-    </div>
-  `;
-};
 
 // Function to generate recent activity HTML
 const generateRecentActivity = (activities: any[]) => {
@@ -362,7 +336,6 @@ async function initializeApp() {
           <i data-lucide="activity" class="w-5 h-5 text-primary" aria-hidden="true"></i>
           <h2 class="font-display text-xl font-normal text-foreground m-0">Recent Activity</h2>
         </div>
-        ${generateActivityFilters(activityData.activities, 'mobile')}
         <div class="recent-activity">
           ${generateRecentActivity(activityData.activities)}
         </div>
@@ -396,7 +369,6 @@ async function initializeApp() {
         </div>
       </div>
       <div class="grid-content-right col-span-1 row-span-1 relative z-[2] self-start">
-        ${generateActivityFilters(activityData.activities, 'desktop')}
         <div class="recent-activity">
           ${generateRecentActivity(activityData.activities)}
         </div>
@@ -472,7 +444,7 @@ async function initializeApp() {
           </div>
         </div>
         <div id="causes-details" class="accordion-content max-h-0 overflow-hidden opacity-0 transition-all duration-500">
-          <div class="px-5 pb-5">
+          <div class="px-5 pb-5 pt-3">
             <div class="causes-grid">
               ${generateCauses(causesData.causes)}
             </div>
@@ -557,8 +529,12 @@ async function initializeApp() {
       <div id="tech-stack-details-2" class="tech-stack-details">
         <ul class="list-none p-0 mt-4 mb-0 flex flex-col gap-3">
           <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+            <i data-lucide="sparkles" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
+            AI Code Gen: <a href="https://claude.ai/referral/4ZgetZUURA" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">Claude <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
+          </li>
+          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
             <i data-lucide="layout-template" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
-            AI Code Gen: <a href="https://v0.link/ryan-rademann" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">v0.app <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
+            Vibe coding for beginners: <a href="https://v0.link/ryan-rademann" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">v0.app <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
           </li>
           <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
             <i data-lucide="database" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
@@ -568,9 +544,20 @@ async function initializeApp() {
             <i data-lucide="presentation" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
             AI Slide Deck Creator: <a href="https://gamma.app/signup?r=3kue3y24828ihup" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">gamma.app <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
           </li>
+          <!--
           <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
             <i data-lucide="briefcase" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
             Quickbooks Online: <a href="https://quickbooks.partnerlinks.io/ryanrademann" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">QBO Signup <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
+          </li>
+          -->
+
+          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+            <i data-lucide="mic" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
+            Voice-to-text everywhere: <a href="https://ref.wisprflow.ai/ryan-rademann-gmail-com" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">Wispr Flow <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
+          </li>
+          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+            <i data-lucide="notebook-pen" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
+            Granola: AI Notetaker: <a href="https://go.granola.ai/ryan-rademann-gmail-com" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">free month <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
           </li>
         </ul>
       </div>
@@ -790,8 +777,8 @@ async function initializeApp() {
       // Apply year filter if active
       if (activeYearFilter && shouldShow) {
         const selectedYear = activeYearFilter.getAttribute('data-year');
-        if (selectedYear === '2021-prior') {
-          shouldShow = itemYear <= 2021;
+        if (selectedYear === '2022-prior') {
+          shouldShow = itemYear <= 2022;
         } else {
           shouldShow = itemYear.toString() === selectedYear;
         }
@@ -851,24 +838,6 @@ async function initializeApp() {
       }
 
       applyFilters();
-    });
-  });
-
-  // Activity type filter chips — mirror state across mobile + desktop chip groups
-  const activityChips = document.querySelectorAll('.activity-chip[data-activity-type]');
-  activityChips.forEach(chip => {
-    chip.addEventListener('click', (e: Event) => {
-      const clicked = e.currentTarget as HTMLButtonElement;
-      const selectedType = clicked.getAttribute('data-activity-type') || 'all';
-
-      document.querySelectorAll('.activity-chip[data-activity-type]').forEach(c => c.classList.remove('active-filter'));
-      document.querySelectorAll(`.activity-chip[data-activity-type="${selectedType}"]`).forEach(c => c.classList.add('active-filter'));
-
-      document.querySelectorAll('.activity-item').forEach(item => {
-        const itemType = item.getAttribute('data-activity-type') || '';
-        const shouldShow = selectedType === 'all' || itemType === selectedType;
-        (item as HTMLElement).style.display = shouldShow ? 'flex' : 'none';
-      });
     });
   });
 

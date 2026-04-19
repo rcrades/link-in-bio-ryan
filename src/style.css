@@ -343,7 +343,7 @@ body::before {
    Accordion Pair - Expand/Collapse Behavior
    ============================================ */
 .accordion-header:hover {
-  background: var(--background-secondary);
+  background: color-mix(in srgb, var(--primary) 7%, var(--card));
 }
 
 @media (min-width: 1024px) {
