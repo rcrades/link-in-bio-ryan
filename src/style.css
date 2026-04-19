@@ -259,6 +259,11 @@ body::before {
   padding: 0.5rem;
 }
 
+.activity-logo-placeholder-light {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
 .activity-placeholder-icon {
   width: 2rem;
   height: 2rem;
@@ -338,7 +343,7 @@ body::before {
    Accordion Pair - Expand/Collapse Behavior
    ============================================ */
 .accordion-header:hover {
-  background: var(--background-secondary);
+  background: color-mix(in srgb, var(--primary) 7%, var(--card));
 }
 
 @media (min-width: 1024px) {
@@ -382,6 +387,36 @@ body::before {
   color: var(--card) !important;
   border-color: var(--primary-dark) !important;
   box-shadow: 0 4px 12px var(--shadow);
+}
+
+/* Activity type filter chips */
+.activity-chip {
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  border: 1.5px solid var(--card-border);
+  background: var(--background-secondary);
+  color: var(--foreground-muted);
+}
+
+.activity-chip:hover {
+  background: var(--card);
+  color: var(--foreground);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.activity-chip.active-filter {
+  background: var(--primary);
+  color: var(--card);
+  border-color: var(--primary-dark);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.activity-chip.active-filter:hover {
+  background: var(--primary-dark);
+  color: var(--card);
 }
 
 /* Wipfli toggle switch */

@@ -102,20 +102,37 @@ const generateRegularLinks = (regularLinks: any[]) => {
   `).join('')
 }
 
-// Function to generate year filter pills
+// Publication type metadata — mirrors the per-card pill colors in generatePublications
+const PUBLICATION_TYPES: Record<string, { label: string; icon: string }> = {
+  article: { label: 'Article', icon: 'file-text' },
+  video: { label: 'Video', icon: 'video' },
+  interview: { label: 'Video Interview', icon: 'tv' }
+};
+
+// Function to generate publication filter pills (year + format chips + Wipfli toggle)
 const generateYearFilters = (publications: any[]) => {
-  const years = [...new Set(publications.map(pub => new Date(pub.date).getFullYear()))].sort((a, b) => b - a);
-  
-  // Group years: keep 2022 and later separate, combine 2021 and earlier
+  // Always surface 2026 even if there are no 2026 publications yet
+  const dataYears = publications.map(pub => new Date(pub.date).getFullYear());
+  const years = [...new Set([2026, ...dataYears])].sort((a, b) => b - a);
+
+  // Group years: 2023 and later get individual chips, 2022 and earlier collapse
   const filterYears: { label: string; value: string }[] = [];
   years.forEach(year => {
-    if (year >= 2022) {
+    if (year >= 2023) {
       filterYears.push({ label: year.toString(), value: year.toString() });
-    } else if (!filterYears.find(f => f.value === '2021-prior')) {
-      filterYears.push({ label: '2021 & Prior', value: '2021-prior' });
+    } else if (!filterYears.find(f => f.value === '2022-prior')) {
+      filterYears.push({ label: '2022 & Prior', value: '2022-prior' });
     }
   });
-  
+
+  // Format (type) chips — only types present in the data
+  const presentTypes = [...new Set(publications.map(p => p.type))];
+  const typeCounts = publications.reduce((acc: Record<string, number>, p) => {
+    acc[p.type] = (acc[p.type] || 0) + 1;
+    return acc;
+  }, {});
+  const showTypeChips = presentTypes.length >= 2;
+
   return `
     <div class="mb-4">
       <div class="flex gap-4 items-center mb-3 flex-wrap">
@@ -128,6 +145,22 @@ const generateYearFilters = (publications: any[]) => {
           </button>
         </div>
       </div>
+      ${showTypeChips ? `
+        <div class="flex gap-1.5 items-center flex-wrap mb-2">
+          <button class="publication-type-filter activity-chip active-filter inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-colors" data-publication-type="all">
+            All (${publications.length})
+          </button>
+          ${presentTypes.map(type => {
+            const meta = PUBLICATION_TYPES[type] || { label: type, icon: 'file' };
+            return `
+              <button class="publication-type-filter activity-chip inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-colors" data-publication-type="${type}">
+                <i data-lucide="${meta.icon}" class="w-3 h-3" aria-hidden="true"></i>
+                ${meta.label} (${typeCounts[type]})
+              </button>
+            `;
+          }).join('')}
+        </div>
+      ` : ''}
       <div class="flex gap-1.5 items-center flex-wrap">
         ${filterYears.map(filter => `
           <button class="year-filter inline-flex items-center px-2 py-1 rounded text-xs font-semibold transition-colors" data-year="${filter.value}">
@@ -138,6 +171,16 @@ const generateYearFilters = (publications: any[]) => {
     </div>
   `;
 }
+
+// Activity type metadata — icon, label, and pill color for each format
+const ACTIVITY_TYPES: Record<string, { label: string; icon: string; colorClass: string }> = {
+  'in-person': { label: 'In-Person', icon: 'mic', colorClass: 'border-amber-400 text-amber-400' },
+  'article': { label: 'Article', icon: 'newspaper', colorClass: 'border-emerald-400 text-emerald-400' },
+  'video': { label: 'Video', icon: 'video', colorClass: 'border-purple-400 text-purple-400' }
+};
+
+const getActivityTypeMeta = (type: string) =>
+  ACTIVITY_TYPES[type] || { label: type, icon: 'circle', colorClass: 'border-gray-400 text-gray-400' };
 
 // Function to generate recent activity HTML
 const generateRecentActivity = (activities: any[]) => {
@@ -154,27 +197,37 @@ const generateRecentActivity = (activities: any[]) => {
     const formattedDate = new Date(activity.date).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
-      year: 'numeric'
+      year: 'numeric',
+      timeZone: 'UTC'
     });
 
-    // For articles, use logo if available, otherwise icon placeholder
+    const typeMeta = getActivityTypeMeta(activity.type);
     const isArticle = activity.type === 'article';
+
+    // Media element: thumbnail image, logo wrapper, or type-icon placeholder fallback
     let mediaElement = '';
     if (thumbnailUrl) {
       mediaElement = `<img src="${thumbnailUrl}" alt="${activity.title}" class="activity-thumbnail" />`;
     } else if (activity.logo) {
-      mediaElement = `<div class="activity-logo-placeholder"><img src="${activity.logo}" alt="${activity.description}" class="activity-logo" /></div>`;
-    } else if (isArticle) {
-      mediaElement = `<div class="activity-icon-placeholder"><i data-lucide="newspaper" class="activity-placeholder-icon" aria-hidden="true"></i></div>`;
+      const bgClass = activity.logoBg === 'light' ? 'activity-logo-placeholder activity-logo-placeholder-light' : 'activity-logo-placeholder';
+      mediaElement = `<div class="${bgClass}"><img src="${activity.logo}" alt="${activity.description}" class="activity-logo" /></div>`;
+    } else {
+      mediaElement = `<div class="activity-icon-placeholder"><i data-lucide="${typeMeta.icon}" class="activity-placeholder-icon" aria-hidden="true"></i></div>`;
     }
 
     return `
-      <a href="${activity.url}" class="activity-item group flex gap-4 p-4 rounded-xl relative overflow-hidden no-underline mb-4 last:mb-0 bg-background-secondary text-foreground border border-card-border transition-all duration-300 ease-bounce-in hover:-translate-y-1 hover:shadow-strong hover:border-primary ${isArticle ? 'activity-item-article' : ''}" target="_blank">
+      <a href="${activity.url}" class="activity-item group flex gap-4 p-4 rounded-xl relative overflow-hidden no-underline mb-4 last:mb-0 bg-background-secondary text-foreground border border-card-border transition-all duration-300 ease-bounce-in hover:-translate-y-1 hover:shadow-strong hover:border-primary ${isArticle ? 'activity-item-article' : ''}" target="_blank" data-activity-type="${activity.type}">
         ${mediaElement}
         <div class="activity-content flex-1 min-w-0 flex flex-col justify-center relative z-10">
           <h3 class="activity-title text-base font-semibold text-foreground m-0 mb-1 leading-tight">${activity.title}</h3>
           <p class="activity-description text-sm text-foreground-muted m-0 leading-snug">${activity.description}</p>
-          <span class="activity-date text-xs text-foreground-muted mt-1 opacity-70">${formattedDate}</span>
+          <div class="flex items-center gap-2 mt-1.5 flex-wrap">
+            <span class="activity-type-badge inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6875rem] font-medium border ${typeMeta.colorClass}">
+              <i data-lucide="${typeMeta.icon}" class="w-2.5 h-2.5" aria-hidden="true"></i>
+              ${typeMeta.label}
+            </span>
+            <span class="activity-date text-xs text-foreground-muted opacity-70">${formattedDate}</span>
+          </div>
         </div>
         <i data-lucide="arrow-up-right" class="activity-external-icon w-4 h-4 text-primary opacity-50 flex-shrink-0 self-start mt-1 transition-all duration-300 ease-bounce-in relative z-10 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden="true"></i>
       </a>
@@ -219,7 +272,7 @@ const generatePublications = (publications: any[]) => {
     const typeColorClass = typeColors[pub.type as keyof typeof typeColors] || 'border-gray-400 text-gray-400';
     
     return `
-      <div class="publication-item p-2 flex flex-col min-h-[140px] justify-self-start w-full" data-year="${year}" data-source="${pub.source.toLowerCase()}">
+      <div class="publication-item p-2 flex flex-col min-h-[140px] justify-self-start w-full" data-year="${year}" data-source="${pub.source.toLowerCase()}" data-type="${pub.type}">
         <div class="flex-1 pb-10 text-left relative z-[1]">
           <h4 class="text-sm font-semibold leading-tight mb-1.5 text-foreground text-left">${pub.title}</h4>
           <p class="text-xs text-foreground-muted font-medium text-left">${pub.source}</p>
@@ -391,7 +444,7 @@ async function initializeApp() {
           </div>
         </div>
         <div id="causes-details" class="accordion-content max-h-0 overflow-hidden opacity-0 transition-all duration-500">
-          <div class="px-5 pb-5">
+          <div class="px-5 pb-5 pt-3">
             <div class="causes-grid">
               ${generateCauses(causesData.causes)}
             </div>
@@ -476,8 +529,12 @@ async function initializeApp() {
       <div id="tech-stack-details-2" class="tech-stack-details">
         <ul class="list-none p-0 mt-4 mb-0 flex flex-col gap-3">
           <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+            <i data-lucide="sparkles" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
+            AI Code Gen: <a href="https://claude.ai/referral/4ZgetZUURA" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">Claude <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
+          </li>
+          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
             <i data-lucide="layout-template" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
-            AI Code Gen: <a href="https://v0.link/ryan-rademann" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">v0.app <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
+            Vibe coding for beginners: <a href="https://v0.link/ryan-rademann" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">v0.app <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
           </li>
           <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
             <i data-lucide="database" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
@@ -487,9 +544,20 @@ async function initializeApp() {
             <i data-lucide="presentation" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
             AI Slide Deck Creator: <a href="https://gamma.app/signup?r=3kue3y24828ihup" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">gamma.app <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
           </li>
+          <!--
           <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
             <i data-lucide="briefcase" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
             Quickbooks Online: <a href="https://quickbooks.partnerlinks.io/ryanrademann" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">QBO Signup <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
+          </li>
+          -->
+
+          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+            <i data-lucide="mic" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
+            Voice-to-text everywhere: <a href="https://ref.wisprflow.ai/ryan-rademann-gmail-com" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">Wispr Flow <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
+          </li>
+          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+            <i data-lucide="notebook-pen" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
+            Granola: AI Notetaker: <a href="https://go.granola.ai/ryan-rademann-gmail-com" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">free month <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
           </li>
         </ul>
       </div>
@@ -674,8 +742,10 @@ async function initializeApp() {
   // Add filter functionality
   const yearFilters = document.querySelectorAll('.year-filter');
   const wipfliFilter = document.querySelector('.wipfli-toggle') as HTMLButtonElement;
+  const publicationTypeChips = document.querySelectorAll('.publication-type-filter');
   const publicationItems = document.querySelectorAll('.publication-item');
   let activeYearFilter: HTMLButtonElement | null = null;
+  let activePublicationType = 'all';
   let wipfliHidden = true; // Hide Wipfli by default
 
   // Count Wipfli publications
@@ -683,31 +753,37 @@ async function initializeApp() {
     const source = item.getAttribute('data-source') || '';
     return source.includes('wipfli');
   }).length;
-  
+
   // Apply initial Wipfli filter (hide by default)
   const applyFilters = () => {
     publicationItems.forEach(item => {
       const itemYear = parseInt(item.getAttribute('data-year') || '0');
       const itemSource = item.getAttribute('data-source') || '';
+      const itemType = item.getAttribute('data-type') || '';
       const isWipfli = itemSource.includes('wipfli');
-      
+
       let shouldShow = true;
-      
+
       // Apply Wipfli filter
       if (wipfliHidden && isWipfli) {
         shouldShow = false;
       }
-      
+
+      // Apply type filter
+      if (shouldShow && activePublicationType !== 'all') {
+        shouldShow = itemType === activePublicationType;
+      }
+
       // Apply year filter if active
       if (activeYearFilter && shouldShow) {
         const selectedYear = activeYearFilter.getAttribute('data-year');
-        if (selectedYear === '2021-prior') {
-          shouldShow = itemYear <= 2021;
+        if (selectedYear === '2022-prior') {
+          shouldShow = itemYear <= 2022;
         } else {
           shouldShow = itemYear.toString() === selectedYear;
         }
       }
-      
+
       (item as HTMLElement).style.display = shouldShow ? 'flex' : 'none';
     });
   };
@@ -744,7 +820,7 @@ async function initializeApp() {
   yearFilters.forEach(filter => {
     filter.addEventListener('click', (e: Event) => {
       const clickedFilter = e.currentTarget as HTMLButtonElement;
-      
+
       // Toggle behavior: if clicking the same filter, deactivate it
       if (activeYearFilter === clickedFilter) {
         // Deactivate current filter
@@ -760,7 +836,21 @@ async function initializeApp() {
         clickedFilter.classList.add('active-filter');
         activeYearFilter = clickedFilter;
       }
-      
+
+      applyFilters();
+    });
+  });
+
+  // Publication type filter chips — single-group filter inside the Media Appearances accordion
+  publicationTypeChips.forEach(chip => {
+    chip.addEventListener('click', (e: Event) => {
+      const clicked = e.currentTarget as HTMLButtonElement;
+      const selectedType = clicked.getAttribute('data-publication-type') || 'all';
+
+      publicationTypeChips.forEach(c => c.classList.remove('active-filter'));
+      clicked.classList.add('active-filter');
+
+      activePublicationType = selectedType;
       applyFilters();
     });
   });
