@@ -75,3 +75,18 @@ src/
 2. Verify desktop (≥1000px) and mobile (<1000px) layouts
 3. Run `vercel build` to ensure no type errors
 4. Keep changes minimal and focused
+
+## CRITICAL: PRs with UI changes require hosted screenshots in the body
+
+The reviewer merges from GitHub **without running the app**. Embedded screenshots in the PR body *are* the review surface. A UI-affecting PR without screenshots is incomplete — do not open it.
+
+**Protocol (uses the `convex-screenshot-host` skill):**
+- Capture at **both** viewports whenever the change crosses the 1000px breakpoint (which is nearly every layout change here):
+  - Desktop **1440×900**
+  - Mobile **375×812**
+- Upload each PNG to `https://resilient-echidna-374.convex.site/upload-screenshot` with header `X-Filename: link-in-bio-ryan-<feature>-<timestamp>.png` (prefix is load-bearing — the host is shared across repos).
+- Embed the returned `screenshot?id=...` URL under `## Desktop` and `## Mobile` in the PR body, with DOM metrics (`scrollWidth`, `clientWidth`, `overflows`, activity-item count) pulled from the capture script.
+- **Validate each shot** by `Read`-ing the PNG back before upload. <20 KB on a content-rich page = loading state; retry with a longer `waitForTimeout`.
+- **Never commit PNGs to the repo** — upload, embed URL, done. 30-day retention is fine for review cycles.
+
+Do not skip this step "for speed." The reviewer cannot merge what they cannot see, and agents have shipped loading-state screenshots into PRs by skipping the Read-back check. Follow the global `convex-screenshot-host` skill contract exactly.

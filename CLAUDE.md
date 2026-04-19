@@ -8,6 +8,22 @@
 - [README.md](README.md) - Project overview, features, and setup
 - [AGENTS.md](AGENTS.md) - AI agent guidelines and conventions
 
+## CRITICAL: Every PR that changes UI MUST include hosted screenshots
+
+The reviewer merges from GitHub **without running the app locally**. Screenshots embedded in the PR body *are* the review mechanism — they are not optional decoration. A PR without screenshots for a visual change is an incomplete PR and should not be opened.
+
+**Use the `convex-screenshot-host` skill** to:
+1. Capture the above-the-fold viewport at desktop (1440×900) **and** mobile (375×812) whenever a change crosses the `desktop:` breakpoint at 1000px — which is almost every layout change in this project.
+2. Upload each PNG to `https://resilient-echidna-374.convex.site/upload-screenshot` with an `X-Filename` prefixed `link-in-bio-ryan-...` so uploads from this repo stay identifiable in the shared host.
+3. Embed the returned `screenshot?id=...` URL in the PR body under `## Desktop` and `## Mobile` sections, including DOM metrics (`scrollWidth`, `clientWidth`, `overflows`) from the capture script.
+
+Why this is non-negotiable here:
+- The repo has two hard layouts (mobile < 1000px, desktop ≥ 1000px) — a single-viewport screenshot hides breakpoint regressions.
+- `Read`-back each captured PNG before uploading: a <20 KB file on this content-rich page means you captured a loading state and must retry with a longer wait.
+- Don't commit screenshot files to the repo. Upload → embed URL. The host has 30-day retention; that's fine for review cycles.
+
+See the global `convex-screenshot-host` skill for the exact capture script and curl invocation. The Playwright dependency lives in `/tmp/screenshot-work/` — reuse it across PRs.
+
 ## Responsive Layout Strategy
 
 ### Breakpoints
