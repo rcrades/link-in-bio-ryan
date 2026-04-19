@@ -252,7 +252,7 @@ body::before {
 }
 
 .activity-logo-placeholder {
-  background: var(--card);
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
