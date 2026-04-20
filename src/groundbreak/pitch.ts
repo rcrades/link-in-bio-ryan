@@ -13,8 +13,8 @@ applyTheme()
 const html = `
   <main class="gb-page">
     <header style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;">
-      ${renderGroundbreakBadge()}
       ${renderSpeakerStamp('inline')}
+      ${renderGroundbreakBadge()}
     </header>
 
     <section class="gb-pitch-hero">
