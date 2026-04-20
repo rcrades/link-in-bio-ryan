@@ -472,6 +472,121 @@ body::before {
 .wipfli-toggle.active:hover .wipfli-toggle-slider { transform: translateX(20px) scale(1.05); }
 
 /* ============================================
+   In-Person Publication (programmatic thumbnail)
+   ============================================ */
+.publication-item.in-person-pub {
+  border-left: 3px solid #1d8a6a;
+  padding: 0;
+}
+
+.publication-item.in-person-pub:hover {
+  border-left-width: 4px;
+}
+
+.publication-item.in-person-pub::before {
+  display: none;
+}
+
+.in-person-hero {
+  width: 100%;
+  min-height: 180px;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(88, 28, 145, 0.25) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 30%, rgba(29, 58, 110, 0.35) 0%, transparent 60%),
+    linear-gradient(180deg, #0b1220 0%, #0a0d16 100%);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Photographic backdrop applied per-entry via inline --in-person-bg var */
+.in-person-hero.has-backdrop {
+  background:
+    linear-gradient(180deg, rgba(8,10,18,0.55) 0%, rgba(8,10,18,0.35) 35%, rgba(8,10,18,0.85) 100%),
+    var(--in-person-bg) center/cover no-repeat,
+    #0a0d16;
+}
+
+.in-person-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 18% 62%, rgba(255,255,255,0.05) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 32% 70%, rgba(255,255,255,0.04) 0 2px, transparent 3px),
+    radial-gradient(circle at 48% 58%, rgba(255,255,255,0.06) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 64% 68%, rgba(255,255,255,0.04) 0 2px, transparent 3px),
+    radial-gradient(circle at 80% 60%, rgba(255,255,255,0.05) 0 1.5px, transparent 2px);
+  background-size: 100% 100%;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* Hide the simulated-audience dot pattern when a real backdrop photo is set */
+.in-person-hero.has-backdrop::before { display: none; }
+
+.in-person-band {
+  background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 100%);
+  backdrop-filter: blur(2px);
+}
+
+.in-person-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #0b1220;
+}
+
+.in-person-logo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.in-person-event {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+
+.in-person-stage {
+  min-height: 28px;
+}
+
+.in-person-panel {
+  background: linear-gradient(0deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.45) 100%);
+  backdrop-filter: blur(3px);
+  margin-top: auto;
+  padding: 0.6rem 0.75rem;
+}
+
+.in-person-headshot {
+  width: 46px;
+  height: 46px;
+  border-radius: 6px;
+  object-fit: cover;
+  object-position: 50% 20%;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.in-person-title {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.publication-item.in-person-pub:hover .in-person-headshot {
+  transform: scale(1.03);
+  border-color: var(--primary);
+  transition: all 0.3s ease;
+}
+
+/* ============================================
    Publication Items
    ============================================ */
 .publication-item {

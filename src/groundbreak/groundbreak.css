@@ -1,0 +1,1015 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --font-display: 'DM Serif Display', serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --background: #faf8f5;
+  --background-secondary: #f0ebe3;
+  --foreground: #1a1512;
+  --foreground-muted: #5a524c;
+  --primary: #c85a3f;
+  --primary-dark: #a4442d;
+  --accent: #d4a574;
+  --accent-light: #e8c9a0;
+  --card: #ffffff;
+  --card-border: #e6dfd6;
+  --shadow: rgba(26, 21, 18, 0.08);
+  --shadow-strong: rgba(26, 21, 18, 0.15);
+
+  --gb-procore: #ff5200;
+  --gb-procore-ink: #0a0908;
+
+  font-family: var(--font-body);
+  line-height: 1.55;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.dark {
+  --background: #0f0d0b;
+  --background-secondary: #1a1614;
+  --foreground: #f5f1eb;
+  --foreground-muted: #a69d94;
+  --primary: #e8845f;
+  --primary-dark: #d66b46;
+  --accent: #d4a574;
+  --accent-light: #c49561;
+  --card: #1a1614;
+  --card-border: #2d2721;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-strong: rgba(0, 0, 0, 0.5);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.035;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+.gb-page {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+}
+
+/* ---------- Groundbreak session badge ---------- */
+.gb-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--foreground-muted);
+  text-transform: uppercase;
+}
+
+.gb-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gb-procore);
+  box-shadow: 0 0 0 3px rgba(255, 82, 0, 0.18);
+}
+
+/* ---------- Speaker stamp (name/title/firm) ---------- */
+.gb-stamp {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.gb-stamp--stacked {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.gb-stamp-photo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 41% 50%;
+  box-shadow: 0 4px 14px var(--shadow), 0 0 0 3px var(--accent-light);
+}
+
+.gb-stamp-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--foreground);
+  line-height: 1.2;
+}
+
+.gb-stamp-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-top: 0.1rem;
+}
+
+.gb-stamp-firm {
+  font-size: 0.76rem;
+  color: var(--foreground-muted);
+  margin-top: 0.1rem;
+}
+
+/* ---------- Previous engagement block (answers Q7) ---------- */
+.gb-prev {
+  display: flex;
+  gap: 1.1rem;
+  padding: 1rem;
+  border: 1.5px solid var(--card-border);
+  border-left: 4px solid var(--gb-procore);
+  border-radius: 14px;
+  background: var(--card);
+  box-shadow: 0 4px 14px var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.gb-prev:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px var(--shadow-strong);
+}
+
+/* Hero variant: stacked card — thumbnail on top at full card width and
+   natural 16:9, body below with padding. Mirrors the standard YouTube /
+   LinkedIn / social-card pattern. Previously the thumbnail lived on the
+   left with card padding around all four sides, which produced an ugly
+   white "picture frame" gutter in light mode; and cropping stretched
+   versions mangled the image. Stacking removes both problems because
+   the thumbnail width always matches the card width, and aspect-ratio
+   keeps it pristine. */
+.gb-prev--hero {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  gap: 0;
+}
+
+.gb-prev-thumb {
+  position: relative;
+  flex: 0 0 220px;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--background-secondary);
+  /* Without align-self, the flex parent's default align-items: stretch forces
+     this element's height to match the body column, overriding aspect-ratio
+     and making the image crop its sides. Pin it to its declared aspect. */
+  align-self: center;
+}
+
+.gb-prev--hero .gb-prev-thumb {
+  flex: 0 0 auto;
+  align-self: stretch;
+  width: 100%;
+  border-radius: 0;
+  aspect-ratio: 16 / 9;
+  background: transparent;
+}
+
+.gb-prev--hero .gb-prev-body {
+  padding: 1.2rem 1.4rem 1.4rem;
+}
+
+.gb-prev-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.gb-prev-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(255, 82, 0, 0.35), rgba(0, 0, 0, 0.25));
+  color: #fff;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+.gb-prev:hover .gb-prev-play { opacity: 1; }
+
+.gb-prev-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.gb-prev-kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gb-procore);
+}
+
+.gb-prev-event {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--foreground);
+}
+
+.gb-prev--hero .gb-prev-event { font-size: 1.7rem; }
+
+.gb-prev-session {
+  font-weight: 600;
+  color: var(--foreground);
+  font-size: 0.95rem;
+}
+
+.gb-prev-meta {
+  display: flex;
+  gap: 0.4rem;
+  color: var(--foreground-muted);
+  font-size: 0.82rem;
+  margin-top: 0.1rem;
+}
+
+.gb-prev-note {
+  margin-top: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--foreground-muted);
+  opacity: 0.7;
+  padding: 0.3rem 0.55rem;
+  border: 1px dashed var(--card-border);
+  border-radius: 6px;
+  align-self: flex-start;
+}
+
+/* ---------- Shared section primitives ---------- */
+.gb-section {
+  margin-top: 3rem;
+}
+
+.gb-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.6rem;
+}
+
+.gb-h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 6vw, 4.2rem);
+  line-height: 1;
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+.gb-h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  margin: 0;
+  line-height: 1.15;
+}
+
+.gb-h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+.gb-lede {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--foreground);
+  font-size: clamp(1.15rem, 1.9vw, 1.4rem);
+  line-height: 1.4;
+}
+
+.gb-body {
+  color: var(--foreground);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.gb-muted {
+  color: var(--foreground-muted);
+  font-size: 0.92rem;
+}
+
+.gb-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.gb-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--background-secondary);
+  border: 1px solid var(--card-border);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.gb-chip--accent {
+  background: rgba(255, 82, 0, 0.08);
+  border-color: rgba(255, 82, 0, 0.35);
+  color: var(--gb-procore);
+}
+
+.dark .gb-chip--accent {
+  background: rgba(255, 82, 0, 0.12);
+}
+
+/* ---------- Alts switcher footer ---------- */
+.gb-alts {
+  margin-top: 4.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.gb-alts-kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--foreground-muted);
+  margin-bottom: 1rem;
+}
+
+.gb-alts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 720px) {
+  .gb-alts-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.gb-alts-card {
+  position: relative;
+  padding: 1rem 1.15rem;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  display: block;
+}
+
+.gb-alts-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  box-shadow: 0 8px 20px var(--shadow);
+}
+
+.gb-alts-label {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--foreground);
+}
+
+.gb-alts-blurb {
+  margin-top: 0.15rem;
+  font-size: 0.85rem;
+  color: var(--foreground-muted);
+  line-height: 1.35;
+}
+
+.gb-alts-arrow {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--primary);
+  font-weight: 600;
+  transition: transform 0.25s ease;
+}
+
+.gb-alts-card:hover .gb-alts-arrow {
+  transform: translateX(4px);
+}
+
+.gb-alts-footer {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+}
+
+.gb-alts-home {
+  color: var(--foreground-muted);
+  transition: color 0.2s ease;
+}
+
+.gb-alts-home:hover { color: var(--primary); }
+
+/* =======================================================================
+   Alt 1 · The Pitch
+   ======================================================================= */
+.gb-pitch-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 900px) {
+  .gb-pitch-hero { grid-template-columns: 1.2fr 1fr; align-items: center; }
+}
+
+.gb-pitch-kicker {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gb-procore);
+}
+
+.gb-pitch-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin: 0.6rem 0 0.9rem;
+  color: var(--foreground);
+}
+
+.gb-pitch-title em {
+  font-style: italic;
+  color: var(--primary);
+}
+
+.gb-pitch-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+  color: var(--foreground);
+  max-width: 32rem;
+}
+
+.gb-pitch-takeaways {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+}
+
+@media (min-width: 720px) {
+  .gb-pitch-takeaways { grid-template-columns: 1fr 1fr; }
+}
+
+.gb-pitch-takeaway {
+  padding: 1.1rem 1.3rem;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.gb-pitch-cred {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+}
+
+@media (min-width: 720px) {
+  .gb-pitch-cred { grid-template-columns: repeat(2, 1fr); }
+}
+
+.gb-pitch-cred-item {
+  padding: 0.85rem 1rem;
+  background: var(--background-secondary);
+  border-radius: 10px;
+  border-left: 2px solid var(--accent);
+}
+
+.gb-pitch-cred-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.gb-pitch-cred-detail {
+  font-size: 0.9rem;
+  color: var(--foreground);
+  margin-top: 0.15rem;
+}
+
+.gb-pitch-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.85rem 1.3rem;
+  background: var(--gb-procore);
+  color: #fff;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 18px rgba(255, 82, 0, 0.25);
+}
+
+.gb-pitch-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255, 82, 0, 0.35);
+}
+
+/* ---------- Narrative hook (father/daughter framing) ---------- */
+.gb-hook {
+  position: relative;
+  padding: 1.6rem 1.8rem;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  border-left: 3px solid var(--gb-procore);
+}
+
+.gb-hook-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: var(--gb-procore);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.gb-hook-scene {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.1rem;
+}
+
+@media (max-width: 640px) {
+  .gb-hook-scene { grid-template-columns: 1fr; gap: 0.6rem; }
+  .gb-hook-v { display: none; }
+}
+
+.gb-hook-person {
+  padding: 0.85rem 1rem;
+  background: var(--background-secondary);
+  border-radius: 10px;
+  border-top: 2px solid var(--accent);
+}
+
+.gb-hook-role {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.3rem;
+}
+
+.gb-hook-detail {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--foreground);
+}
+
+.gb-hook-v {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--foreground-muted);
+  align-self: center;
+}
+
+.gb-hook-premise {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--foreground);
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--card-border);
+}
+
+.gb-hook-payoff {
+  margin-top: 0.8rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--foreground-muted);
+}
+
+/* =======================================================================
+   Alt 2 · The Thesis (editorial)
+   ======================================================================= */
+.gb-thesis {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.gb-thesis-kicker {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--foreground-muted);
+  font-family: var(--font-mono);
+}
+
+.gb-thesis-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5.2vw, 4rem);
+  line-height: 1;
+  margin: 1rem 0 0.6rem;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+}
+
+.gb-thesis-dek {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.45;
+  color: var(--foreground);
+  margin-top: 0.8rem;
+}
+
+.gb-thesis-byline {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--card-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--foreground-muted);
+  font-family: var(--font-mono);
+}
+
+.gb-thesis-body {
+  margin-top: 2.2rem;
+  font-size: 1.07rem;
+  line-height: 1.75;
+  color: var(--foreground);
+}
+
+.gb-thesis-body p {
+  margin: 0 0 1.3rem;
+}
+
+.gb-thesis-body p:first-child::first-letter {
+  font-family: var(--font-display);
+  font-size: 3.8rem;
+  float: left;
+  line-height: 0.85;
+  margin: 0.15rem 0.55rem 0 0;
+  color: var(--primary);
+}
+
+.gb-thesis-h2 {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  margin: 2.5rem 0 0.6rem;
+  color: var(--foreground);
+}
+
+.gb-thesis-pull {
+  margin: 2rem -1rem;
+  padding: 1.5rem 1.5rem;
+  border-left: 4px solid var(--gb-procore);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.35;
+  color: var(--foreground);
+  background: var(--background-secondary);
+  border-radius: 0 10px 10px 0;
+}
+
+.gb-thesis-proof {
+  margin: 2.5rem 0;
+  padding: 1rem;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+}
+
+.gb-thesis-proof-caption {
+  margin-top: 0.6rem;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--foreground-muted);
+  text-align: center;
+}
+
+.gb-thesis-takeaways {
+  margin-top: 2rem;
+  padding: 1.4rem 1.5rem;
+  background: var(--background-secondary);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+}
+
+.gb-thesis-takeaways h3 {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.gb-thesis-takeaways ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--foreground);
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+
+.gb-thesis-takeaways li { margin-bottom: 0.4rem; }
+
+/* =======================================================================
+   Alt 3 · The Dossier
+   ======================================================================= */
+.gb-dossier-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.gb-dossier-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+  margin: 0.4rem 0;
+  color: var(--foreground);
+}
+
+.gb-dossier-sub {
+  font-size: 0.95rem;
+  color: var(--foreground-muted);
+  line-height: 1.5;
+  max-width: 44rem;
+}
+
+.gb-dossier-questions {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gb-qa {
+  padding: 1.1rem 1.2rem;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gb-qa:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px var(--shadow);
+}
+
+.gb-qa--highlight {
+  border-left: 4px solid var(--gb-procore);
+  background: linear-gradient(
+    135deg,
+    var(--card) 0%,
+    color-mix(in srgb, var(--gb-procore) 5%, var(--card)) 100%
+  );
+}
+
+.gb-qa-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--foreground-muted);
+  letter-spacing: 0.05em;
+}
+
+.gb-qa-q {
+  font-weight: 700;
+  color: var(--foreground);
+  font-size: 0.95rem;
+  margin-top: 0.15rem;
+  line-height: 1.4;
+}
+
+.gb-qa-a {
+  margin-top: 0.6rem;
+  color: var(--foreground);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.gb-qa-answer-block {
+  margin-top: 0.7rem;
+}
+
+.gb-qa-meta {
+  margin-top: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--foreground-muted);
+}
+
+.gb-qa-chip-row {
+  margin-top: 0.55rem;
+}
+
+.gb-qa-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: 41% 50%;
+  box-shadow: 0 2px 8px var(--shadow);
+  margin-top: 0.3rem;
+}
+
+/* =======================================================================
+   Alt 4 · The Preview (interactive mini-talk)
+   ======================================================================= */
+.gb-preview-hero {
+  text-align: center;
+  padding: 3rem 1rem 2.5rem;
+}
+
+.gb-preview-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin: 0.5rem 0;
+  color: var(--foreground);
+}
+
+.gb-preview-tagline {
+  max-width: 34rem;
+  margin: 0.8rem auto 1.4rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--foreground-muted);
+}
+
+.gb-preview-scroll-hint {
+  margin-top: 1.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  color: var(--foreground-muted);
+}
+
+.gb-preview-scroll-hint::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 40px;
+  margin: 0.5rem auto 0;
+  background: linear-gradient(to bottom, var(--foreground-muted), transparent);
+  animation: gb-scroll-hint 1.8s ease-in-out infinite;
+}
+
+@keyframes gb-scroll-hint {
+  0%, 100% { opacity: 0.2; transform: scaleY(0.6); }
+  50%      { opacity: 0.9; transform: scaleY(1); }
+}
+
+.gb-slide {
+  position: relative;
+  margin: 3rem 0;
+  padding: 2rem 1.5rem;
+  border-radius: 18px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.gb-slide.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gb-slide::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--gb-procore);
+}
+
+.gb-slide-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--gb-procore);
+  font-weight: 600;
+}
+
+.gb-slide-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  line-height: 1.05;
+  color: var(--foreground);
+  margin: 0.3rem 0 0.8rem;
+}
+
+.gb-slide-body {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--foreground);
+  max-width: 42rem;
+}
+
+.gb-slide-list {
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.gb-slide-list li {
+  padding: 0.65rem 0.9rem;
+  background: var(--background-secondary);
+  border-radius: 8px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--foreground);
+  border-left: 2px solid var(--accent);
+}
+
+.gb-preview-proof {
+  margin-top: 3.5rem;
+  padding: 1.5rem;
+  background: var(--background-secondary);
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+}
+
+.gb-preview-proof-kicker {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gb-procore);
+  margin-bottom: 0.8rem;
+}
+
+/* ---------- Mobile tuning ---------- */
+@media (max-width: 720px) {
+  .gb-page { padding: 1.75rem 1rem 4rem; }
+  .gb-prev { flex-direction: column; }
+  .gb-prev-thumb, .gb-prev--hero .gb-prev-thumb { flex: 0 0 auto; width: 100%; }
+  /* Restore explicit 16:9 for the hero thumb on mobile — on desktop the
+     thumb stretches to match the body column, but column flex has no
+     inherent height for the image to fill, so pin the ratio back. */
+  .gb-prev--hero .gb-prev-thumb { aspect-ratio: 16 / 9; }
+  .gb-prev--hero .gb-prev-body { padding: 1.1rem 1.2rem; }
+  .gb-thesis-pull { margin: 1.5rem 0; font-size: 1.25rem; }
+}

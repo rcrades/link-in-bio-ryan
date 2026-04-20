@@ -1,6 +1,18 @@
 {
   "publications": [
     {
+      "type": "in-person",
+      "title": "How Generative AI Can Drive Productivity In The Office And The Field",
+      "date": "2024-09-26",
+      "source": "Rocky Mountain CFMA Conference 2024",
+      "url": "https://youtu.be/9zJ0QphHq2Q",
+      "speaker": "Ryan Rademann",
+      "presentedBy": "Presented by: CFMA Rocky Mountain Chapter",
+      "time": "1:30 PM – 3:30 PM MT",
+      "headshot": "/profile-backup.jpg",
+      "background": "/rocky-mountain-cfma-audience.jpg"
+    },
+    {
       "type": "article",
       "title": "Elevating Construction Operations With an Advanced Tech Stack",
       "date": "2025-03-21",
