@@ -32,6 +32,26 @@ const html = `
     </section>
 
     <section class="gb-section">
+      <div class="gb-section-label">The framing</div>
+      <div class="gb-hook">
+        <div class="gb-hook-kicker">The talk opens on a phone call</div>
+        <div class="gb-hook-scene">
+          <div class="gb-hook-person">
+            <div class="gb-hook-role">Father</div>
+            <div class="gb-hook-detail">${TALK.narrativeHook.scene.father}</div>
+          </div>
+          <div class="gb-hook-v">v.</div>
+          <div class="gb-hook-person">
+            <div class="gb-hook-role">Daughter</div>
+            <div class="gb-hook-detail">${TALK.narrativeHook.scene.daughter}</div>
+          </div>
+        </div>
+        <div class="gb-hook-premise">${TALK.narrativeHook.scene.premise}</div>
+        <div class="gb-hook-payoff">${TALK.narrativeHook.payoff}</div>
+      </div>
+    </section>
+
+    <section class="gb-section">
       <div class="gb-section-label">What a Groundbreak audience walks away with</div>
       <div class="gb-pitch-takeaways">
         ${TALK.takeaways.map(t => `<div class="gb-pitch-takeaway">${t}</div>`).join('')}

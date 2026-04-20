@@ -31,6 +31,18 @@ export const TALK = {
   tagline: "What a ten-block radius of Market Street has already decided about AI — and why construction has ~24 months to act on it.",
   oneLine:
     "A consensus is forming in San Francisco about what AI is, how it's built, and what it replaces. Construction is 3–5 years downstream of that consensus. Here's how to pre-position before it arrives.",
+  narrativeHook: {
+    short:
+      'Structured as a bird\'s-eye view of a recurring conversation: a father in the East Bay — president of a $400M GC — and his daughter, late twenties, Stanford grad, Member of Technical Staff at Anthropic. She can\'t tell him what she\'s working on. She *can* tell him where the puck is going.',
+    scene: {
+      father: 'President of a $400M East Bay GC. Sixty-one. Reads the Dodge Report over coffee, still pours concrete in his sleep.',
+      daughter: 'Late twenties. Stanford CS. Member of Technical Staff at Anthropic. Under NDA for the interesting parts.',
+      premise:
+        "Most of what she sees, she can't share. What she can share is the advice itself — the shape of where the puck is going."
+    },
+    payoff:
+      "The talk is forty-five minutes of exactly that advice, translated into the timelines, roles, and decisions a Groundbreak audience actually controls. Skate to where the puck is going."
+  },
   claims: [
     {
       header: 'The consensus is real',
@@ -87,7 +99,7 @@ export const DOSSIER_ANSWERS = {
   q2_title: `${SPEAKER.title}, ${SPEAKER.firm}`,
   q3_headshot: SPEAKER.photo,
   q4_bio:
-    "Ryan Rademann is a Partner at Wipfli LLP, where he leads construction and real-estate technology practice work for contractors and owners across North America. His focus is the slice of technology strategy that most firms underspend on: how humans, software, and now agents collaborate to actually finish projects. Ryan has spoken at Procore Groundbreak, BuiltWorlds, CFMA, UCA of Illinois, and Office Hours Global, and writes for Construction Executive, ForConstructionPros, and CMAA. He advises early-stage startups building field AI for specialty contractors, and lives at the intersection of frontier-AI thinking and the working reality of a jobsite.",
+    "Ryan Rademann is a Partner at Wipfli LLP, where he leads construction and real-estate technology practice work for contractors and owners across North America. His focus is the slice of technology strategy that most firms underspend on: how humans, software, and now agents collaborate to actually finish projects. Ryan has spoken at Procore Groundbreak, BuiltWorlds, CFMA, UCA of Illinois, and Office Hours Global, and writes for Construction Executive, ForConstructionPros, and CMAA. Alongside advising contractors large and small, he also advises early-stage startups building field AI for specialty contractors — living at the intersection of frontier-AI thinking and the working reality of a jobsite.",
   q5_links: `${SPEAKER.site} · ${SPEAKER.linkedin}`,
   q6_prior_groundbreak: 'Yes',
   q7_previous_engagement: PREVIOUS_ENGAGEMENT.url,
@@ -109,7 +121,7 @@ export const DOSSIER_ANSWERS = {
   q13_audiences: ['General Contractors', 'Owners', 'Specialty Contractors'],
   q14_personas: ['Executive', 'Operations', 'IT', 'Preconstruction'],
   q15_why_good_fit:
-    "Most AI sessions at industry conferences are either hype reels or vendor demos. This one is a serious read on what the frontier has already decided about AI, translated into the timelines, roles, and decisions a Groundbreak audience actually controls. I've spent the last three years helping contractors and owners make real technology bets — and the last eighteen months pressure-testing the San Francisco Consensus against what actually works at a jobsite. Groundbreak is the right audience because it's the one room that holds all three buyer roles (Owner, GC, Specialty) plus Procore's product org — exactly the mix this talk is designed to move."
+    "Most AI sessions at industry conferences are hype reels or vendor demos. This one is a serious read on what the frontier has already decided about AI, translated into the timelines, roles, and decisions a Groundbreak audience actually controls. The talk is structured as a bird's-eye view of a recurring conversation — a $400M East Bay GC president and his daughter, a Member of Technical Staff at Anthropic. She can't share most of what she sees, but she can share the advice: skate to where the puck is going. The audience walks out with 45 minutes of exactly that advice. Groundbreak is the right room because it holds all three buyer roles plus Procore's product org — the mix this talk is designed to move."
 }
 
 // Links between the four alts. Each page shows the *other* three.

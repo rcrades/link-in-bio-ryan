@@ -11,6 +11,13 @@ applyTheme()
 
 const slides = [
   {
+    n: '00',
+    title: 'The framing',
+    body:
+      "A father and daughter on a Sunday phone call. He's in the East Bay — president of a $400M GC, sixty-one, still pours concrete in his sleep. She's in the city — late twenties, Stanford CS, Member of Technical Staff at Anthropic. She can't tell him what she's working on. She can tell him where the puck is going. This talk is an overhearing of her advice — translated for a room full of people with cranes.",
+    list: null
+  },
+  {
     n: '01',
     title: 'The claim',
     body:

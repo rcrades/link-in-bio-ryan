@@ -29,12 +29,21 @@ const html = `
 
       <div class="gb-thesis-body">
         <p>
-          There is a room in San Francisco — and it is not metaphorical, it is an actual
-          ten-block radius around Market Street — where a small number of people have
-          stopped arguing about what AI is. The frontier labs, the teams shipping
-          agents into production, the investors underwriting the next decade of
-          software: they've aligned on a handful of claims most industries haven't
-          even read yet.
+          A father and daughter talk most Sunday evenings. He lives in the
+          East Bay — president of a $400M general contractor, sixty-one,
+          still pours concrete in his sleep. She lives in the city — late
+          twenties, Stanford CS, Member of Technical Staff at Anthropic.
+          She can't tell him what she's working on. She <em>can</em> tell him
+          where the puck is going. This talk is an overhearing of that
+          advice, translated for a room full of people with cranes.
+        </p>
+        <p>
+          There is a ten-block radius around Market Street where a small
+          number of people have stopped arguing about what AI is. The
+          frontier labs, the teams shipping agents into production, the
+          investors underwriting the next decade of software: they've
+          aligned on a handful of claims most industries haven't even read
+          yet.
         </p>
         <p>
           Call it the <em>San Francisco Consensus</em>. The model is the kernel.
@@ -45,9 +54,8 @@ const html = `
         </p>
 
         <blockquote class="gb-thesis-pull">
-          Construction's AI conversation is still stuck on the wrong question.
-          The right one is: what changes when every superintendent has a
-          research-grade copilot?
+          The daughter to the father: "Dad, skate to where the puck is going."
+          The rest of this talk is forty-five minutes of what the puck is doing.
         </blockquote>
 
         <h2 class="gb-thesis-h2">Why construction is downstream</h2>
