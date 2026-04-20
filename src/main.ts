@@ -314,10 +314,15 @@ const generateInPersonPublication = (pub: any, year: number) => {
 
   const headshotSrc = pub.headshot || '/profile.jpg';
   const timeRange = pub.time ? ` · ${pub.time}` : '';
+  // Optional photographic backdrop. The CSS gradient remains the base layer so
+  // the card still renders cleanly if the asset is missing.
+  const backdropStyle = pub.background
+    ? `style="--in-person-bg:url('${pub.background}');"`
+    : '';
 
   return `
     <div class="publication-item in-person-pub p-0 min-h-[260px] justify-self-start w-full overflow-hidden" data-year="${year}" data-source="${pub.source.toLowerCase()}" data-type="${pub.type}">
-      <div class="in-person-hero relative flex flex-col h-full">
+      <div class="in-person-hero ${pub.background ? 'has-backdrop' : ''} relative flex flex-col h-full" ${backdropStyle}>
         <!-- Event band: logo + event name + date/time -->
         <div class="in-person-band flex items-center gap-3 px-3 py-2.5 relative z-[2]">
           <div class="in-person-logo flex-shrink-0">${ROCKY_MOUNTAIN_CFMA_SVG}</div>
@@ -510,7 +515,7 @@ async function initializeApp() {
         <div id="publications-details" class="accordion-content max-h-0 overflow-hidden opacity-0 transition-all duration-500">
           <div class="px-5 pb-5">
             ${generateYearFilters(publicationsData.publications)}
-            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2.5 mt-4">
+            <div class="grid grid-cols-1 desktop:grid-cols-2 gap-2.5 mt-4">
               ${generatePublications(publicationsData.publications)}
             </div>
           </div>

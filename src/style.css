@@ -499,6 +499,14 @@ body::before {
   position: relative;
 }
 
+/* Photographic backdrop applied per-entry via inline --in-person-bg var */
+.in-person-hero.has-backdrop {
+  background:
+    linear-gradient(180deg, rgba(8,10,18,0.55) 0%, rgba(8,10,18,0.35) 35%, rgba(8,10,18,0.85) 100%),
+    var(--in-person-bg) center/cover no-repeat,
+    #0a0d16;
+}
+
 .in-person-hero::before {
   content: '';
   position: absolute;
@@ -513,6 +521,9 @@ body::before {
   opacity: 0.8;
   pointer-events: none;
 }
+
+/* Hide the simulated-audience dot pattern when a real backdrop photo is set */
+.in-person-hero.has-backdrop::before { display: none; }
 
 .in-person-band {
   background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 100%);
