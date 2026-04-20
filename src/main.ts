@@ -321,25 +321,24 @@ const generateInPersonPublication = (pub: any, year: number) => {
     : '';
 
   return `
-    <div class="publication-item in-person-pub p-0 min-h-[260px] justify-self-start w-full overflow-hidden" data-year="${year}" data-source="${pub.source.toLowerCase()}" data-type="${pub.type}">
+    <div class="publication-item in-person-pub p-0 min-h-[180px] justify-self-start w-full overflow-hidden" data-year="${year}" data-source="${pub.source.toLowerCase()}" data-type="${pub.type}">
       <div class="in-person-hero ${pub.background ? 'has-backdrop' : ''} relative flex flex-col h-full" ${backdropStyle}>
         <!-- Event band: logo + event name + date/time -->
-        <div class="in-person-band flex items-center gap-3 px-3 py-2.5 relative z-[2]">
+        <div class="in-person-band flex items-center gap-2.5 px-2.5 py-2 relative z-[2]">
           <div class="in-person-logo flex-shrink-0">${ROCKY_MOUNTAIN_CFMA_SVG}</div>
           <div class="flex-1 min-w-0">
-            <div class="in-person-event text-sm font-bold text-white leading-tight">${pub.source}</div>
-            <div class="in-person-datetime text-[0.7rem] text-white/80 mt-0.5">${formattedDate}${timeRange}</div>
+            <div class="in-person-event text-[0.8rem] font-bold text-white leading-tight">${pub.source}</div>
+            <div class="in-person-datetime text-[0.65rem] text-white/80 mt-0.5">${formattedDate}${timeRange}</div>
           </div>
         </div>
         <!-- Stage / audience mood backdrop -->
         <div class="in-person-stage flex-1 relative"></div>
         <!-- Speaker panel: headshot + title + speaker line -->
-        <div class="in-person-panel relative z-[2] flex items-stretch gap-3 p-3">
+        <div class="in-person-panel relative z-[2] flex items-center gap-2.5">
           <img src="${headshotSrc}" alt="${pub.speaker || 'Ryan Rademann'}" class="in-person-headshot flex-shrink-0" />
           <div class="flex-1 min-w-0 flex flex-col justify-center">
-            <div class="in-person-title font-display text-base leading-tight text-white">&ldquo;${pub.title}&rdquo;</div>
-            <div class="in-person-speaker text-xs font-semibold text-white/90 mt-1">${pub.speaker || 'Ryan Rademann'}</div>
-            <div class="in-person-presented text-[0.65rem] text-white/60 mt-0.5">${pub.presentedBy || 'Presented in person'}</div>
+            <div class="in-person-title font-display text-white">&ldquo;${pub.title}&rdquo;</div>
+            <div class="in-person-speaker text-[0.72rem] font-semibold text-white/90 mt-0.5 leading-tight">${pub.speaker || 'Ryan Rademann'} <span class="font-normal text-white/55">· ${pub.presentedBy || 'Presented in person'}</span></div>
           </div>
         </div>
       </div>
