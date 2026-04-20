@@ -161,8 +161,8 @@ img { max-width: 100%; display: block; }
 .gb-prev--hero {
   flex-direction: row;
   align-items: stretch;
-  padding: 1.5rem;
-  gap: 1.5rem;
+  padding: 0;
+  gap: 0;
 }
 
 .gb-prev-thumb {
@@ -178,9 +178,22 @@ img { max-width: 100%; display: block; }
   align-self: center;
 }
 
+/* Hero variant: thumbnail sits flush with the top-left corner of the card
+   at its natural 16:9 ratio — no card-padding gutter, no rounded corners
+   on the thumb itself, no separate background color. The body column
+   takes its own padding. Empty space below the thumb (inside the thumb's
+   flex column) shows the card's own background seamlessly, so there is
+   no visible "picture frame" effect that the padded version produced. */
 .gb-prev--hero .gb-prev-thumb {
-  flex: 0 0 320px;
+  flex: 0 0 44%;
   align-self: flex-start;
+  border-radius: 0;
+  aspect-ratio: 16 / 9;
+  background: transparent;
+}
+
+.gb-prev--hero .gb-prev-body {
+  padding: 1.4rem 1.5rem;
 }
 
 .gb-prev-thumb img {
@@ -990,5 +1003,10 @@ img { max-width: 100%; display: block; }
   .gb-page { padding: 1.75rem 1rem 4rem; }
   .gb-prev { flex-direction: column; }
   .gb-prev-thumb, .gb-prev--hero .gb-prev-thumb { flex: 0 0 auto; width: 100%; }
+  /* Restore explicit 16:9 for the hero thumb on mobile — on desktop the
+     thumb stretches to match the body column, but column flex has no
+     inherent height for the image to fill, so pin the ratio back. */
+  .gb-prev--hero .gb-prev-thumb { aspect-ratio: 16 / 9; }
+  .gb-prev--hero .gb-prev-body { padding: 1.1rem 1.2rem; }
   .gb-thesis-pull { margin: 1.5rem 0; font-size: 1.25rem; }
 }
