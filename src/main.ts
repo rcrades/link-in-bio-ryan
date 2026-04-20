@@ -106,8 +106,56 @@ const generateRegularLinks = (regularLinks: any[]) => {
 const PUBLICATION_TYPES: Record<string, { label: string; icon: string }> = {
   article: { label: 'Article', icon: 'file-text' },
   video: { label: 'Video', icon: 'video' },
-  interview: { label: 'Video Interview', icon: 'tv' }
+  interview: { label: 'Video Interview', icon: 'tv' },
+  'in-person': { label: 'In-Person Talk', icon: 'mic' }
 };
+
+// Inline SVG approximation of the Rocky Mountain CFMA badge — kept inline so
+// the composite in-person publication card renders without a separate asset.
+const ROCKY_MOUNTAIN_CFMA_SVG = `
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Rocky Mountain CFMA">
+  <defs>
+    <linearGradient id="rmc-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1d3a6e"/>
+      <stop offset="100%" stop-color="#10223f"/>
+    </linearGradient>
+    <linearGradient id="rmc-mtn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9bbcd9"/>
+      <stop offset="100%" stop-color="#4f7aa8"/>
+    </linearGradient>
+    <linearGradient id="rmc-green" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1d8a6a"/>
+      <stop offset="100%" stop-color="#0f5a46"/>
+    </linearGradient>
+  </defs>
+  <!-- Shield outline -->
+  <path d="M20 28 L180 28 L180 150 L100 188 L20 150 Z" fill="url(#rmc-sky)" stroke="#ffffff" stroke-width="3"/>
+  <!-- Mountain range -->
+  <path d="M22 112 L52 72 L72 94 L100 54 L128 92 L150 70 L178 112 L178 118 L22 118 Z" fill="url(#rmc-mtn)"/>
+  <!-- Snow caps -->
+  <path d="M92 68 L100 54 L110 72 L103 74 L99 68 Z" fill="#ffffff" opacity="0.85"/>
+  <path d="M46 82 L52 72 L60 84 L54 86 Z" fill="#ffffff" opacity="0.7"/>
+  <path d="M142 82 L150 70 L158 86 L152 88 Z" fill="#ffffff" opacity="0.7"/>
+  <!-- Building pixels on center mountain (architectural nod) -->
+  <g fill="#ffffff" opacity="0.95">
+    <rect x="92" y="80" width="6" height="8"/>
+    <rect x="100" y="76" width="6" height="12"/>
+    <rect x="108" y="80" width="6" height="8"/>
+    <rect x="92" y="90" width="6" height="8"/>
+    <rect x="100" y="90" width="6" height="8"/>
+    <rect x="108" y="90" width="6" height="8"/>
+  </g>
+  <!-- Green band -->
+  <rect x="20" y="118" width="160" height="34" fill="url(#rmc-green)"/>
+  <!-- ROCKY MOUNTAIN text -->
+  <text x="100" y="46" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="13" fill="#ffffff" letter-spacing="1.5">ROCKY MOUNTAIN</text>
+  <!-- CONFERENCE chip -->
+  <rect x="58" y="53" width="84" height="12" fill="#ffffff" opacity="0.12"/>
+  <text x="100" y="62" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="7" fill="#ffffff" letter-spacing="3">CONFERENCE</text>
+  <!-- CFMA plate -->
+  <rect x="54" y="128" width="92" height="18" fill="#ffffff"/>
+  <text x="100" y="142" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-weight="900" font-size="14" fill="#1d3a6e" letter-spacing="2">CFMA</text>
+</svg>`;
 
 // Function to generate publication filter pills (year + format chips + Wipfli toggle)
 const generateYearFilters = (publications: any[]) => {
@@ -251,26 +299,77 @@ const generateCauses = (causes: any[]) => {
   `).join('')
 }
 
+// Programmatic composite card for an in-person speaking engagement.
+// Re-creates the look of a conference thumbnail (event badge, title, date,
+// headshot) entirely in TypeScript so no image asset is required beyond the
+// speaker's headshot.
+const generateInPersonPublication = (pub: any, year: number) => {
+  const formattedDate = new Date(pub.date).toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC'
+  });
+
+  const headshotSrc = pub.headshot || '/profile.jpg';
+  const timeRange = pub.time ? ` · ${pub.time}` : '';
+
+  return `
+    <div class="publication-item in-person-pub p-0 min-h-[260px] justify-self-start w-full overflow-hidden" data-year="${year}" data-source="${pub.source.toLowerCase()}" data-type="${pub.type}">
+      <div class="in-person-hero relative flex flex-col h-full">
+        <!-- Event band: logo + event name + date/time -->
+        <div class="in-person-band flex items-center gap-3 px-3 py-2.5 relative z-[2]">
+          <div class="in-person-logo flex-shrink-0">${ROCKY_MOUNTAIN_CFMA_SVG}</div>
+          <div class="flex-1 min-w-0">
+            <div class="in-person-event text-sm font-bold text-white leading-tight">${pub.source}</div>
+            <div class="in-person-datetime text-[0.7rem] text-white/80 mt-0.5">${formattedDate}${timeRange}</div>
+          </div>
+        </div>
+        <!-- Stage / audience mood backdrop -->
+        <div class="in-person-stage flex-1 relative"></div>
+        <!-- Speaker panel: headshot + title + speaker line -->
+        <div class="in-person-panel relative z-[2] flex items-stretch gap-3 p-3">
+          <img src="${headshotSrc}" alt="${pub.speaker || 'Ryan Rademann'}" class="in-person-headshot flex-shrink-0" />
+          <div class="flex-1 min-w-0 flex flex-col justify-center">
+            <div class="in-person-title font-display text-base leading-tight text-white">&ldquo;${pub.title}&rdquo;</div>
+            <div class="in-person-speaker text-xs font-semibold text-white/90 mt-1">${pub.speaker || 'Ryan Rademann'}</div>
+            <div class="in-person-presented text-[0.65rem] text-white/60 mt-0.5">${pub.presentedBy || 'Presented in person'}</div>
+          </div>
+        </div>
+      </div>
+      <a href="${pub.url}" target="_blank" class="publication-link-btn absolute bottom-2 right-2 z-[3] inline-flex items-center justify-center w-7 h-7 rounded-md bg-primary text-card transition-all duration-300 ease-bounce-in">
+        <i data-lucide="arrow-up-right" class="w-3.5 h-3.5" aria-hidden="true"></i>
+      </a>
+    </div>
+  `;
+};
+
 // Function to generate publications HTML
 const generatePublications = (publications: any[]) => {
   // Sort publications by date (newest first)
   const sortedPublications = publications.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  
+
   return sortedPublications.map(pub => {
     const year = new Date(pub.date).getFullYear();
-    const typeIcon = pub.type === 'article' ? 'file-text' : 
-                    pub.type === 'video' ? 'video' : 
+
+    if (pub.type === 'in-person') {
+      return generateInPersonPublication(pub, year);
+    }
+
+    const typeIcon = pub.type === 'article' ? 'file-text' :
+                    pub.type === 'video' ? 'video' :
                     pub.type === 'interview' ? 'tv' : 'file';
-    
+
     // Color mapping for publication types
     const typeColors = {
       article: 'border-emerald-400 text-emerald-400',
       video: 'border-purple-400 text-purple-400',
       interview: 'border-orange-400 text-orange-400'
     };
-    
+
     const typeColorClass = typeColors[pub.type as keyof typeof typeColors] || 'border-gray-400 text-gray-400';
-    
+
     return `
       <div class="publication-item p-2 flex flex-col min-h-[140px] justify-self-start w-full" data-year="${year}" data-source="${pub.source.toLowerCase()}" data-type="${pub.type}">
         <div class="flex-1 pb-10 text-left relative z-[1]">
