@@ -33,7 +33,7 @@ export const TALK = {
     "A consensus is forming in San Francisco about what AI is, how it's built, and what it replaces. Construction is 3–5 years downstream of that consensus. Here's how to pre-position before it arrives.",
   narrativeHook: {
     short:
-      'Structured as a bird\'s-eye view of a recurring conversation: a father in the East Bay — president of a $400M GC — and his daughter, late twenties, Stanford grad, Member of Technical Staff at Anthropic. She can\'t tell him what she\'s working on. She *can* tell him where the puck is going.',
+      "Structured as a bird's-eye view of a recurring Sunday lunch downtown: a father from the East Bay — president of a $400M GC — and his daughter, late twenties, Stanford grad, Member of Technical Staff at Anthropic. She can't tell him what she's working on. She *can* tell him where the puck is going.",
     scene: {
       father: 'President of a $400M East Bay GC. Sixty-one. Reads the Dodge Report over coffee, still pours concrete in his sleep.',
       daughter: 'Late twenties. Stanford CS. Member of Technical Staff at Anthropic. Under NDA for the interesting parts.',
@@ -47,7 +47,7 @@ export const TALK = {
     {
       header: 'The consensus is real',
       body:
-        "Inside a ten-block radius of Market Street, a small group of labs, founders, and operators have aligned on concrete claims: the model is the kernel, agents beat apps, context is the new moat. These aren't takes — they're the operating assumptions of the next ten years."
+        "Inside a ten-block radius of Market Street, a small group of labs, founders, and operators have aligned on concrete claims: the model itself is the product, agents beat apps, context is the new moat. These aren't takes — they're the operating assumptions of the next ten years."
     },
     {
       header: "Construction's AI dialogue is several cycles behind",
@@ -121,7 +121,7 @@ export const DOSSIER_ANSWERS = {
   q13_audiences: ['General Contractors', 'Owners', 'Specialty Contractors'],
   q14_personas: ['Executive', 'Operations', 'IT', 'Preconstruction'],
   q15_why_good_fit:
-    "Most AI sessions at industry conferences are hype reels or vendor demos. This one is a serious read on what the frontier has already decided about AI, translated into the timelines, roles, and decisions a Groundbreak audience actually controls. The talk is structured as a bird's-eye view of a recurring conversation — a $400M East Bay GC president and his daughter, a Member of Technical Staff at Anthropic. She can't share most of what she sees, but she can share the advice: skate to where the puck is going. The audience walks out with 45 minutes of exactly that advice. Groundbreak is the right room because it holds all three buyer roles plus Procore's product org — the mix this talk is designed to move."
+    "Most AI sessions at industry conferences are hype reels or vendor demos. This one is a serious read on what the frontier has already decided about AI, translated into the timelines, roles, and decisions a Groundbreak audience actually controls. The talk is structured as a bird's-eye view of a recurring Sunday lunch downtown — a $400M East Bay GC president and his daughter, a Member of Technical Staff at Anthropic. She can't share most of what she sees, but she can share the advice: skate to where the puck is going. The audience walks out with 45 minutes of exactly that advice. Groundbreak is the right room because it holds all three buyer roles plus Procore's product org — the mix this talk is designed to move."
 }
 
 // Links between the four alts. Each page shows the *other* three.

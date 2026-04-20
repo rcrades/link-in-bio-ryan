@@ -29,13 +29,14 @@ const html = `
 
       <div class="gb-thesis-body">
         <p>
-          A father and daughter talk most Sunday evenings. He lives in the
-          East Bay — president of a $400M general contractor, sixty-one,
-          still pours concrete in his sleep. She lives in the city — late
-          twenties, Stanford CS, Member of Technical Staff at Anthropic.
-          She can't tell him what she's working on. She <em>can</em> tell him
-          where the puck is going. This talk is an overhearing of that
-          advice, translated for a room full of people with cranes.
+          A father and daughter meet for lunch downtown most Sundays. He
+          drives in from the East Bay — president of a $400M general
+          contractor, sixty-one, still pours concrete in his sleep. She
+          walks over from her side of town — late twenties, Stanford CS,
+          Member of Technical Staff at Anthropic. She can't tell him what
+          she's working on. She <em>can</em> tell him where the puck is
+          going. This talk is an overhearing of that advice, translated
+          for a room full of people with cranes.
         </p>
         <p>
           There is a ten-block radius around Market Street where a small
@@ -46,11 +47,12 @@ const html = `
           yet.
         </p>
         <p>
-          Call it the <em>San Francisco Consensus</em>. The model is the kernel.
-          Agents will eat applications. Context is the new moat. Code is being
-          generated faster than it can be reviewed, and the reviewers are becoming
-          models themselves. What you can <em>do</em> at your desk this month is
-          genuinely different from what you could do last quarter.
+          Call it the <em>San Francisco Consensus</em>. The model itself is the
+          product, not a feature bolted on top. Agents will eat applications.
+          Context is the new moat. Code is being generated faster than it can
+          be reviewed, and the reviewers are becoming models themselves. What
+          you can <em>do</em> at your desk this month is genuinely different
+          from what you could do last quarter.
         </p>
 
         <blockquote class="gb-thesis-pull">
@@ -107,7 +109,8 @@ const html = `
           three buyer roles (Owner / GC / Specialty) sitting next to Procore's
           product organization, with enough signal in the audience to ask hard
           questions back. The goal isn't inspiration. The goal is that a
-          preconstruction VP flies home with three specific moves for Monday.
+          construction firm's COO flies home with three specific moves for
+          Monday.
         </p>
       </div>
     </article>

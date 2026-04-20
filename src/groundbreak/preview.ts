@@ -14,14 +14,14 @@ const slides = [
     n: '00',
     title: 'The framing',
     body:
-      "A father and daughter on a Sunday phone call. He's in the East Bay — president of a $400M GC, sixty-one, still pours concrete in his sleep. She's in the city — late twenties, Stanford CS, Member of Technical Staff at Anthropic. She can't tell him what she's working on. She can tell him where the puck is going. This talk is an overhearing of her advice — translated for a room full of people with cranes.",
+      "A father and daughter meet for lunch downtown on Sundays. He drives in from the East Bay — president of a $400M GC, sixty-one, still pours concrete in his sleep. She walks over from her side of town — late twenties, Stanford CS, Member of Technical Staff at Anthropic. She can't tell him what she's working on. She can tell him where the puck is going. This talk is an overhearing of her advice — translated for a room full of people with cranes.",
     list: null
   },
   {
     n: '01',
     title: 'The claim',
     body:
-      "Inside a ten-block radius of Market Street, a small number of labs, founders, and operators have aligned on a handful of concrete claims. The model is the kernel. Agents will eat applications. Context is the new moat. These aren't takes — they're the operating assumptions of the next ten years.",
+      "Inside a ten-block radius of Market Street, a small number of labs, founders, and operators have aligned on a handful of concrete claims. The model itself is the product, not a feature bolted on top. Agents will eat applications. Context is the new moat. These aren't takes — they're the operating assumptions of the next ten years.",
     list: null
   },
   {
@@ -58,7 +58,7 @@ const slides = [
     n: '05',
     title: 'What you walk out with',
     body:
-      "This talk is designed for the exact room Groundbreak assembles: Owners, GCs, and Specialty Contractors sitting next to Procore's product org. The goal isn't inspiration — it's that a preconstruction VP flies home with three specific moves for Monday.",
+      "This talk is designed for the exact room Groundbreak assembles: Owners, GCs, and Specialty Contractors sitting next to Procore's product org. The goal isn't inspiration — it's that a construction firm's COO flies home with three specific moves for Monday.",
     list: TALK.takeaways
   }
 ]
