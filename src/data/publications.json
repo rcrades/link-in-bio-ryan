@@ -32,7 +32,8 @@
       "source": "Procore Groundbreak 2025 · Houston, TX",
       "speaker": "Ryan Rademann",
       "presentedBy": "Co-presented with Howard Fu, CFO of Procore",
-      "headshot": "/profile.jpg"
+      "headshot": "/profile.jpg",
+      "background": "/gbk-2025.jpg"
     },
     {
       "type": "in-person",
@@ -40,7 +41,8 @@
       "date": "2025-11-15",
       "source": "Centuri Energy & Utility Leaders' Executive Forum · Orlando, FL",
       "speaker": "Ryan Rademann",
-      "headshot": "/profile.jpg"
+      "headshot": "/profile.jpg",
+      "background": "/centuri-orlando.jpg"
     },
     {
       "type": "article",

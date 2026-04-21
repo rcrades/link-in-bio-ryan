@@ -331,16 +331,14 @@ const generateInPersonPublication = (pub: any, year: number) => {
   });
   const timeRange = pub.time ? ` · ${pub.time}` : '';
 
-  // Logo resolution — opt-in inline SVG by key, image path, or a minimal
-  // fallback. When the top band is hidden we skip the logo entirely.
+  // Logo resolution — opt-in inline SVG by key or image path. If no logo is
+  // configured and the top band is visible, the band renders as text-only.
   let logoHtml = '';
   if (!hideEventBand) {
     if (pub.logoKey === 'rocky-mountain-cfma') {
       logoHtml = ROCKY_MOUNTAIN_CFMA_SVG;
     } else if (pub.logo) {
       logoHtml = `<img src="${pub.logo}" alt="${pub.source}" class="in-person-logo-img" />`;
-    } else {
-      logoHtml = `<div class="in-person-logo-fallback"><i data-lucide="mic" class="w-4 h-4" aria-hidden="true"></i></div>`;
     }
   }
 
@@ -350,7 +348,7 @@ const generateInPersonPublication = (pub: any, year: number) => {
     ? ''
     : `
         <div class="in-person-band flex items-center gap-2.5 pl-2.5 pr-10 py-2 relative z-[2]">
-          <div class="in-person-logo flex-shrink-0">${logoHtml}</div>
+          ${logoHtml ? `<div class="in-person-logo flex-shrink-0">${logoHtml}</div>` : ''}
           <div class="flex-1 min-w-0">
             <div class="in-person-event text-[0.8rem] font-bold text-white leading-tight">${pub.source}</div>
             <div class="in-person-datetime text-[0.65rem] text-white/80 mt-0.5">${formattedDate}${timeRange}</div>
