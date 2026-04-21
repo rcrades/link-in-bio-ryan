@@ -304,8 +304,24 @@ const generateCauses = (causes: any[]) => {
 // headshot) entirely in TypeScript so no image asset is required beyond the
 // speaker's headshot.
 const generateInPersonPublication = (pub: any, year: number) => {
-  // Auto-formatted date is the default; individual entries can override the
-  // display string via `dateDisplay` without changing the sortable `date`.
+  const headshotSrc = pub.headshot || '/profile.jpg';
+  // Optional photographic backdrop. The CSS gradient remains the base layer so
+  // the card still renders cleanly if the asset is missing.
+  const backdropStyle = pub.background
+    ? `style="--in-person-bg:url('${pub.background}');"`
+    : '';
+
+  // Per-entry layout toggles.
+  // hideEventBand: skip the blurred top band and fold the event name into the
+  //   speaker line in the bottom panel, so the backdrop photo reads edge-to-edge.
+  // hideHeadshot: skip the circular headshot (useful when the speaker is already
+  //   the subject of the backdrop photo).
+  const hideEventBand = !!pub.hideEventBand;
+  const hideHeadshot = !!pub.hideHeadshot;
+
+  // Auto-formatted date only renders when the top band is shown; entries can
+  // override the display string via `dateDisplay` without changing the
+  // sortable `date`.
   const formattedDate = pub.dateDisplay || new Date(pub.date).toLocaleDateString('en-US', {
     weekday: 'long',
     month: 'short',
@@ -313,19 +329,7 @@ const generateInPersonPublication = (pub: any, year: number) => {
     year: 'numeric',
     timeZone: 'UTC'
   });
-
-  const headshotSrc = pub.headshot || '/profile.jpg';
   const timeRange = pub.time ? ` · ${pub.time}` : '';
-  // Optional photographic backdrop. The CSS gradient remains the base layer so
-  // the card still renders cleanly if the asset is missing.
-  const backdropStyle = pub.background
-    ? `style="--in-person-bg:url('${pub.background}');"`
-    : '';
-
-  // Per-entry layout toggle: when true, we hide the blurred top band so the
-  // backdrop photo reads edge-to-edge, and move event name + date into the
-  // bottom panel alongside the speaker info.
-  const hideEventBand = !!pub.hideEventBand;
 
   // Logo resolution — opt-in inline SVG by key, image path, or a minimal
   // fallback. When the top band is hidden we skip the logo entirely.
@@ -340,10 +344,12 @@ const generateInPersonPublication = (pub: any, year: number) => {
     }
   }
 
+  // Right padding on the top band leaves room for the launch arrow which now
+  // lives in the top-right corner of the card.
   const topBand = hideEventBand
     ? ''
     : `
-        <div class="in-person-band flex items-center gap-2.5 px-2.5 py-2 relative z-[2]">
+        <div class="in-person-band flex items-center gap-2.5 pl-2.5 pr-10 py-2 relative z-[2]">
           <div class="in-person-logo flex-shrink-0">${logoHtml}</div>
           <div class="flex-1 min-w-0">
             <div class="in-person-event text-[0.8rem] font-bold text-white leading-tight">${pub.source}</div>
@@ -351,13 +357,16 @@ const generateInPersonPublication = (pub: any, year: number) => {
           </div>
         </div>`;
 
-  const panelEventHeader = hideEventBand
-    ? `
-          <div class="in-person-panel-event">
-            <div class="in-person-event text-[0.8rem] font-bold text-white leading-tight">${pub.source}</div>
-            <div class="in-person-datetime text-[0.65rem] text-white/75 mt-0.5">${formattedDate}${timeRange}</div>
-          </div>`
-    : '';
+  // Speaker line. When the top band is hidden we append the event source to
+  // the presenter line so the event info still reads somewhere on the card.
+  const speakerName = pub.speaker || 'Ryan Rademann';
+  const presenterParts = [pub.presentedBy || 'Presented in person'];
+  if (hideEventBand) presenterParts.push(pub.source);
+  const speakerLine = `${speakerName} <span class="font-normal text-white/55">· ${presenterParts.join(' · ')}</span>`;
+
+  const headshotImg = hideHeadshot
+    ? ''
+    : `<img src="${headshotSrc}" alt="${speakerName}" class="in-person-headshot flex-shrink-0" />`;
 
   return `
     <div class="publication-item in-person-pub p-0 min-h-[180px] justify-self-start w-full overflow-hidden" data-year="${year}" data-source="${pub.source.toLowerCase()}" data-type="${pub.type}">
@@ -366,19 +375,18 @@ const generateInPersonPublication = (pub: any, year: number) => {
         ${topBand}
         <!-- Stage / audience mood backdrop -->
         <div class="in-person-stage flex-1 relative"></div>
-        <!-- Speaker panel: optional event header + headshot + title + speaker line -->
+        <!-- Speaker panel: headshot (optional) + title + speaker line -->
         <div class="in-person-panel relative z-[2]">
-          ${panelEventHeader}
           <div class="in-person-panel-main flex items-center gap-2.5">
-            <img src="${headshotSrc}" alt="${pub.speaker || 'Ryan Rademann'}" class="in-person-headshot flex-shrink-0" />
+            ${headshotImg}
             <div class="flex-1 min-w-0 flex flex-col justify-center">
               <div class="in-person-title font-display text-white">&ldquo;${pub.title}&rdquo;</div>
-              <div class="in-person-speaker text-[0.72rem] font-semibold text-white/90 mt-0.5 leading-tight">${pub.speaker || 'Ryan Rademann'} <span class="font-normal text-white/55">· ${pub.presentedBy || 'Presented in person'}</span></div>
+              <div class="in-person-speaker text-[0.72rem] font-semibold text-white/90 mt-0.5 leading-tight">${speakerLine}</div>
             </div>
           </div>
         </div>
       </div>
-      <a href="${pub.url}" target="_blank" class="publication-link-btn absolute bottom-2 right-2 z-[3] inline-flex items-center justify-center w-7 h-7 rounded-md bg-primary text-card transition-all duration-300 ease-bounce-in">
+      <a href="${pub.url}" target="_blank" class="publication-link-btn in-person-link-btn absolute top-2 right-2 z-[3] inline-flex items-center justify-center w-7 h-7 rounded-md bg-primary text-card transition-all duration-300 ease-bounce-in">
         <i data-lucide="arrow-up-right" class="w-3.5 h-3.5" aria-hidden="true"></i>
       </a>
     </div>

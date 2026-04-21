@@ -17,14 +17,13 @@
       "type": "in-person",
       "title": "The Cost of Disconnected Systems",
       "date": "2024-10-15",
-      "dateDisplay": "October 2024",
       "source": "Procore Groundbreak 2024",
       "url": "https://youtu.be/VZxeggf1-Q0",
       "speaker": "Ryan Rademann",
       "presentedBy": "With Aldridge Electric",
-      "headshot": "/profile-backup.jpg",
       "background": "/gbk-rademann-2024.jpg",
-      "hideEventBand": true
+      "hideEventBand": true,
+      "hideHeadshot": true
     },
     {
       "type": "article",

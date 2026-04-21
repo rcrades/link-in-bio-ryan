@@ -787,17 +787,18 @@ body::before {
   padding: 0.6rem 0.75rem;
 }
 
-.in-person-panel-event {
-  padding-bottom: 0.5rem;
-  margin-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.12);
-}
-
 /* When the top band is hidden, the backdrop photo reads edge-to-edge from
    the card's top. Give the hero a minimum headroom so subjects in the
    photo stay visible before the bottom panel begins. */
 .in-person-hero.no-band .in-person-stage {
-  min-height: 80px;
+  min-height: 90px;
+}
+
+/* Launch arrow for in-person cards lives in the top-right corner so the
+   bottom panel has full width for speaker + event text. Shadow helps it
+   separate from whatever the backdrop shows behind it. */
+.publication-item.in-person-pub .in-person-link-btn {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .in-person-headshot {
