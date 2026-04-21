@@ -1,4 +1,5 @@
 import './groundbreak.css'
+import * as lucide from 'lucide'
 import { CREDIBILITY, SPEAKER, TALK } from './data'
 import {
   applyTheme,
@@ -54,7 +55,18 @@ const html = `
     <section class="gb-section">
       <div class="gb-section-label">What a Groundbreak audience walks away with</div>
       <div class="gb-pitch-takeaways">
-        ${TALK.takeaways.map(t => `<div class="gb-pitch-takeaway">${t}</div>`).join('')}
+        ${TALK.takeaways
+          .map(
+            t => `
+          <div class="gb-pitch-takeaway">
+            <span class="gb-pitch-takeaway-icon" aria-hidden="true">
+              <i data-lucide="${t.icon}"></i>
+            </span>
+            <span class="gb-pitch-takeaway-text">${t.text}</span>
+          </div>
+        `
+          )
+          .join('')}
       </div>
     </section>
 
@@ -107,3 +119,10 @@ const html = `
 `
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = html
+
+// Icons get wired up after innerHTML set.
+try {
+  lucide.createIcons({ icons: lucide.icons })
+} catch (err) {
+  console.error('lucide init failed', err)
+}

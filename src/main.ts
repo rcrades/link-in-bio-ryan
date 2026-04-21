@@ -360,9 +360,12 @@ const generateInPersonPublication = (pub: any, year: number) => {
   // Speaker line. When the top band is hidden we append the event source to
   // the presenter line so the event info still reads somewhere on the card.
   const speakerName = pub.speaker || 'Ryan Rademann';
-  const presenterParts = [pub.presentedBy || 'Presented in person'];
-  if (hideEventBand) presenterParts.push(pub.source);
-  const speakerLine = `${speakerName} <span class="font-normal text-white/55">· ${presenterParts.join(' · ')}</span>`;
+  const presenterParts: string[] = [];
+  if (pub.presentedBy) presenterParts.push(pub.presentedBy);
+  if (hideEventBand && pub.source) presenterParts.push(pub.source);
+  const speakerLine = presenterParts.length
+    ? `${speakerName} <span class="font-normal text-white/55">· ${presenterParts.join(' · ')}</span>`
+    : speakerName;
 
   const headshotImg = hideHeadshot
     ? ''
@@ -386,9 +389,9 @@ const generateInPersonPublication = (pub: any, year: number) => {
           </div>
         </div>
       </div>
-      <a href="${pub.url}" target="_blank" class="publication-link-btn in-person-link-btn absolute top-2 right-2 z-[3] inline-flex items-center justify-center w-7 h-7 rounded-md bg-primary text-card transition-all duration-300 ease-bounce-in">
+      ${pub.url ? `<a href="${pub.url}" target="_blank" class="publication-link-btn in-person-link-btn absolute top-2 right-2 z-[3] inline-flex items-center justify-center w-7 h-7 rounded-md bg-primary text-card transition-all duration-300 ease-bounce-in">
         <i data-lucide="arrow-up-right" class="w-3.5 h-3.5" aria-hidden="true"></i>
-      </a>
+      </a>` : ''}
     </div>
   `;
 };
