@@ -342,6 +342,18 @@ const generateInPersonPublication = (pub: any, year: number) => {
     }
   }
 
+  // Compact header mode: when the headshot is hidden the card has more
+  // horizontal breathing room, so the event name and date collapse onto a
+  // single dot-separated line in the top band.
+  const compactHeader = hideHeadshot;
+
+  const headerInner = compactHeader
+    ? `<div class="in-person-event text-[0.8rem] font-bold text-white leading-snug">${pub.source} · ${formattedDate}${timeRange}</div>`
+    : `
+            <div class="in-person-event text-[0.8rem] font-bold text-white leading-tight">${pub.source}</div>
+            <div class="in-person-datetime text-[0.65rem] text-white/80 mt-0.5">${formattedDate}${timeRange}</div>
+          `;
+
   // Right padding on the top band leaves room for the launch arrow which now
   // lives in the top-right corner of the card.
   const topBand = hideEventBand
@@ -350,8 +362,7 @@ const generateInPersonPublication = (pub: any, year: number) => {
         <div class="in-person-band flex items-center gap-2.5 pl-2.5 pr-10 py-2 relative z-[2]">
           ${logoHtml ? `<div class="in-person-logo flex-shrink-0">${logoHtml}</div>` : ''}
           <div class="flex-1 min-w-0">
-            <div class="in-person-event text-[0.8rem] font-bold text-white leading-tight">${pub.source}</div>
-            <div class="in-person-datetime text-[0.65rem] text-white/80 mt-0.5">${formattedDate}${timeRange}</div>
+            ${headerInner}
           </div>
         </div>`;
 
