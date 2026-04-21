@@ -787,6 +787,19 @@ body::before {
   padding: 0.6rem 0.75rem;
 }
 
+.in-person-panel-event {
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+/* When the top band is hidden, the backdrop photo reads edge-to-edge from
+   the card's top. Give the hero a minimum headroom so subjects in the
+   photo stay visible before the bottom panel begins. */
+.in-person-hero.no-band .in-person-stage {
+  min-height: 80px;
+}
+
 .in-person-headshot {
   width: 46px;
   height: 46px;
