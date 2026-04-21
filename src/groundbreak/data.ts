@@ -13,16 +13,19 @@ export const SPEAKER = {
   wipfliBio: 'https://www.wipfli.com/about-wipfli/partners-and-associates/ryan-rademann'
 }
 
-// TODO: Ryan — replace these two with the actual Groundbreak 2024 session URL + title.
-// Everything across all four alt pages reads from here.
+// Previous speaking engagement shown in the hero of the Pitch alt (and
+// embedded across Thesis / Dossier / Preview). Pulled from the same
+// Bricks & Bytes card that appears on the homepage's Media Appearances
+// and Recent Activity sections, so the thumbnail matches the card.
 export const PREVIOUS_ENGAGEMENT = {
-  event: 'Procore Groundbreak 2024',
-  sessionTitle: '[Replace with your Groundbreak 2024 session title]',
-  url: 'https://www.procore.com/groundbreak',
-  thumbnail: '/ryan-b-and-b-youtube-thumb.jpg', // placeholder — swap for a session still
-  duration: '45 min',
-  audience: 'General Contractors, Owners, Specialty Contractors',
-  note: 'Placeholder — swap the URL + title in src/groundbreak/data.ts'
+  event: 'Bricks & Bytes Podcast',
+  sessionTitle:
+    'Why 50% of Mid-Size Contractors Still Struggle with Tech Integration',
+  url: 'https://youtu.be/2Cd3oNo3G3Y',
+  thumbnail: '/ryan-b-and-b-youtube-thumb.jpg',
+  duration: 'Nov 2024 · long-form interview',
+  audience: 'Construction operators, founders, and tech leaders',
+  note: ''
 }
 
 export const TALK = {

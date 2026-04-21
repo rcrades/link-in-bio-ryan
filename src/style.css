@@ -1,5 +1,5 @@
 /* Import distinctive fonts */
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -335,8 +335,224 @@ body::before {
   visibility: visible;
 }
 
-.tech-stack-modal.open .tech-stack-modal-content {
+.tech-stack-modal.open .tech-stack-modal-content,
+.tech-stack-modal.open .sitemap-modal-content {
   transform: scale(1) translateY(0);
+}
+
+/* ============================================
+   Sitemap Modal — dev-terminal vibes (light theme)
+   ============================================ */
+.sitemap-modal-content {
+  font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+}
+
+/* Traffic-light dots on the terminal-style title bar */
+.sitemap-traffic-light {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.15);
+}
+
+.sitemap-titlebar-text {
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--foreground-muted);
+  font-weight: 500;
+}
+
+.sitemap-close {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+/* Prompt line */
+.sitemap-prompt-line {
+  font-size: 0.78rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  color: var(--foreground-muted);
+  border-bottom: 1px dashed var(--card-border);
+  padding-bottom: 0.6rem;
+}
+
+.sitemap-prompt-glyph {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.sitemap-prompt-cmd {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.sitemap-prompt-flag {
+  color: var(--foreground-muted);
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.sitemap-root {
+  font-size: 0.85rem;
+}
+
+.sitemap-root-label {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.sitemap-tree {
+  list-style: none;
+  padding: 0;
+  margin: 0.3rem 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sitemap-row {
+  margin: 0;
+}
+
+.sitemap-link {
+  display: grid;
+  grid-template-columns: 10px auto minmax(0, max-content) 1fr;
+  gap: 0.55rem;
+  align-items: center;
+  padding: 0.4rem 0.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.15s ease;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.sitemap-link:hover {
+  background: var(--background-secondary);
+  transform: translateX(2px);
+}
+
+.sitemap-status {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.sitemap-status.linked {
+  background: #22c55e;
+  box-shadow: 0 0 0 2px color-mix(in srgb, #22c55e 25%, transparent);
+}
+
+.sitemap-status.hidden {
+  background: transparent;
+  border: 1.5px dashed var(--foreground-muted);
+  opacity: 0.6;
+}
+
+.sitemap-status--inline {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.35rem;
+}
+
+.sitemap-branch {
+  color: var(--foreground-muted);
+  white-space: pre;
+  opacity: 0.65;
+  font-weight: 400;
+}
+
+.sitemap-path {
+  color: var(--primary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sitemap-link:hover .sitemap-path {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.sitemap-desc {
+  color: var(--foreground-muted);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  opacity: 0.85;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sitemap-row--child .sitemap-link {
+  grid-template-columns: 10px auto minmax(0, max-content) 1fr;
+  padding-left: 0.5rem;
+}
+
+.sitemap-row--child .sitemap-link::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  display: block;
+}
+
+.sitemap-subtree {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sitemap-summary {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--card-border);
+  display: flex;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+  font-size: 0.72rem;
+  color: var(--foreground-muted);
+  font-family: var(--font-body);
+}
+
+.sitemap-summary-dim {
+  color: var(--foreground-muted);
+  opacity: 0.65;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Mobile — drop the tree-branch art (hierarchy is implied by indentation +
+   the status dot column) and wrap description under the path. */
+@media (max-width: 560px) {
+  .sitemap-link {
+    grid-template-columns: 10px 1fr;
+    gap: 0.45rem;
+  }
+  .sitemap-branch { display: none; }
+  .sitemap-path {
+    grid-column: 2;
+    white-space: normal;
+    word-break: break-all;
+  }
+  .sitemap-desc {
+    grid-column: 2;
+    white-space: normal;
+    font-size: 0.72rem;
+    margin-top: 0.1rem;
+  }
+  .sitemap-row--child .sitemap-link {
+    grid-template-columns: 1fr;
+    padding-left: 1.4rem;
+  }
+  .sitemap-row--child .sitemap-link::before { display: none; }
+  .sitemap-row--child .sitemap-path,
+  .sitemap-row--child .sitemap-desc {
+    grid-column: 1;
+  }
 }
 
 /* ============================================
@@ -538,10 +754,22 @@ body::before {
   background: #0b1220;
 }
 
-.in-person-logo svg {
+.in-person-logo svg,
+.in-person-logo-img {
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: contain;
+  background: #0b1220;
+}
+
+.in-person-logo-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.75);
 }
 
 .in-person-event {
@@ -557,6 +785,20 @@ body::before {
   backdrop-filter: blur(3px);
   margin-top: auto;
   padding: 0.6rem 0.75rem;
+}
+
+/* When the top band is hidden, the backdrop photo reads edge-to-edge from
+   the card's top. Give the hero a minimum headroom so subjects in the
+   photo stay visible before the bottom panel begins. */
+.in-person-hero.no-band .in-person-stage {
+  min-height: 90px;
+}
+
+/* Launch arrow for in-person cards lives in the top-right corner so the
+   bottom panel has full width for speaker + event text. Shadow helps it
+   separate from whatever the backdrop shows behind it. */
+.publication-item.in-person-pub .in-person-link-btn {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .in-person-headshot {
