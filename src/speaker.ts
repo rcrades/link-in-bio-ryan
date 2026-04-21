@@ -1,83 +1,132 @@
 import './style.css'
+import * as lucide from 'lucide'
+import { inject } from '@vercel/analytics'
+import { getProfileImageSrc } from './utils/profileImage'
 
-// Create HTML content
-const content = `
-  <div class="max-w-2xl mx-auto p-6 sm:p-8">
-    <!-- Header -->
-    <div class="mb-8 text-center">
-      <h1 class="text-3xl font-bold text-gray-900 mb-2">Speaker Inquiry</h1>
-      <p class="text-gray-600">Fill out the form below to inquire about speaking engagements</p>
-    </div>
+// Inherit the theme the visitor picked on the main page. No toggle here —
+// the page reads whatever they last set and stays consistent with the rest
+// of the site.
+const getThemePreference = () => {
+  if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+    return localStorage.getItem('theme')
+  }
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
+  return prefersLight ? 'light' : 'dark'
+}
+document.documentElement.classList[
+  getThemePreference() === 'dark' ? 'add' : 'remove'
+]('dark')
 
-    <!-- Form -->
-    <form class="space-y-6 bg-white p-6 sm:p-8 rounded-lg shadow-sm border border-gray-200">
-      <!-- Event Details -->
-      <div>
-        <label for="eventDetails" class="block text-sm font-medium text-gray-700 mb-2">
-          Event Details
-        </label>
-        <textarea
-          id="eventDetails"
-          name="eventDetails"
-          rows="4"
-          class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
-          placeholder="Please describe your event, including the topic, audience, and format..."
-        ></textarea>
-      </div>
+inject()
 
-      <!-- Event Date -->
-      <div>
-        <label for="eventDate" class="block text-sm font-medium text-gray-700 mb-2">
-          Event Date
-        </label>
-        <input
-          type="date"
-          id="eventDate"
-          name="eventDate"
-          class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
-        >
-      </div>
+async function renderSpeakerForm() {
+  const profileSrc = await getProfileImageSrc()
 
-      <!-- Contact Information -->
-      <div>
-        <label for="contactInfo" class="block text-sm font-medium text-gray-700 mb-2">
-          How to reach you?
-        </label>
-        <input
-          type="text"
-          id="contactInfo"
-          name="contactInfo"
-          class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm"
-          placeholder="Email, phone, or preferred contact method"
-        >
-      </div>
+  const html = `
+    <main class="speaker-page">
+      <header class="speaker-stamp">
+        <img src="${profileSrc}" alt="Ryan Rademann" />
+        <div>
+          <div class="speaker-stamp-name">Ryan Rademann</div>
+          <div class="speaker-stamp-role">Partner, Construction &amp; Real Estate Technology</div>
+          <div class="speaker-stamp-firm">Wipfli LLP · Chicago, IL</div>
+        </div>
+      </header>
 
-      <!-- Submit Button -->
-      <div>
-        <button
-          type="submit"
-          class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
-        >
-          Submit Inquiry
+      <section class="speaker-intro">
+        <div class="speaker-kicker">Speaker Inquiry</div>
+        <h1 class="speaker-title">Tell me about your event.</h1>
+        <p class="speaker-subtitle">
+          I speak to construction and real-estate audiences about technology
+          strategy, AI, and the decisions leaders actually have to make. Send
+          a few details below and I'll follow up within a couple of days.
+        </p>
+      </section>
+
+      <form id="speaker-form" class="speaker-form" novalidate>
+        <div class="speaker-field">
+          <label class="speaker-label" for="eventDetails">Event details</label>
+          <textarea
+            id="eventDetails"
+            name="eventDetails"
+            class="speaker-textarea"
+            rows="5"
+            placeholder="Audience, topic, format (solo / panel / roundtable), size, location…"
+            required
+          ></textarea>
+        </div>
+
+        <div class="speaker-field-row">
+          <div class="speaker-field">
+            <label class="speaker-label" for="eventDate">When is it?</label>
+            <input
+              id="eventDate"
+              name="eventDate"
+              type="date"
+              class="speaker-input"
+            />
+          </div>
+          <div class="speaker-field">
+            <label class="speaker-label" for="contactInfo">How should I reach you?</label>
+            <input
+              id="contactInfo"
+              name="contactInfo"
+              type="text"
+              class="speaker-input"
+              placeholder="Email or phone"
+              required
+            />
+          </div>
+        </div>
+
+        <button type="submit" class="speaker-submit">
+          <span>Submit Inquiry</span>
+          <i data-lucide="arrow-right" aria-hidden="true"></i>
         </button>
-      </div>
-    </form>
+      </form>
 
-    <!-- Back Link -->
-    <div class="mt-6 text-center">
-      <a href="/" class="text-sm text-blue-600 hover:text-blue-800 transition-colors">
-        ← Back to home
+      <section id="speaker-success" class="speaker-success" aria-live="polite">
+        <div class="speaker-success-icon">
+          <i data-lucide="check" aria-hidden="true"></i>
+        </div>
+        <h2 class="speaker-success-title">Got it — thanks.</h2>
+        <p class="speaker-success-body">
+          I'll be in touch within a couple of days. Feel free to head back to
+          the main page while you wait.
+        </p>
+      </section>
+
+      <a href="/" class="speaker-back">
+        <i data-lucide="chevron-left" aria-hidden="true"></i>
+        <span>Back to RyanRademann.com</span>
       </a>
-    </div>
-  </div>
-`
+    </main>
+  `
 
-// Add content to DOM
-document.querySelector('#app')!.innerHTML = content
+  const app = document.querySelector<HTMLDivElement>('#app')
+  if (!app) return
+  app.innerHTML = html
 
-// Add form submission handler
-document.querySelector('form')?.addEventListener('submit', (e) => {
-  e.preventDefault()
-  // TODO: Handle form submission
-  console.log('Form submitted')
-}) 
+  // Initialize lucide icons after the DOM exists.
+  try {
+    lucide.createIcons({ icons: lucide.icons })
+  } catch (err) {
+    console.error('Error initializing icons:', err)
+  }
+
+  // Submit handler. The form stays client-side for now (no backend wired
+  // yet) — swap this for a fetch() to the inquiry endpoint when it lands.
+  const form = document.getElementById('speaker-form') as HTMLFormElement | null
+  const success = document.getElementById('speaker-success')
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const data = new FormData(form)
+    const payload = Object.fromEntries(data.entries())
+    console.log('Speaker inquiry submitted', payload)
+    form.style.display = 'none'
+    success?.classList.add('active')
+    success?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
+}
+
+renderSpeakerForm()
