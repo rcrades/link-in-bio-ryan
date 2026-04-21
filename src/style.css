@@ -525,20 +525,34 @@ body::before {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Mobile — trade horizontal path+desc for stacked layout */
+/* Mobile — drop the tree-branch art (hierarchy is implied by indentation +
+   the status dot column) and wrap description under the path. */
 @media (max-width: 560px) {
   .sitemap-link {
-    grid-template-columns: 10px auto 1fr;
+    grid-template-columns: 10px 1fr;
     gap: 0.45rem;
   }
+  .sitemap-branch { display: none; }
+  .sitemap-path {
+    grid-column: 2;
+    white-space: normal;
+    word-break: break-all;
+  }
   .sitemap-desc {
-    grid-column: 1 / -1;
-    padding-left: calc(10px + 0.55rem);
+    grid-column: 2;
     white-space: normal;
     font-size: 0.72rem;
     margin-top: 0.1rem;
   }
+  .sitemap-row--child .sitemap-link {
+    grid-template-columns: 1fr;
+    padding-left: 1.4rem;
+  }
   .sitemap-row--child .sitemap-link::before { display: none; }
+  .sitemap-row--child .sitemap-path,
+  .sitemap-row--child .sitemap-desc {
+    grid-column: 1;
+  }
 }
 
 /* ============================================
