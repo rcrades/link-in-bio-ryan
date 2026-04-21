@@ -320,12 +320,24 @@ const generateInPersonPublication = (pub: any, year: number) => {
     ? `style="--in-person-bg:url('${pub.background}');"`
     : '';
 
+  // Logo resolution — allow entries to either reference a hardcoded inline
+  // SVG by key, supply an image path, or fall back to a minimal mic icon
+  // so the event band always reads consistently.
+  let logoHtml: string;
+  if (pub.logoKey === 'rocky-mountain-cfma') {
+    logoHtml = ROCKY_MOUNTAIN_CFMA_SVG;
+  } else if (pub.logo) {
+    logoHtml = `<img src="${pub.logo}" alt="${pub.source}" class="in-person-logo-img" />`;
+  } else {
+    logoHtml = `<div class="in-person-logo-fallback"><i data-lucide="mic" class="w-4 h-4" aria-hidden="true"></i></div>`;
+  }
+
   return `
     <div class="publication-item in-person-pub p-0 min-h-[180px] justify-self-start w-full overflow-hidden" data-year="${year}" data-source="${pub.source.toLowerCase()}" data-type="${pub.type}">
       <div class="in-person-hero ${pub.background ? 'has-backdrop' : ''} relative flex flex-col h-full" ${backdropStyle}>
         <!-- Event band: logo + event name + date/time -->
         <div class="in-person-band flex items-center gap-2.5 px-2.5 py-2 relative z-[2]">
-          <div class="in-person-logo flex-shrink-0">${ROCKY_MOUNTAIN_CFMA_SVG}</div>
+          <div class="in-person-logo flex-shrink-0">${logoHtml}</div>
           <div class="flex-1 min-w-0">
             <div class="in-person-event text-[0.8rem] font-bold text-white leading-tight">${pub.source}</div>
             <div class="in-person-datetime text-[0.65rem] text-white/80 mt-0.5">${formattedDate}${timeRange}</div>
@@ -574,6 +586,10 @@ async function initializeApp() {
         <button id="show-tech-stack-btn" class="show-tech-stack-btn bg-transparent border-none p-2 text-foreground-muted text-sm cursor-pointer underline underline-offset-2 transition-colors duration-200 hover:text-foreground desktop:whitespace-nowrap">
           Show me this thing's tech stack
         </button>
+        <button id="show-sitemap-btn" class="show-sitemap-btn bg-transparent border-none p-2 text-foreground-muted text-sm cursor-pointer transition-colors duration-200 hover:text-foreground desktop:whitespace-nowrap flex items-center gap-1.5 justify-center">
+          <i data-lucide="folder-tree" class="w-3.5 h-3.5" aria-hidden="true"></i>
+          <span class="underline underline-offset-2">Sitemap</span>
+        </button>
       </div>
     </footer>
 
@@ -618,6 +634,124 @@ async function initializeApp() {
         </a>
       </div>
     </div>
+
+    <!-- Sitemap Modal Overlay -->
+    <div id="sitemap-modal" class="tech-stack-modal fixed inset-0 z-[1000] flex items-center justify-center opacity-0 invisible transition-all duration-300" aria-hidden="true">
+      <div class="tech-stack-modal-backdrop absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
+      <div class="sitemap-modal-content relative w-[94%] max-w-[680px] max-h-[88vh] overflow-hidden bg-card border border-card-border rounded-[12px] shadow-modal scale-90 translate-y-5 transition-transform duration-300 ease-bounce-in flex flex-col">
+        <!-- Terminal-style title bar -->
+        <div class="sitemap-titlebar flex items-center gap-2 px-3.5 py-2.5 border-b border-card-border bg-background-secondary">
+          <span class="sitemap-traffic-light" style="background:#ff5f57"></span>
+          <span class="sitemap-traffic-light" style="background:#febc2e"></span>
+          <span class="sitemap-traffic-light" style="background:#28c840"></span>
+          <span class="sitemap-titlebar-text flex-1 text-center pr-16">ryanrademann.com — sitemap</span>
+          <button id="close-sitemap-modal" class="sitemap-close ml-auto w-7 h-7 inline-flex items-center justify-center rounded-md text-foreground-muted hover:text-foreground hover:bg-card transition-colors" aria-label="Close">
+            <i data-lucide="x" class="w-4 h-4" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <!-- Body -->
+        <div class="sitemap-body overflow-y-auto p-4 sm:p-5">
+          <div class="sitemap-prompt-line">
+            <span class="sitemap-prompt-glyph">$</span>
+            <span class="sitemap-prompt-cmd">tree</span>
+            <span class="sitemap-prompt-flag">--all-pages</span>
+          </div>
+
+          <div class="sitemap-root mt-3">
+            <span class="sitemap-root-label">ryanrademann.com</span>
+          </div>
+
+          <ul class="sitemap-tree">
+            <li class="sitemap-row">
+              <a href="/" class="sitemap-link" data-sitemap-target="/">
+                <span class="sitemap-status linked" aria-label="Linked from homepage"></span>
+                <span class="sitemap-branch">├──</span>
+                <span class="sitemap-path">/</span>
+                <span class="sitemap-desc">Main bio page · profile, links, activity, media</span>
+              </a>
+            </li>
+            <li class="sitemap-row">
+              <a href="/pages/admin/" class="sitemap-link" data-sitemap-target="/pages/admin/">
+                <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
+                <span class="sitemap-branch">├──</span>
+                <span class="sitemap-path">/pages/admin/</span>
+                <span class="sitemap-desc">Admin controls · direct link only</span>
+              </a>
+            </li>
+            <li class="sitemap-row">
+              <a href="/pages/speaker/" class="sitemap-link" data-sitemap-target="/pages/speaker/">
+                <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
+                <span class="sitemap-branch">├──</span>
+                <span class="sitemap-path">/pages/speaker/</span>
+                <span class="sitemap-desc">Speaker inquiry form · direct link only</span>
+              </a>
+            </li>
+            <li class="sitemap-row">
+              <a href="/pages/stealth/" class="sitemap-link" data-sitemap-target="/pages/stealth/">
+                <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
+                <span class="sitemap-branch">├──</span>
+                <span class="sitemap-path">/pages/stealth/</span>
+                <span class="sitemap-desc">Stealth mode · direct link only</span>
+              </a>
+            </li>
+            <li class="sitemap-row">
+              <a href="/pages/start-with-v0/" class="sitemap-link" data-sitemap-target="/pages/start-with-v0/">
+                <span class="sitemap-status linked" aria-label="Linked from homepage"></span>
+                <span class="sitemap-branch">├──</span>
+                <span class="sitemap-path">/pages/start-with-v0/</span>
+                <span class="sitemap-desc">v0 templates · surfaced via the v0 social tile</span>
+              </a>
+            </li>
+            <li class="sitemap-row sitemap-row--group">
+              <a href="/pages/groundbreak/" class="sitemap-link" data-sitemap-target="/pages/groundbreak/">
+                <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
+                <span class="sitemap-branch">└──</span>
+                <span class="sitemap-path">/pages/groundbreak/</span>
+                <span class="sitemap-desc">Groundbreak 2026 speaker proposal · four alt landing pages</span>
+              </a>
+              <ul class="sitemap-subtree">
+                <li class="sitemap-row sitemap-row--child">
+                  <a href="/pages/groundbreak/" class="sitemap-link">
+                    <span class="sitemap-branch">    ├──</span>
+                    <span class="sitemap-path">/</span>
+                    <span class="sitemap-desc">The Pitch · tight one-pager</span>
+                  </a>
+                </li>
+                <li class="sitemap-row sitemap-row--child">
+                  <a href="/pages/groundbreak/thesis/" class="sitemap-link">
+                    <span class="sitemap-branch">    ├──</span>
+                    <span class="sitemap-path">thesis/</span>
+                    <span class="sitemap-desc">The Thesis · long-form editorial preview</span>
+                  </a>
+                </li>
+                <li class="sitemap-row sitemap-row--child">
+                  <a href="/pages/groundbreak/dossier/" class="sitemap-link">
+                    <span class="sitemap-branch">    ├──</span>
+                    <span class="sitemap-path">dossier/</span>
+                    <span class="sitemap-desc">The Dossier · every form question pre-answered</span>
+                  </a>
+                </li>
+                <li class="sitemap-row sitemap-row--child">
+                  <a href="/pages/groundbreak/preview/" class="sitemap-link">
+                    <span class="sitemap-branch">    └──</span>
+                    <span class="sitemap-path">preview/</span>
+                    <span class="sitemap-desc">The Preview · scroll-reveal mini-talk</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+          <div class="sitemap-summary">
+            <span class="sitemap-summary-dim">10 entries ·</span>
+            <span><span class="sitemap-status linked sitemap-status--inline"></span> 2 linked from home</span>
+            <span><span class="sitemap-status hidden sitemap-status--inline"></span> 8 direct-link only</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Favorite Apps Accordion: Start -->
     <footer class="tech-stack favorite-apps mt-4 py-8 px-7 rounded-2xl w-full mb-8 relative overflow-hidden bg-card text-card-foreground border border-card-border">
       <div class="tech-stack-header expandable-header-row flex justify-between items-center gap-4 cursor-pointer rounded-lg py-2 px-3 -my-2 -mx-3 transition-colors duration-200 desktop:hover:bg-background-secondary" role="button" tabindex="0" aria-expanded="false" aria-controls="tech-stack-details-2">
@@ -729,10 +863,39 @@ async function initializeApp() {
   closeTechStackBtn?.addEventListener('click', closeModal);
   modalBackdrop?.addEventListener('click', closeModal);
 
-  // Close modal on Escape key
+  // Sitemap Modal — mirrors the tech stack modal pattern so it picks up the
+  // existing .tech-stack-modal.open opacity/visibility transitions for free.
+  const sitemapModal = document.getElementById('sitemap-modal');
+  const showSitemapBtn = document.getElementById('show-sitemap-btn');
+  const closeSitemapBtn = document.getElementById('close-sitemap-modal');
+  const sitemapBackdrop = sitemapModal?.querySelector('.tech-stack-modal-backdrop');
+
+  const openSitemap = () => {
+    if (sitemapModal) {
+      sitemapModal.classList.add('open');
+      sitemapModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lucide.createIcons({ icons: lucide.icons });
+    }
+  };
+
+  const closeSitemap = () => {
+    if (sitemapModal) {
+      sitemapModal.classList.remove('open');
+      sitemapModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+  };
+
+  showSitemapBtn?.addEventListener('click', openSitemap);
+  closeSitemapBtn?.addEventListener('click', closeSitemap);
+  sitemapBackdrop?.addEventListener('click', closeSitemap);
+
+  // Close modals on Escape key
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && techStackModal?.classList.contains('open')) {
-      closeModal();
+    if (e.key === 'Escape') {
+      if (techStackModal?.classList.contains('open')) closeModal();
+      if (sitemapModal?.classList.contains('open')) closeSitemap();
     }
   });
 

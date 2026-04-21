@@ -45,7 +45,7 @@ export const renderPreviousEngagement = (layout: 'hero' | 'inline' = 'inline') =
         <span>·</span>
         <span>${PREVIOUS_ENGAGEMENT.audience}</span>
       </div>
-      <div class="gb-prev-note">${PREVIOUS_ENGAGEMENT.note}</div>
+      ${PREVIOUS_ENGAGEMENT.note ? `<div class="gb-prev-note">${PREVIOUS_ENGAGEMENT.note}</div>` : ''}
     </div>
   </a>
 `

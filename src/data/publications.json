@@ -10,7 +10,19 @@
       "presentedBy": "Presented by: CFMA Rocky Mountain Chapter",
       "time": "1:30 PM – 3:30 PM MT",
       "headshot": "/profile-backup.jpg",
-      "background": "/rocky-mountain-cfma-audience.jpg"
+      "background": "/rocky-mountain-cfma-audience.jpg",
+      "logoKey": "rocky-mountain-cfma"
+    },
+    {
+      "type": "in-person",
+      "title": "The Cost of Disconnected Systems",
+      "date": "2024-10-15",
+      "source": "Procore Groundbreak 2024",
+      "url": "https://youtu.be/VZxeggf1-Q0",
+      "speaker": "Ryan Rademann",
+      "presentedBy": "With Aldridge Electric",
+      "headshot": "/profile-backup.jpg",
+      "background": "/gbk-rademann-2024.jpg"
     },
     {
       "type": "article",
