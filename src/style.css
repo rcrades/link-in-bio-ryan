@@ -179,6 +179,21 @@ body::before {
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* Desktop: compact cards next to the "Connect" label keep smaller icons + softer hover */
+@media (min-width: 1000px) {
+  .social-links-icons .social-icon,
+  .social-links-icons .x-logo,
+  .social-links-icons .linkedin-logo,
+  .social-links-icons .v0-logo {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .social-links-icons .social-card:hover .social-icon {
+    transform: rotate(-3deg) scale(1.05);
+  }
+}
+
 /* Logo dark/light mode filters */
 .x-logo {
   filter: invert(1);

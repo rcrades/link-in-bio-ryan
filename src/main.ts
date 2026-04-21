@@ -61,7 +61,7 @@ const generateSocialLinks = (socialLinks: any[]) => {
     // Use custom SVG for X icon
     if (link.icon === 'x') {
       return `
-        <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
+        <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
           <img src="/logos/logo.svg" alt="X (Twitter)" class="social-icon x-logo" />
         </a>
       `
@@ -69,7 +69,7 @@ const generateSocialLinks = (socialLinks: any[]) => {
     // Use custom images for LinkedIn icon (black for light mode, white for dark mode)
     if (link.icon === 'linkedin') {
       return `
-        <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
+        <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
           <img src="/logos/InBug-Black.png" alt="LinkedIn" class="social-icon linkedin-logo linkedin-light" />
           <img src="/logos/InBug-White.png" alt="LinkedIn" class="social-icon linkedin-logo linkedin-dark" />
         </a>
@@ -78,13 +78,23 @@ const generateSocialLinks = (socialLinks: any[]) => {
     // Use custom SVG for v0 icon
     if (link.icon === 'v0') {
       return `
-        <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
+        <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
           <img src="/logos/v0-logo-dark.svg" alt="v0" class="social-icon v0-logo" />
         </a>
       `
     }
+    // GitHub uses the Lucide glyph — color it with foreground so it matches the
+    // black-in-light / white-in-dark tone of the X, LinkedIn, and v0 logos
+    // rather than the orange primary accent.
+    if (link.icon === 'github') {
+      return `
+        <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-foreground border border-card-border" target="_blank">
+          <i data-lucide="github" class="social-icon" aria-hidden="true"></i>
+        </a>
+      `
+    }
     return `
-      <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
+      <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
         <i data-lucide="${link.icon}" class="social-icon" aria-hidden="true"></i>
       </a>
     `
@@ -500,8 +510,14 @@ async function initializeApp() {
     <!-- Desktop grid layout -->
     <div class="desktop-grid hidden desktop:grid desktop:grid-cols-2 desktop:gap-x-8">
       <div class="grid-header-left col-span-1 row-span-1">
-        <div class="social-links flex gap-4 mb-5 w-full">
-          ${generateSocialLinks(linksData.socialLinks)}
+        <div class="social-links flex items-center justify-between gap-4 mb-5 w-full">
+          <div class="social-links-header flex items-center gap-3">
+            <i data-lucide="link" class="social-links-header-icon w-5 h-5 text-primary" aria-hidden="true"></i>
+            <h2 class="font-display text-[1.35rem] font-normal text-foreground m-0 tracking-tight">Connect</h2>
+          </div>
+          <div class="social-links-icons flex gap-3">
+            ${generateSocialLinks(linksData.socialLinks)}
+          </div>
         </div>
       </div>
       <div class="grid-header-right col-span-1 row-span-1 flex items-end pb-5">
