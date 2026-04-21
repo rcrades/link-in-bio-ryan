@@ -720,14 +720,6 @@ async function initializeApp() {
               </a>
             </li>
             <li class="sitemap-row">
-              <a href="/pages/stealth/" class="sitemap-link" data-sitemap-target="/pages/stealth/">
-                <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
-                <span class="sitemap-branch">├──</span>
-                <span class="sitemap-path">/pages/stealth/</span>
-                <span class="sitemap-desc">Stealth mode · direct link only</span>
-              </a>
-            </li>
-            <li class="sitemap-row">
               <a href="/pages/start-with-v0/" class="sitemap-link" data-sitemap-target="/pages/start-with-v0/">
                 <span class="sitemap-status linked" aria-label="Linked from homepage"></span>
                 <span class="sitemap-branch">├──</span>
@@ -776,9 +768,9 @@ async function initializeApp() {
           </ul>
 
           <div class="sitemap-summary">
-            <span class="sitemap-summary-dim">10 entries ·</span>
+            <span class="sitemap-summary-dim">9 entries ·</span>
             <span><span class="sitemap-status linked sitemap-status--inline"></span> 2 linked from home</span>
-            <span><span class="sitemap-status hidden sitemap-status--inline"></span> 8 direct-link only</span>
+            <span><span class="sitemap-status hidden sitemap-status--inline"></span> 7 direct-link only</span>
           </div>
         </div>
       </div>

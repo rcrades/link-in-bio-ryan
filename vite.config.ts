@@ -8,7 +8,6 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         admin: resolve(__dirname, 'pages/admin/index.html'),
         speaker: resolve(__dirname, 'pages/speaker/index.html'),
-        stealth: resolve(__dirname, 'pages/stealth/index.html'),
         'start-with-v0': resolve(__dirname, 'pages/start-with-v0/index.html'),
         'groundbreak-pitch': resolve(__dirname, 'pages/groundbreak/index.html'),
         'groundbreak-thesis': resolve(__dirname, 'pages/groundbreak/thesis/index.html'),
