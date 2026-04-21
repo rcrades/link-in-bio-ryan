@@ -1026,3 +1026,350 @@ body::before {
   background: var(--primary-dark);
   transform: translateY(-1px);
 }
+
+/* ============================================
+   YouTube Banner page
+   ============================================ */
+.yt-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  font-family: var(--font-body);
+  color: var(--foreground);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.yt-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.yt-page-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.8rem;
+  margin: 0;
+  color: var(--foreground);
+}
+
+.yt-page-sub {
+  margin: 0.4rem 0 0;
+  color: var(--foreground-muted);
+  font-size: 0.9rem;
+  max-width: 44rem;
+}
+
+.yt-controls {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.yt-btn {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 0.55rem 0.95rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--card-border);
+  background: var(--card);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.yt-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.yt-btn--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.yt-btn--primary:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+  color: #fff;
+}
+
+/* --- Scaled preview --- */
+.yt-preview-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.yt-preview-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--foreground-muted);
+  text-transform: uppercase;
+}
+
+.yt-meta-sep {
+  opacity: 0.5;
+}
+
+.yt-preview-wrap {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--background-secondary);
+  position: relative;
+}
+
+.yt-preview {
+  width: 2560px;
+  height: 1440px;
+  transform-origin: top left;
+  transform: scale(0.4);
+}
+
+/* --- Description --- */
+.yt-description-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.2rem 1.4rem;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-left: 4px solid var(--primary);
+  border-radius: 12px;
+}
+
+.yt-description-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.yt-description-head h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.3rem;
+  margin: 0;
+  color: var(--foreground);
+}
+
+.yt-description-note {
+  margin: 0;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: var(--foreground-muted);
+  letter-spacing: 0.04em;
+}
+
+.yt-description-text {
+  width: 100%;
+  min-height: 12rem;
+  padding: 0.9rem 1rem;
+  background: var(--background);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--foreground);
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.yt-description-text:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* --- Full-size banner --- */
+.yt-full-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.yt-full-head h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.3rem;
+  margin: 0 0 0.4rem;
+  color: var(--foreground);
+}
+
+.yt-full-note {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--foreground-muted);
+  line-height: 1.5;
+  max-width: 48rem;
+}
+
+.yt-full-scroll {
+  width: 100%;
+  overflow: auto;
+  border-radius: 12px;
+  background: var(--background-secondary);
+}
+
+.yt-full {
+  /* sized in JS so the scroll container gets the right child dimensions */
+}
+
+/* --- Banner styles (the actual thing that gets screenshot) --- */
+.yt-banner {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  color: #1a1512;
+  background: #faf8f5;
+}
+
+.yt-banner--dark {
+  background: #0f0d0b;
+  color: #f5f1eb;
+}
+
+.yt-banner-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.yt-banner--dark .yt-banner-pattern {
+  opacity: 0.08;
+}
+
+.yt-banner-safe {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.yt-banner-mark {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #c85a3f;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 18px rgba(200, 90, 63, 0.12);
+  margin-bottom: 40px;
+}
+
+.yt-banner--dark .yt-banner-mark {
+  background: #e8845f;
+  box-shadow: 0 0 0 18px rgba(232, 132, 95, 0.16);
+}
+
+.yt-banner-mark svg {
+  width: 22px;
+  height: 22px;
+  transform: translateX(1px); /* nudge the play triangle to optical center */
+}
+
+.yt-banner-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 180px;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: inherit;
+}
+
+.yt-banner-tagline {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 1.25;
+  color: #5a524c;
+  margin: 24px 0 0;
+  max-width: 1300px;
+}
+
+.yt-banner--dark .yt-banner-tagline {
+  color: #a69d94;
+}
+
+.yt-banner-url {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.08em;
+  color: #c85a3f;
+  margin: 36px 0 0;
+  text-transform: lowercase;
+}
+
+.yt-banner--dark .yt-banner-url {
+  color: #e8845f;
+}
+
+/* Safe-area outline — only shown while the control is on. Drawn on top of
+   everything so it's easy to see; removed cleanly when toggled off. */
+.yt-banner-safe-outline {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px dashed rgba(200, 90, 63, 0.45);
+  pointer-events: none;
+  z-index: 2;
+  display: none;
+}
+
+.yt-banner--with-outline .yt-banner-safe-outline {
+  display: block;
+}
+
+.yt-banner--dark.yt-banner--with-outline .yt-banner-safe-outline {
+  border-color: rgba(232, 132, 95, 0.55);
+}
+
+/* Raw capture mode — body is the exact banner canvas, nothing else. */
+body.yt-raw-body {
+  margin: 0;
+  padding: 0;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+}
+
+body.yt-raw-body::before { display: none; }
+
+body.yt-raw-body #app {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.yt-inline-link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
