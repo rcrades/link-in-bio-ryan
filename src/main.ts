@@ -83,6 +83,16 @@ const generateSocialLinks = (socialLinks: any[]) => {
         </a>
       `
     }
+    // GitHub uses the Lucide glyph — color it with foreground so it matches the
+    // black-in-light / white-in-dark tone of the X, LinkedIn, and v0 logos
+    // rather than the orange primary accent.
+    if (link.icon === 'github') {
+      return `
+        <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-foreground border border-card-border" target="_blank">
+          <i data-lucide="github" class="social-icon" aria-hidden="true"></i>
+        </a>
+      `
+    }
     return `
       <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
         <i data-lucide="${link.icon}" class="social-icon" aria-hidden="true"></i>
