@@ -14,6 +14,11 @@
       "type": "social",
       "icon": "v0",
       "link": "https://v0.app/@rcrades"
+    },
+    {
+      "type": "social",
+      "icon": "github",
+      "link": "https://github.com/rcrades"
     }
   ],
   "regularLinks": [
