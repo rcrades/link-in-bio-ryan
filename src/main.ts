@@ -35,11 +35,40 @@ if (typeof localStorage !== 'undefined') {
 import './style.css'
 import * as lucide from 'lucide'
 import { inject } from '@vercel/analytics'
+import { ConvexHttpClient } from 'convex/browser'
+import { api } from '../convex/_generated/api'
 import linksData from './data/links.json'
 import publicationsData from './data/publications.json'
 import causesData from './data/causes.json'
 import activityData from './data/activity.json'
 import { getProfileImageSrc } from './utils/profileImage'
+
+// Convex is the source of truth for Recent Activity when reachable. The
+// bundled activity.json stays as a fallback so the page still renders if
+// Convex is unavailable or the deployment is empty (e.g. pre-seed).
+async function loadRecentActivity(): Promise<any[]> {
+  const convexUrl = import.meta.env.VITE_CONVEX_URL as string | undefined
+  if (!convexUrl) return activityData.activities
+  try {
+    const client = new ConvexHttpClient(convexUrl)
+    const items = await client.query(api.appearances.listPublic, { state: 'recent' })
+    if (!items || items.length === 0) return activityData.activities
+    return items.map((c: any) => ({
+      title: c.title,
+      description: c.description,
+      date: c.date,
+      type: c.type,
+      url: c.url,
+      thumbnail: c.thumbnailUrl ?? undefined,
+      thumbnailId: c.thumbnailId,
+      logo: c.logoUrl ?? undefined,
+      logoBg: c.logoBg,
+    }))
+  } catch (err) {
+    console.warn('Convex Recent Activity fetch failed, falling back to JSON', err)
+    return activityData.activities
+  }
+}
 
 // Initialize Vercel Analytics
 inject()
@@ -450,8 +479,11 @@ const generatePublications = (publications: any[]) => {
 
 // Initialize the app
 async function initializeApp() {
-  const profileImageSrc = await getProfileImageSrc();
-  
+  const [profileImageSrc, recentActivityItems] = await Promise.all([
+    getProfileImageSrc(),
+    loadRecentActivity(),
+  ]);
+
   // Create HTML content
   const content = `
     <div>
@@ -494,7 +526,7 @@ async function initializeApp() {
           <h2 class="font-display text-xl font-normal text-foreground m-0">Recent Activity</h2>
         </div>
         <div class="recent-activity">
-          ${generateRecentActivity(activityData.activities)}
+          ${generateRecentActivity(recentActivityItems)}
         </div>
       </div>
 
@@ -533,7 +565,7 @@ async function initializeApp() {
       </div>
       <div class="grid-content-right col-span-1 row-span-1 relative z-[2] self-start">
         <div class="recent-activity">
-          ${generateRecentActivity(activityData.activities)}
+          ${generateRecentActivity(recentActivityItems)}
         </div>
       </div>
     </div>
