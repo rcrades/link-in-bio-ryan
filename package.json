@@ -12,6 +12,9 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
@@ -19,8 +22,13 @@
     "vite": "^5.4.8"
   },
   "dependencies": {
+    "@auth/core": "^0.37.0",
+    "@convex-dev/auth": "^0.0.91",
     "@vercel/analytics": "^1.6.1",
+    "convex": "^1.35.1",
     "lucide": "^0.358.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "vercel": "^41.4.0"
   }
 }
