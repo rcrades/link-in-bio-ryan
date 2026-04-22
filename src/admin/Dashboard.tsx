@@ -55,7 +55,7 @@ function AppearancesView() {
   const appearances = useQuery(api.appearances.listAdmin, {});
 
   return (
-    <main className="admin-main">
+    <main className="admin-main" data-selected={selectedId !== null ? "yes" : "no"}>
       <section className="admin-list-col">
         <div className="admin-list-toolbar">
           <button type="button" onClick={() => setSelectedId("new")}>
@@ -70,6 +70,15 @@ function AppearancesView() {
         />
       </section>
       <section className="admin-edit-col">
+        {selectedId !== null && (
+          <button
+            type="button"
+            className="admin-back-mobile"
+            onClick={() => setSelectedId(null)}
+          >
+            ← List
+          </button>
+        )}
         {selectedId === null ? (
           <div className="admin-empty">Select an appearance on the left, or create a new one.</div>
         ) : (

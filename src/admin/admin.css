@@ -212,3 +212,119 @@ body {
   padding: 5px 7px; font-size: 12px;
   border: 1px solid var(--admin-border); border-radius: 4px; background: #fff;
 }
+
+.admin-back-mobile { display: none; }
+
+/* ============================================
+   Mobile layout (under desktop breakpoint)
+   Two-column grids collapse to a single column;
+   the Appearances list and editor swap based on
+   whether something is selected. The header nav
+   becomes a full-width tab bar.
+   ============================================ */
+@media (max-width: 999px) {
+  .admin-header {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 14px;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+  .admin-header h1 {
+    font-size: 14px;
+    flex: 1 1 auto;
+  }
+  .admin-header-right {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .admin-me { display: none; }
+  .admin-header button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  .admin-nav {
+    order: 3;
+    flex: 1 0 100%;
+    background: var(--admin-bg);
+    padding: 3px;
+    border-radius: 8px;
+  }
+  .admin-nav button {
+    flex: 1;
+    padding: 8px 10px;
+    font-size: 13px;
+    text-align: center;
+  }
+  .admin-nav button.active {
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Appearances: stack and swap list/editor based on selection */
+  .admin-main {
+    grid-template-columns: 1fr;
+  }
+  .admin-list-col {
+    border-right: none;
+  }
+  .admin-main[data-selected="yes"] .admin-list-col { display: none; }
+  .admin-main[data-selected="no"] .admin-edit-col { display: none; }
+
+  .admin-edit-col { padding: 16px 14px; }
+  .admin-back-mobile {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 14px;
+    padding: 7px 12px;
+    background: #fff;
+    border: 1px solid var(--admin-border);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--admin-text);
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .admin-back-mobile:hover { border-color: var(--admin-primary); color: var(--admin-primary); }
+
+  /* Form rows stack */
+  .admin-edit-row { grid-template-columns: 1fr; gap: 10px; }
+  .admin-edit-fieldset { padding: 10px; }
+  .admin-edit { gap: 14px; }
+
+  /* Sign-in / awaiting card */
+  .admin-shell { padding: 16px; }
+  .admin-card { max-width: 100%; padding: 20px; }
+  .admin-card h1 { font-size: 18px; }
+
+  /* Images view */
+  .admin-images {
+    padding: 14px;
+    gap: 20px;
+  }
+  .admin-images h2 { font-size: 13px; }
+  .admin-images-upload {
+    padding: 14px;
+    border-radius: 10px;
+  }
+  .admin-images-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .admin-image-card { border-radius: 10px; }
+  .admin-image-meta {
+    padding: 8px 10px;
+    gap: 4px;
+  }
+  .admin-image-name { font-size: 12px; }
+  .admin-image-sub { font-size: 10px; gap: 6px; }
+  /* Raw storage-ID is noisy at 2-col width; keep the Copy button. */
+  .admin-image-id { display: none; }
+  .admin-image-actions { gap: 4px; margin-top: 4px; }
+  .admin-image-actions button {
+    padding: 4px 7px;
+    font-size: 11px;
+  }
+}
