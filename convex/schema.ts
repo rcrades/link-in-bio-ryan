@@ -63,4 +63,17 @@ export default defineSchema({
     .index("by_state", ["state"])
     .index("by_state_visible_date", ["state", "visible", "date"])
     .index("by_date", ["date"]),
+
+  images: defineTable({
+    storageId: v.id("_storage"),
+    name: v.string(),
+    contentType: v.optional(v.string()),
+    size: v.optional(v.number()),
+    tag: v.optional(v.string()),
+    alt: v.optional(v.string()),
+    uploadedAt: v.number(),
+    uploadedBy: v.optional(v.id("users")),
+  })
+    .index("by_uploaded_at", ["uploadedAt"])
+    .index("by_tag", ["tag"]),
 });

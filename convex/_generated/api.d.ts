@@ -15,6 +15,7 @@ import type * as authGuards from "../authGuards.js";
 import type * as devBypass from "../devBypass.js";
 import type * as files from "../files.js";
 import type * as http from "../http.js";
+import type * as images from "../images.js";
 import type * as seed from "../seed.js";
 import type * as users from "../users.js";
 
@@ -32,6 +33,7 @@ declare const fullApi: ApiFromModules<{
   devBypass: typeof devBypass;
   files: typeof files;
   http: typeof http;
+  images: typeof images;
   seed: typeof seed;
   users: typeof users;
 }>;
