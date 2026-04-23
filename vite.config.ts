@@ -15,7 +15,8 @@ export default defineConfig({
         'groundbreak-pitch': resolve(__dirname, 'pages/groundbreak/index.html'),
         'groundbreak-thesis': resolve(__dirname, 'pages/groundbreak/thesis/index.html'),
         'groundbreak-dossier': resolve(__dirname, 'pages/groundbreak/dossier/index.html'),
-        'groundbreak-preview': resolve(__dirname, 'pages/groundbreak/preview/index.html')
+        'groundbreak-preview': resolve(__dirname, 'pages/groundbreak/preview/index.html'),
+        'youtube-banner': resolve(__dirname, 'pages/youtube-banner/index.html')
       }
     }
   },

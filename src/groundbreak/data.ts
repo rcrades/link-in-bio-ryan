@@ -23,8 +23,7 @@ export const PREVIOUS_ENGAGEMENT = {
     'Why 50% of Mid-Size Contractors Still Struggle with Tech Integration',
   url: 'https://youtu.be/2Cd3oNo3G3Y',
   thumbnail: '/ryan-b-and-b-youtube-thumb.jpg',
-  duration: 'Nov 2024 · long-form interview',
-  audience: 'Construction operators, founders, and tech leaders',
+  meta: 'Nov 2024 · long-form interview',
   note: ''
 }
 
@@ -69,10 +68,26 @@ export const TALK = {
     }
   ],
   takeaways: [
-    'A plain-English read of the San Francisco Consensus — without the hype accent',
-    'A self-assessment for where your org sits on the 24-month pre-position curve',
-    'Three role-specific playbooks (Owner / GC / Specialty) with first-90-day moves',
-    'A short list of vendor questions that separate AI theater from AI leverage'
+    {
+      icon: 'compass',
+      text:
+        "A plain-English read of the San Francisco Consensus — and what folks like me, riding the lightning of the frontier tools, are experiencing with tools displacing staff"
+    },
+    {
+      icon: 'briefcase',
+      text:
+        "A primer for the C-suite on concepts that can't be left to staff to internalize, including the harness your org needs to be investing in now"
+    },
+    {
+      icon: 'users',
+      text:
+        'The talent framework for job reqs, interviews, and existing-team upskilling that must be acted upon sooner than later'
+    },
+    {
+      icon: 'map',
+      text:
+        'Three role-specific playbooks (Owner / GC / Specialty) with first-90-day moves'
+    }
   ],
   formats: ['Solo', 'Interactive Session', 'Panel'],
   topics: [
@@ -89,7 +104,7 @@ export const TALK = {
 
 export const CREDIBILITY = [
   { label: 'Partner', detail: 'Construction & Real Estate Technology, Wipfli LLP' },
-  { label: 'Groundbreak alumnus', detail: 'Previously presented at Procore Groundbreak' },
+  { label: 'Groundbreak alumnus', detail: 'Presented at Procore Groundbreak 2024 and 2025' },
   { label: 'Speaker', detail: 'UCA of Illinois, CFMA, BuiltWorlds, Office Hours Global' },
   { label: 'Publications', detail: 'Construction Executive, ForConstructionPros, CMAA, NAIOP' },
   { label: 'Advisor', detail: 'Fieldsity — field AI for SMB specialty contractors' }
