@@ -35,11 +35,40 @@ if (typeof localStorage !== 'undefined') {
 import './style.css'
 import * as lucide from 'lucide'
 import { inject } from '@vercel/analytics'
+import { ConvexHttpClient } from 'convex/browser'
+import { api } from '../convex/_generated/api'
 import linksData from './data/links.json'
 import publicationsData from './data/publications.json'
 import causesData from './data/causes.json'
 import activityData from './data/activity.json'
 import { getProfileImageSrc } from './utils/profileImage'
+
+// Convex is the source of truth for Recent Activity when reachable. The
+// bundled activity.json stays as a fallback so the page still renders if
+// Convex is unavailable or the deployment is empty (e.g. pre-seed).
+async function loadRecentActivity(): Promise<any[]> {
+  const convexUrl = import.meta.env.VITE_CONVEX_URL as string | undefined
+  if (!convexUrl) return activityData.activities
+  try {
+    const client = new ConvexHttpClient(convexUrl)
+    const items = await client.query(api.appearances.listPublic, { state: 'recent' })
+    if (!items || items.length === 0) return activityData.activities
+    return items.map((c: any) => ({
+      title: c.title,
+      description: c.description,
+      date: c.date,
+      type: c.type,
+      url: c.url,
+      thumbnail: c.thumbnailUrl ?? undefined,
+      thumbnailId: c.thumbnailId,
+      logo: c.logoUrl ?? undefined,
+      logoBg: c.logoBg,
+    }))
+  } catch (err) {
+    console.warn('Convex Recent Activity fetch failed, falling back to JSON', err)
+    return activityData.activities
+  }
+}
 
 // Initialize Vercel Analytics
 inject()
@@ -61,7 +90,7 @@ const generateSocialLinks = (socialLinks: any[]) => {
     // Use custom SVG for X icon
     if (link.icon === 'x') {
       return `
-        <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
+        <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
           <img src="/logos/logo.svg" alt="X (Twitter)" class="social-icon x-logo" />
         </a>
       `
@@ -69,7 +98,7 @@ const generateSocialLinks = (socialLinks: any[]) => {
     // Use custom images for LinkedIn icon (black for light mode, white for dark mode)
     if (link.icon === 'linkedin') {
       return `
-        <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
+        <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
           <img src="/logos/InBug-Black.png" alt="LinkedIn" class="social-icon linkedin-logo linkedin-light" />
           <img src="/logos/InBug-White.png" alt="LinkedIn" class="social-icon linkedin-logo linkedin-dark" />
         </a>
@@ -78,13 +107,23 @@ const generateSocialLinks = (socialLinks: any[]) => {
     // Use custom SVG for v0 icon
     if (link.icon === 'v0') {
       return `
-        <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
+        <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
           <img src="/logos/v0-logo-dark.svg" alt="v0" class="social-icon v0-logo" />
         </a>
       `
     }
+    // GitHub uses the Lucide glyph — color it with foreground so it matches the
+    // black-in-light / white-in-dark tone of the X, LinkedIn, and v0 logos
+    // rather than the orange primary accent.
+    if (link.icon === 'github') {
+      return `
+        <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-foreground border border-card-border" target="_blank">
+          <i data-lucide="github" class="social-icon" aria-hidden="true"></i>
+        </a>
+      `
+    }
     return `
-      <a href="${link.link}" class="social-card flex-1 flex items-center justify-center p-5 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
+      <a href="${link.link}" class="social-card flex-1 desktop:flex-none flex items-center justify-center p-5 desktop:p-3 rounded-xl relative overflow-hidden bg-card text-primary border border-card-border" target="_blank">
         <i data-lucide="${link.icon}" class="social-icon" aria-hidden="true"></i>
       </a>
     `
@@ -452,8 +491,11 @@ const generatePublications = (publications: any[]) => {
 
 // Initialize the app
 async function initializeApp() {
-  const profileImageSrc = await getProfileImageSrc();
-  
+  const [profileImageSrc, recentActivityItems] = await Promise.all([
+    getProfileImageSrc(),
+    loadRecentActivity(),
+  ]);
+
   // Create HTML content
   const content = `
     <div>
@@ -496,7 +538,7 @@ async function initializeApp() {
           <h2 class="font-display text-xl font-normal text-foreground m-0">Recent Activity</h2>
         </div>
         <div class="recent-activity">
-          ${generateRecentActivity(activityData.activities)}
+          ${generateRecentActivity(recentActivityItems)}
         </div>
       </div>
 
@@ -512,8 +554,14 @@ async function initializeApp() {
     <!-- Desktop grid layout -->
     <div class="desktop-grid hidden desktop:grid desktop:grid-cols-2 desktop:gap-x-8">
       <div class="grid-header-left col-span-1 row-span-1">
-        <div class="social-links flex gap-4 mb-5 w-full">
-          ${generateSocialLinks(linksData.socialLinks)}
+        <div class="social-links flex items-center justify-between gap-4 mb-5 w-full">
+          <div class="social-links-header flex items-center gap-3">
+            <i data-lucide="link" class="social-links-header-icon w-5 h-5 text-primary" aria-hidden="true"></i>
+            <h2 class="font-display text-[1.35rem] font-normal text-foreground m-0 tracking-tight">Connect</h2>
+          </div>
+          <div class="social-links-icons flex gap-3">
+            ${generateSocialLinks(linksData.socialLinks)}
+          </div>
         </div>
       </div>
       <div class="grid-header-right col-span-1 row-span-1 flex items-end pb-5">
@@ -529,7 +577,7 @@ async function initializeApp() {
       </div>
       <div class="grid-content-right col-span-1 row-span-1 relative z-[2] self-start">
         <div class="recent-activity">
-          ${generateRecentActivity(activityData.activities)}
+          ${generateRecentActivity(recentActivityItems)}
         </div>
       </div>
     </div>
@@ -732,14 +780,6 @@ async function initializeApp() {
               </a>
             </li>
             <li class="sitemap-row">
-              <a href="/pages/stealth/" class="sitemap-link" data-sitemap-target="/pages/stealth/">
-                <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
-                <span class="sitemap-branch">├──</span>
-                <span class="sitemap-path">/pages/stealth/</span>
-                <span class="sitemap-desc">Stealth mode · direct link only</span>
-              </a>
-            </li>
-            <li class="sitemap-row">
               <a href="/pages/start-with-v0/" class="sitemap-link" data-sitemap-target="/pages/start-with-v0/">
                 <span class="sitemap-status linked" aria-label="Linked from homepage"></span>
                 <span class="sitemap-branch">├──</span>
@@ -788,9 +828,9 @@ async function initializeApp() {
           </ul>
 
           <div class="sitemap-summary">
-            <span class="sitemap-summary-dim">10 entries ·</span>
+            <span class="sitemap-summary-dim">9 entries ·</span>
             <span><span class="sitemap-status linked sitemap-status--inline"></span> 2 linked from home</span>
-            <span><span class="sitemap-status hidden sitemap-status--inline"></span> 8 direct-link only</span>
+            <span><span class="sitemap-status hidden sitemap-status--inline"></span> 7 direct-link only</span>
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ A modern bio page that centralizes all your important links in one place. Perfec
 
 ## Features
 
-- **Multiple page types**: Main bio, speaker inquiries, admin controls, stealth mode
+- **Multiple page types**: Main bio, speaker inquiries, admin controls
 - **Desktop/Mobile layouts**: Two-column desktop (≥1000px) with Recent Activity; compact mobile layout with photo/text side-by-side, social row, CTA, and Recent Activity
 - **Easy content management**: JSON-based configuration
 - **Feature flagging**: Control experimental features
@@ -20,9 +20,10 @@ A modern bio page that centralizes all your important links in one place. Perfec
 ## Page Routes
 
 - `/` - Main links page
-- `/speaker/` - Speaker inquiry form  
-- `/admin/` - Admin controls
-- `/stealth/` - Stealth mode page
+- `/pages/speaker/` - Speaker inquiry form
+- `/pages/admin/` - Admin controls
+- `/pages/start-with-v0/` - v0 templates
+- `/pages/groundbreak/` - Groundbreak 2026 speaker proposal (plus `thesis/`, `dossier/`, `preview/` alts)
 
 ## Directory Structure
 
@@ -31,7 +32,6 @@ A modern bio page that centralizes all your important links in one place. Perfec
 │   ├── main.ts            # Main page logic
 │   ├── speaker.ts         # Speaker page logic
 │   ├── admin.ts           # Admin page logic
-│   ├── stealth.ts         # Stealth mode page logic
 │   ├── style.css          # Global styles
 │   ├── data/              # Data files
 │   │   ├── links.json     # Link configurations
@@ -50,12 +50,10 @@ A modern bio page that centralizes all your important links in one place. Perfec
 │   └── android-chrome-512x512.png  # Android icon (large)
 │
 ├── pages/                 # Page directories
-│   ├── admin/            
+│   ├── admin/
 │   │   └── index.html     # Admin page
-│   ├── speaker/          
-│   │   └── index.html     # Speaker inquiry form
-│   └── stealth/          
-│       └── index.html     # Stealth mode page
+│   └── speaker/
+│       └── index.html     # Speaker inquiry form
 │
 ├── index.html             # Main page
 ├── vite.config.ts         # Vite configuration
