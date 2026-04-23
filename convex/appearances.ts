@@ -125,6 +125,20 @@ const upsertArgs = {
   headshotStorageId: v.optional(v.id("_storage")),
   backgroundStorageId: v.optional(v.id("_storage")),
   logoKey: v.optional(v.string()),
+  planningAbstract: v.optional(v.string()),
+  planningObjectives: v.optional(v.array(v.string())),
+  planningCoPresenters: v.optional(
+    v.array(
+      v.object({
+        name: v.string(),
+        organization: v.optional(v.string()),
+        role: v.optional(v.string()),
+        notes: v.optional(v.string()),
+      }),
+    ),
+  ),
+  planningFormat: v.optional(v.string()),
+  planningNotes: v.optional(v.string()),
 };
 
 export const upsert = mutation({

@@ -59,6 +59,29 @@ export default defineSchema({
     backgroundStorageId: v.optional(v.id("_storage")),
 
     logoKey: v.optional(v.string()),
+
+    // Planning workspace — internal-only fields for prepping the talk.
+    // Not returned by listPublic; only visible in the admin Planning tab.
+    //
+    // Intentionally inline: objectives and co-presenters live as arrays on
+    // the appearance document, not in separate tables. There is no query
+    // pattern that crosses appearances (e.g. "list all objectives from any
+    // talk"), cascade-delete is automatic, and optimistic UI is simpler.
+    // Please keep it this way — resist normalizing into three tables.
+    planningAbstract: v.optional(v.string()),
+    planningObjectives: v.optional(v.array(v.string())),
+    planningCoPresenters: v.optional(
+      v.array(
+        v.object({
+          name: v.string(),
+          organization: v.optional(v.string()),
+          role: v.optional(v.string()),
+          notes: v.optional(v.string()),
+        }),
+      ),
+    ),
+    planningFormat: v.optional(v.string()),
+    planningNotes: v.optional(v.string()),
   })
     .index("by_state", ["state"])
     .index("by_state_visible_date", ["state", "visible", "date"])

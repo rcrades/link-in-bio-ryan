@@ -6,6 +6,13 @@ import { Id } from "../../convex/_generated/dataModel";
 type StateValue = "idea" | "planning" | "upcoming" | "recent" | "media" | "archived";
 type TypeValue = "video" | "article" | "interview" | "in-person" | "podcast" | "panel";
 
+type CoPresenter = {
+  name: string;
+  organization: string;
+  role: string;
+  notes: string;
+};
+
 type Form = {
   state: StateValue;
   visible: boolean;
@@ -28,6 +35,11 @@ type Form = {
   backgroundStorageId: Id<"_storage"> | null;
   logoKey: string;
   orderHint: string;
+  planningAbstract: string;
+  planningObjectives: string[];
+  planningCoPresenters: CoPresenter[];
+  planningFormat: string;
+  planningNotes: string;
 };
 
 const EMPTY_FORM: Form = {
@@ -52,6 +64,11 @@ const EMPTY_FORM: Form = {
   backgroundStorageId: null,
   logoKey: "",
   orderHint: "",
+  planningAbstract: "",
+  planningObjectives: [],
+  planningCoPresenters: [],
+  planningFormat: "",
+  planningNotes: "",
 };
 
 const STATES: StateValue[] = ["idea", "planning", "upcoming", "recent", "media", "archived"];
@@ -105,6 +122,16 @@ export function AppearanceEdit({
         backgroundStorageId: existing.backgroundStorageId ?? null,
         logoKey: existing.logoKey ?? "",
         orderHint: existing.orderHint?.toString() ?? "",
+        planningAbstract: existing.planningAbstract ?? "",
+        planningObjectives: existing.planningObjectives ?? [],
+        planningCoPresenters: (existing.planningCoPresenters ?? []).map((p) => ({
+          name: p.name,
+          organization: p.organization ?? "",
+          role: p.role ?? "",
+          notes: p.notes ?? "",
+        })),
+        planningFormat: existing.planningFormat ?? "",
+        planningNotes: existing.planningNotes ?? "",
       });
     }
   }, [id, existing]);
@@ -142,6 +169,18 @@ export function AppearanceEdit({
     setError(null);
     setSaving(true);
     try {
+      const cleanedCoPresenters = form.planningCoPresenters
+        .map((p) => ({
+          name: p.name.trim(),
+          organization: p.organization.trim() || undefined,
+          role: p.role.trim() || undefined,
+          notes: p.notes.trim() || undefined,
+        }))
+        .filter((p) => p.name.length > 0);
+      const cleanedObjectives = form.planningObjectives
+        .map((o) => o.trim())
+        .filter((o) => o.length > 0);
+
       const newId = await upsert({
         id: id ?? undefined,
         state: form.state,
@@ -165,6 +204,11 @@ export function AppearanceEdit({
         headshotStorageId: form.headshotStorageId ?? undefined,
         backgroundStorageId: form.backgroundStorageId ?? undefined,
         logoKey: form.logoKey || undefined,
+        planningAbstract: form.planningAbstract.trim() || undefined,
+        planningObjectives: cleanedObjectives.length ? cleanedObjectives : undefined,
+        planningCoPresenters: cleanedCoPresenters.length ? cleanedCoPresenters : undefined,
+        planningFormat: form.planningFormat.trim() || undefined,
+        planningNotes: form.planningNotes.trim() || undefined,
       });
       onSaved(newId);
     } catch (err) {
@@ -384,32 +428,197 @@ export function AppearanceEdit({
               </label>
             </div>
           </fieldset>
-
-          {error && <p className="admin-error">{error}</p>}
-
-          <div className="admin-edit-actions">
-            <button type="submit" disabled={saving}>
-              {saving ? "Saving…" : id ? "Save changes" : "Create appearance"}
-            </button>
-            {id && (
-              <button type="button" className="admin-danger" onClick={handleDelete}>
-                Delete
-              </button>
-            )}
-          </div>
         </>
       )}
 
       {activeTab === "planning" && (
-        <div className="admin-edit-placeholder">
-          <h2>Planning workspace</h2>
-          <p>
-            The richer planning layer — thesis, brief, research, social posts,
-            speaker applications — hooks up here in v2. Each will link back to
-            this appearance record.
-          </p>
-        </div>
+        <>
+          <fieldset className="admin-edit-fieldset">
+            <legend>Session abstract</legend>
+            <label>
+              Abstract (the paragraph-long pitch from the organizer or partner)
+              <textarea
+                rows={8}
+                value={form.planningAbstract}
+                onChange={(e) => setForm((f) => ({ ...f, planningAbstract: e.target.value }))}
+                placeholder="Paste the session description here…"
+              />
+            </label>
+            <label>
+              Format (e.g. keynote, panel, workshop, fireside)
+              <input
+                type="text"
+                value={form.planningFormat}
+                onChange={(e) => setForm((f) => ({ ...f, planningFormat: e.target.value }))}
+              />
+            </label>
+          </fieldset>
+
+          <fieldset className="admin-edit-fieldset">
+            <legend>Learning objectives</legend>
+            <p className="admin-edit-help">
+              Ordered list of the talk's objectives. Used for CPE credit, pitch decks,
+              or pre-event communications.
+            </p>
+            {form.planningObjectives.map((obj, i) => (
+              <div key={i} className="admin-edit-objective-row">
+                <span className="admin-edit-objective-num" aria-hidden="true">{i + 1}</span>
+                <input
+                  type="text"
+                  value={obj}
+                  aria-label={`Objective ${i + 1}`}
+                  placeholder="Describe one takeaway or learning outcome"
+                  onChange={(e) => {
+                    const next = [...form.planningObjectives];
+                    next[i] = e.target.value;
+                    setForm((f) => ({ ...f, planningObjectives: next }));
+                  }}
+                />
+                <button
+                  type="button"
+                  className="admin-edit-remove"
+                  aria-label={`Remove objective ${i + 1}`}
+                  onClick={() =>
+                    setForm((f) => ({
+                      ...f,
+                      planningObjectives: f.planningObjectives.filter((_, j) => j !== i),
+                    }))
+                  }
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              className="admin-edit-add"
+              onClick={() =>
+                setForm((f) => ({ ...f, planningObjectives: [...f.planningObjectives, ""] }))
+              }
+            >
+              + Add objective
+            </button>
+          </fieldset>
+
+          <fieldset className="admin-edit-fieldset">
+            <legend>Co-presenters</legend>
+            <p className="admin-edit-help">
+              Who else is on stage. Include organization and role so you can brief
+              or re-engage them later.
+            </p>
+            {form.planningCoPresenters.map((p, i) => (
+              <div key={i} className="admin-edit-subcard">
+                <div className="admin-edit-row">
+                  <label>
+                    Name
+                    <input
+                      type="text"
+                      value={p.name}
+                      placeholder="e.g. Teddy"
+                      onChange={(e) => {
+                        const next = [...form.planningCoPresenters];
+                        next[i] = { ...next[i], name: e.target.value };
+                        setForm((f) => ({ ...f, planningCoPresenters: next }));
+                      }}
+                    />
+                  </label>
+                  <label>
+                    Organization
+                    <input
+                      type="text"
+                      value={p.organization}
+                      placeholder="e.g. Ramp"
+                      onChange={(e) => {
+                        const next = [...form.planningCoPresenters];
+                        next[i] = { ...next[i], organization: e.target.value };
+                        setForm((f) => ({ ...f, planningCoPresenters: next }));
+                      }}
+                    />
+                  </label>
+                </div>
+                <label>
+                  Role / title
+                  <input
+                    type="text"
+                    value={p.role}
+                    placeholder="e.g. Product team, Customer, Moderator…"
+                    onChange={(e) => {
+                      const next = [...form.planningCoPresenters];
+                      next[i] = { ...next[i], role: e.target.value };
+                      setForm((f) => ({ ...f, planningCoPresenters: next }));
+                    }}
+                  />
+                </label>
+                <label>
+                  Notes
+                  <textarea
+                    rows={2}
+                    value={p.notes}
+                    onChange={(e) => {
+                      const next = [...form.planningCoPresenters];
+                      next[i] = { ...next[i], notes: e.target.value };
+                      setForm((f) => ({ ...f, planningCoPresenters: next }));
+                    }}
+                    placeholder="Intro context, prep notes, their angle…"
+                  />
+                </label>
+                <button
+                  type="button"
+                  className="admin-edit-remove"
+                  onClick={() =>
+                    setForm((f) => ({
+                      ...f,
+                      planningCoPresenters: f.planningCoPresenters.filter((_, j) => j !== i),
+                    }))
+                  }
+                >
+                  Remove co-presenter
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              className="admin-edit-add"
+              onClick={() =>
+                setForm((f) => ({
+                  ...f,
+                  planningCoPresenters: [
+                    ...f.planningCoPresenters,
+                    { name: "", organization: "", role: "", notes: "" },
+                  ],
+                }))
+              }
+            >
+              + Add co-presenter
+            </button>
+          </fieldset>
+
+          <fieldset className="admin-edit-fieldset">
+            <legend>Freeform planning notes</legend>
+            <label>
+              Notes (logistics, open questions, references, links)
+              <textarea
+                rows={6}
+                value={form.planningNotes}
+                onChange={(e) => setForm((f) => ({ ...f, planningNotes: e.target.value }))}
+              />
+            </label>
+          </fieldset>
+        </>
       )}
+
+      {error && <p className="admin-error">{error}</p>}
+
+      <div className="admin-edit-actions">
+        <button type="submit" disabled={saving}>
+          {saving ? "Saving…" : id ? "Save changes" : "Create appearance"}
+        </button>
+        {id && (
+          <button type="button" className="admin-danger" onClick={handleDelete}>
+            Delete
+          </button>
+        )}
+      </div>
     </form>
   );
 }

@@ -69,3 +69,78 @@ export const seedRecentActivity = mutation({
     return { inserted: inserted.length };
   },
 });
+
+/**
+ * Upsert a single appearance, keyed on title + date. Used by scripts that
+ * need to add or update a specific talk (e.g. an upcoming speaking engagement)
+ * without wiping the full appearances table. Idempotent across re-runs.
+ */
+export const upsertOne = mutation({
+  args: {
+    secret: v.string(),
+    state: v.union(
+      v.literal("idea"),
+      v.literal("planning"),
+      v.literal("upcoming"),
+      v.literal("recent"),
+      v.literal("media"),
+      v.literal("archived"),
+    ),
+    visible: v.boolean(),
+    type: v.union(
+      v.literal("video"),
+      v.literal("article"),
+      v.literal("interview"),
+      v.literal("in-person"),
+      v.literal("podcast"),
+      v.literal("panel"),
+    ),
+    title: v.string(),
+    description: v.optional(v.string()),
+    date: v.string(),
+    dateDisplay: v.optional(v.string()),
+    url: v.optional(v.string()),
+    source: v.optional(v.string()),
+    speaker: v.optional(v.string()),
+    presentedBy: v.optional(v.string()),
+    time: v.optional(v.string()),
+    hideEventBand: v.optional(v.boolean()),
+    hideHeadshot: v.optional(v.boolean()),
+    thumbnailId: v.optional(v.string()),
+    thumbnailStorageId: v.optional(v.id("_storage")),
+    logoStorageId: v.optional(v.id("_storage")),
+    logoBg: v.optional(v.union(v.literal("light"), v.literal("dark"))),
+    headshotStorageId: v.optional(v.id("_storage")),
+    backgroundStorageId: v.optional(v.id("_storage")),
+    logoKey: v.optional(v.string()),
+    orderHint: v.optional(v.number()),
+    planningAbstract: v.optional(v.string()),
+    planningObjectives: v.optional(v.array(v.string())),
+    planningCoPresenters: v.optional(
+      v.array(
+        v.object({
+          name: v.string(),
+          organization: v.optional(v.string()),
+          role: v.optional(v.string()),
+          notes: v.optional(v.string()),
+        }),
+      ),
+    ),
+    planningFormat: v.optional(v.string()),
+    planningNotes: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    checkSecret(args.secret);
+    const { secret: _secret, ...rest } = args;
+    const existing = await ctx.db
+      .query("appearances")
+      .filter((q) => q.and(q.eq(q.field("title"), rest.title), q.eq(q.field("date"), rest.date)))
+      .first();
+    if (existing) {
+      await ctx.db.patch(existing._id, rest);
+      return { updated: existing._id };
+    }
+    const id = await ctx.db.insert("appearances", rest);
+    return { inserted: id };
+  },
+});
