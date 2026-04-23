@@ -461,22 +461,23 @@ export function AppearanceEdit({
               or pre-event communications.
             </p>
             {form.planningObjectives.map((obj, i) => (
-              <div key={i} className="admin-edit-row admin-edit-row-grow">
-                <label className="admin-edit-grow">
-                  Objective {i + 1}
-                  <input
-                    type="text"
-                    value={obj}
-                    onChange={(e) => {
-                      const next = [...form.planningObjectives];
-                      next[i] = e.target.value;
-                      setForm((f) => ({ ...f, planningObjectives: next }));
-                    }}
-                  />
-                </label>
+              <div key={i} className="admin-edit-objective-row">
+                <span className="admin-edit-objective-num" aria-hidden="true">{i + 1}</span>
+                <input
+                  type="text"
+                  value={obj}
+                  aria-label={`Objective ${i + 1}`}
+                  placeholder="Describe one takeaway or learning outcome"
+                  onChange={(e) => {
+                    const next = [...form.planningObjectives];
+                    next[i] = e.target.value;
+                    setForm((f) => ({ ...f, planningObjectives: next }));
+                  }}
+                />
                 <button
                   type="button"
                   className="admin-edit-remove"
+                  aria-label={`Remove objective ${i + 1}`}
                   onClick={() =>
                     setForm((f) => ({
                       ...f,
@@ -513,6 +514,7 @@ export function AppearanceEdit({
                     <input
                       type="text"
                       value={p.name}
+                      placeholder="e.g. Teddy"
                       onChange={(e) => {
                         const next = [...form.planningCoPresenters];
                         next[i] = { ...next[i], name: e.target.value };
@@ -525,6 +527,7 @@ export function AppearanceEdit({
                     <input
                       type="text"
                       value={p.organization}
+                      placeholder="e.g. Ramp"
                       onChange={(e) => {
                         const next = [...form.planningCoPresenters];
                         next[i] = { ...next[i], organization: e.target.value };
@@ -538,6 +541,7 @@ export function AppearanceEdit({
                   <input
                     type="text"
                     value={p.role}
+                    placeholder="e.g. Product team, Customer, Moderator…"
                     onChange={(e) => {
                       const next = [...form.planningCoPresenters];
                       next[i] = { ...next[i], role: e.target.value };

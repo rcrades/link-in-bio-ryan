@@ -62,6 +62,12 @@ export default defineSchema({
 
     // Planning workspace — internal-only fields for prepping the talk.
     // Not returned by listPublic; only visible in the admin Planning tab.
+    //
+    // Intentionally inline: objectives and co-presenters live as arrays on
+    // the appearance document, not in separate tables. There is no query
+    // pattern that crosses appearances (e.g. "list all objectives from any
+    // talk"), cascade-delete is automatic, and optimistic UI is simpler.
+    // Please keep it this way — resist normalizing into three tables.
     planningAbstract: v.optional(v.string()),
     planningObjectives: v.optional(v.array(v.string())),
     planningCoPresenters: v.optional(
