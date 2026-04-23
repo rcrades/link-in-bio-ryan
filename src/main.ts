@@ -370,18 +370,28 @@ const generateInPersonPublication = (pub: any, year: number) => {
   });
   const timeRange = pub.time ? ` · ${pub.time}` : '';
 
-  // Logo resolution — opt-in inline SVG by key, image path, or a minimal
-  // fallback. When the top band is hidden we skip the logo entirely.
+  // Logo resolution — opt-in inline SVG by key or image path. If no logo is
+  // configured and the top band is visible, the band renders as text-only.
   let logoHtml = '';
   if (!hideEventBand) {
     if (pub.logoKey === 'rocky-mountain-cfma') {
       logoHtml = ROCKY_MOUNTAIN_CFMA_SVG;
     } else if (pub.logo) {
       logoHtml = `<img src="${pub.logo}" alt="${pub.source}" class="in-person-logo-img" />`;
-    } else {
-      logoHtml = `<div class="in-person-logo-fallback"><i data-lucide="mic" class="w-4 h-4" aria-hidden="true"></i></div>`;
     }
   }
+
+  // Compact header mode: when the headshot is hidden the card has more
+  // horizontal breathing room, so the event name and date collapse onto a
+  // single dot-separated line in the top band.
+  const compactHeader = hideHeadshot;
+
+  const headerInner = compactHeader
+    ? `<div class="in-person-event text-[0.8rem] font-bold text-white leading-snug">${pub.source} · ${formattedDate}${timeRange}</div>`
+    : `
+            <div class="in-person-event text-[0.8rem] font-bold text-white leading-tight">${pub.source}</div>
+            <div class="in-person-datetime text-[0.65rem] text-white/80 mt-0.5">${formattedDate}${timeRange}</div>
+          `;
 
   // Right padding on the top band leaves room for the launch arrow which now
   // lives in the top-right corner of the card.
@@ -389,19 +399,21 @@ const generateInPersonPublication = (pub: any, year: number) => {
     ? ''
     : `
         <div class="in-person-band flex items-center gap-2.5 pl-2.5 pr-10 py-2 relative z-[2]">
-          <div class="in-person-logo flex-shrink-0">${logoHtml}</div>
+          ${logoHtml ? `<div class="in-person-logo flex-shrink-0">${logoHtml}</div>` : ''}
           <div class="flex-1 min-w-0">
-            <div class="in-person-event text-[0.8rem] font-bold text-white leading-tight">${pub.source}</div>
-            <div class="in-person-datetime text-[0.65rem] text-white/80 mt-0.5">${formattedDate}${timeRange}</div>
+            ${headerInner}
           </div>
         </div>`;
 
   // Speaker line. When the top band is hidden we append the event source to
   // the presenter line so the event info still reads somewhere on the card.
   const speakerName = pub.speaker || 'Ryan Rademann';
-  const presenterParts = [pub.presentedBy || 'Presented in person'];
-  if (hideEventBand) presenterParts.push(pub.source);
-  const speakerLine = `${speakerName} <span class="font-normal text-white/55">· ${presenterParts.join(' · ')}</span>`;
+  const presenterParts: string[] = [];
+  if (pub.presentedBy) presenterParts.push(pub.presentedBy);
+  if (hideEventBand && pub.source) presenterParts.push(pub.source);
+  const speakerLine = presenterParts.length
+    ? `${speakerName} <span class="font-normal text-white/55">· ${presenterParts.join(' · ')}</span>`
+    : speakerName;
 
   const headshotImg = hideHeadshot
     ? ''
@@ -425,9 +437,9 @@ const generateInPersonPublication = (pub: any, year: number) => {
           </div>
         </div>
       </div>
-      <a href="${pub.url}" target="_blank" class="publication-link-btn in-person-link-btn absolute top-2 right-2 z-[3] inline-flex items-center justify-center w-7 h-7 rounded-md bg-primary text-card transition-all duration-300 ease-bounce-in">
+      ${pub.url ? `<a href="${pub.url}" target="_blank" class="publication-link-btn in-person-link-btn absolute top-2 right-2 z-[3] inline-flex items-center justify-center w-7 h-7 rounded-md bg-primary text-card transition-all duration-300 ease-bounce-in">
         <i data-lucide="arrow-up-right" class="w-3.5 h-3.5" aria-hidden="true"></i>
-      </a>
+      </a>` : ''}
     </div>
   `;
 };

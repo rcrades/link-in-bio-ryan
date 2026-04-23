@@ -26,6 +26,27 @@
       "hideHeadshot": true
     },
     {
+      "type": "in-person",
+      "title": "Executive Forum — CFO Roundtable",
+      "date": "2025-10-15",
+      "dateDisplay": "October 2025",
+      "source": "Procore Groundbreak · Houston, TX",
+      "speaker": "Ryan Rademann",
+      "presentedBy": "Co-presented with Howard Fu, CFO of Procore",
+      "background": "/gbk-2025.jpg",
+      "hideHeadshot": true
+    },
+    {
+      "type": "in-person",
+      "title": "Robots in the Right of Way: A Practical Guide to AI in the Office and the Field",
+      "date": "2025-11-13",
+      "dateDisplay": "November 2025",
+      "source": "Centuri Energy & Utility Leaders' Executive Forum · Orlando, FL",
+      "speaker": "Ryan Rademann",
+      "background": "/centuri-orlando.jpg",
+      "hideHeadshot": true
+    },
+    {
       "type": "article",
       "title": "Elevating Construction Operations With an Advanced Tech Stack",
       "date": "2025-03-21",

@@ -9,68 +9,173 @@ import {
 
 applyTheme()
 
-const slides = [
+// Each section has its own body layout so the page reads as chapters
+// rather than a uniform slide deck. `layout` dispatches the inner render.
+type Section =
+  | { layout: 'prose'; title: string; body: string }
+  | {
+      layout: 'signals'
+      title: string
+      body: string
+      signals: string[]
+    }
+  | {
+      layout: 'moves'
+      title: string
+      body: string
+      moves: { label: string; body: string }[]
+    }
+  | {
+      layout: 'walk'
+      title: string
+      body: string
+      items: string[]
+    }
+
+const sections: Section[] = [
   {
-    n: '00',
+    layout: 'prose',
     title: 'The framing',
     body:
-      "A father and daughter meet for lunch downtown on Sundays. He drives in from the East Bay — president of a $400M GC, sixty-one, still pours concrete in his sleep. She walks over from her side of town — late twenties, Stanford CS, Member of Technical Staff at Anthropic. She can't tell him what she's working on. She can tell him where the puck is going. This talk is an overhearing of her advice — translated for a room full of people with cranes.",
-    list: null
+      "A father and daughter meet for lunch downtown on Sundays. He drives in from the East Bay — president of a $400M GC, sixty-one, still pours concrete in his sleep. She walks over from her side of town — late twenties, Stanford CS, Member of Technical Staff at Anthropic. She can't tell him what she's working on. She can tell him where the puck is going. This talk is an overhearing of her advice — translated for a room full of people with cranes."
   },
   {
-    n: '01',
+    layout: 'prose',
     title: 'The claim',
     body:
-      "Inside a ten-block radius of Market Street, a small number of labs, founders, and operators have aligned on a handful of concrete claims. The model itself is the product, not a feature bolted on top. Agents will eat applications. Context is the new moat. These aren't takes — they're the operating assumptions of the next ten years.",
-    list: null
+      "Inside a ten-block radius of Market Street, a small number of labs, founders, and operators have aligned on a handful of concrete claims. The model itself is the product, not a feature bolted on top. Agents will eat applications. Context is the new moat. These aren't takes — they're the operating assumptions of the next ten years."
   },
   {
-    n: '02',
+    layout: 'signals',
     title: 'Three signals the consensus is real',
     body:
-      "You can argue about hype, you can't argue with receipts. Three signals that suggest the Bay Area isn't doing its usual overclaiming:",
-    list: [
+      "You can argue about hype, you can't argue with receipts. Three signals that suggest the Bay Area isn't doing its usual overclaiming.",
+    signals: [
       'Coding agents are now writing PRs larger than 500 lines that pass review at frontier companies — not occasionally, daily.',
       "Valuations for 'context' companies (retrieval, memory, tool-use infra) are a leading indicator of what the next moat looks like.",
       "The migration from 'apps you open' to 'agents you delegate to' is already visible inside every major product org."
     ]
   },
   {
-    n: '03',
+    layout: 'prose',
     title: "Why construction isn't a participant — yet",
     body:
-      "Construction is downstream of every software consensus, historically by 3–5 years. The reasons are structural (fragmentation, thin margins, the rightful conservatism of anyone responsible for a crane above a sidewalk) — not cultural. The industry's current AI dialogue is still mostly two things: displacement anxiety, and AI-as-marketing-veneer on products you already bought. Both are distractions.",
-    list: null
+      "Construction is downstream of every software consensus, historically by 3–5 years. The reasons are structural (fragmentation, thin margins, the rightful conservatism of anyone responsible for a crane above a sidewalk) — not cultural. The industry's current AI dialogue is still mostly two things: displacement anxiety, and AI-as-marketing-veneer on products you already bought. Both are distractions."
   },
   {
-    n: '04',
+    layout: 'moves',
     title: 'The 24-month pre-position window',
     body:
-      "Consensus propagates on a lag. Construction leaders have roughly two years to pre-position before the agentic workflow patterns hit the jobsite in serious volume. Four moves that separate participants from recipients:",
-    list: [
-      "People: hire or promote one person whose job title includes the word 'agents' — not 'AI strategy.'",
-      'Data: treat your project data the way a model would — queryable, permissioned, with clean boundaries. This is 80% of the work.',
-      'Vendors: ask them what they build on top of, not what they stamp on top. Anyone serious will show you a model + context story.',
-      'Governance: a one-page policy for how agents act on behalf of the firm beats a 40-page AI strategy deck.'
+      "Consensus propagates on a lag. Construction leaders have roughly two years to pre-position before the agentic workflow patterns hit the jobsite in serious volume. Four moves that separate participants from recipients.",
+    moves: [
+      {
+        label: 'People',
+        body:
+          "Hire or promote one person whose job title includes the word \u2018agents\u2019 — not \u2018AI strategy.\u2019"
+      },
+      {
+        label: 'Data',
+        body:
+          'Treat your project data the way a model would — queryable, permissioned, with clean boundaries. This is 80% of the work.'
+      },
+      {
+        label: 'Vendors',
+        body:
+          'Ask what they build on top of, not what they stamp on top. Anyone serious will show you a model + context story.'
+      },
+      {
+        label: 'Governance',
+        body:
+          'A one-page policy for how agents act on behalf of the firm beats a 40-page AI strategy deck.'
+      }
     ]
   },
   {
-    n: '05',
+    layout: 'walk',
     title: 'What you walk out with',
     body:
       "This talk is designed for the exact room Groundbreak assembles: Owners, GCs, and Specialty Contractors sitting next to Procore's product org. The goal isn't inspiration — it's that a construction firm's COO flies home with three specific moves for Monday.",
-    list: TALK.takeaways
+    items: TALK.takeaways.map(t => t.text)
   }
 ]
 
-const renderSlide = (s: typeof slides[number]) => `
-  <section class="gb-slide">
-    <div class="gb-slide-num">Slide ${s.n}</div>
-    <h2 class="gb-slide-title">${s.title}</h2>
-    <div class="gb-slide-body">${s.body}</div>
-    ${s.list ? `<ul class="gb-slide-list">${s.list.map(i => `<li>${i}</li>`).join('')}</ul>` : ''}
-  </section>
+const renderHeader = (title: string, body: string) => `
+  <h2 class="gb-slide-title">${title}</h2>
+  <div class="gb-slide-body">${body}</div>
 `
+
+const renderProse = (s: Extract<Section, { layout: 'prose' }>) =>
+  renderHeader(s.title, s.body)
+
+const renderSignals = (s: Extract<Section, { layout: 'signals' }>) => `
+  ${renderHeader(s.title, s.body)}
+  <ol class="gb-signals">
+    ${s.signals
+      .map(
+        (sig, i) => `
+      <li class="gb-signal">
+        <div class="gb-signal-num">${String(i + 1).padStart(2, '0')}</div>
+        <p class="gb-signal-body">${sig}</p>
+      </li>
+    `
+      )
+      .join('')}
+  </ol>
+`
+
+const renderMoves = (s: Extract<Section, { layout: 'moves' }>) => `
+  ${renderHeader(s.title, s.body)}
+  <div class="gb-moves">
+    ${s.moves
+      .map(
+        m => `
+      <div class="gb-move">
+        <div class="gb-move-label">${m.label}</div>
+        <div class="gb-move-body">${m.body}</div>
+      </div>
+    `
+      )
+      .join('')}
+  </div>
+`
+
+const renderWalk = (s: Extract<Section, { layout: 'walk' }>) => `
+  ${renderHeader(s.title, s.body)}
+  <ul class="gb-walk">
+    ${s.items
+      .map(
+        item => `
+      <li class="gb-walk-item">
+        <span class="gb-walk-check" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </span>
+        <span>${item}</span>
+      </li>
+    `
+      )
+      .join('')}
+  </ul>
+`
+
+const renderSection = (s: Section) => {
+  let inner: string
+  switch (s.layout) {
+    case 'signals':
+      inner = renderSignals(s)
+      break
+    case 'moves':
+      inner = renderMoves(s)
+      break
+    case 'walk':
+      inner = renderWalk(s)
+      break
+    default:
+      inner = renderProse(s)
+  }
+  return `<section class="gb-slide gb-slide--${s.layout}">${inner}</section>`
+}
 
 const html = `
   <main class="gb-page">
@@ -86,7 +191,7 @@ const html = `
       <div class="gb-preview-scroll-hint">Scroll</div>
     </section>
 
-    ${slides.map(renderSlide).join('')}
+    ${sections.map(renderSection).join('')}
 
     <section class="gb-preview-proof">
       <div class="gb-preview-proof-kicker">Evidence · Question 7</div>
@@ -99,7 +204,7 @@ const html = `
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = html
 
-// Reveal slides on scroll using IntersectionObserver for a taste of
+// Reveal sections on scroll using IntersectionObserver for a taste of
 // on-stage pacing without shipping a heavy animation library.
 const observer = new IntersectionObserver(
   entries => {

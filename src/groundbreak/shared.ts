@@ -37,13 +37,10 @@ export const renderPreviousEngagement = (layout: 'hero' | 'inline' = 'inline') =
       </div>
     </div>
     <div class="gb-prev-body">
-      <div class="gb-prev-kicker">Question 7 · Previous speaking engagement</div>
       <div class="gb-prev-event">${PREVIOUS_ENGAGEMENT.event}</div>
       <div class="gb-prev-session">${PREVIOUS_ENGAGEMENT.sessionTitle}</div>
       <div class="gb-prev-meta">
-        <span>${PREVIOUS_ENGAGEMENT.duration}</span>
-        <span>·</span>
-        <span>${PREVIOUS_ENGAGEMENT.audience}</span>
+        <span>${PREVIOUS_ENGAGEMENT.meta}</span>
       </div>
       ${PREVIOUS_ENGAGEMENT.note ? `<div class="gb-prev-note">${PREVIOUS_ENGAGEMENT.note}</div>` : ''}
     </div>
