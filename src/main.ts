@@ -70,6 +70,43 @@ async function loadRecentActivity(): Promise<any[]> {
   }
 }
 
+// Upcoming appearances (state="upcoming") are merged into the Media Appearances
+// section so the public card renders before the talk happens. Shape matches
+// what generatePublications / generateInPersonPublication expect.
+async function loadUpcomingAppearances(): Promise<any[]> {
+  const convexUrl = import.meta.env.VITE_CONVEX_URL as string | undefined
+  if (!convexUrl) return []
+  try {
+    const client = new ConvexHttpClient(convexUrl)
+    const items = await client.query(api.appearances.listPublic, { state: 'upcoming' })
+    if (!items) return []
+    return items.map((c: any) => ({
+      type: c.type,
+      title: c.title,
+      description: c.description,
+      date: c.date,
+      dateDisplay: c.dateDisplay,
+      source: c.source,
+      url: c.url,
+      speaker: c.speaker,
+      presentedBy: c.presentedBy,
+      time: c.time,
+      hideEventBand: c.hideEventBand,
+      hideHeadshot: c.hideHeadshot,
+      headshot: c.headshotUrl ?? undefined,
+      background: c.backgroundUrl ?? undefined,
+      logo: c.logoUrl ?? undefined,
+      logoBg: c.logoBg,
+      logoKey: c.logoKey,
+      thumbnailId: c.thumbnailId,
+      isUpcoming: true,
+    }))
+  } catch (err) {
+    console.warn('Convex Upcoming Appearances fetch failed, hiding upcoming section', err)
+    return []
+  }
+}
+
 // Initialize Vercel Analytics
 inject()
 
@@ -383,6 +420,15 @@ const generateInPersonPublication = (pub: any, year: number) => {
     }
   }
 
+  // Upcoming talks show a compact pill inline with the event name so the card
+  // reads as "future-dated" rather than a recap.
+  const upcomingInlineBadge = pub.isUpcoming
+    ? `<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[0.55rem] font-bold uppercase tracking-wide bg-primary text-card mr-1.5 align-middle">
+         <i data-lucide="calendar-clock" class="w-2 h-2" aria-hidden="true"></i>
+         Upcoming
+       </span>`
+    : '';
+
   // Right padding on the top band leaves room for the launch arrow which now
   // lives in the top-right corner of the card.
   const topBand = hideEventBand
@@ -391,7 +437,7 @@ const generateInPersonPublication = (pub: any, year: number) => {
         <div class="in-person-band flex items-center gap-2.5 pl-2.5 pr-10 py-2 relative z-[2]">
           <div class="in-person-logo flex-shrink-0">${logoHtml}</div>
           <div class="flex-1 min-w-0">
-            <div class="in-person-event text-[0.8rem] font-bold text-white leading-tight">${pub.source}</div>
+            <div class="in-person-event text-[0.8rem] font-bold text-white leading-tight">${upcomingInlineBadge}${pub.source}</div>
             <div class="in-person-datetime text-[0.65rem] text-white/80 mt-0.5">${formattedDate}${timeRange}</div>
           </div>
         </div>`;
@@ -408,7 +454,7 @@ const generateInPersonPublication = (pub: any, year: number) => {
     : `<img src="${headshotSrc}" alt="${speakerName}" class="in-person-headshot flex-shrink-0" />`;
 
   return `
-    <div class="publication-item in-person-pub p-0 min-h-[180px] justify-self-start w-full overflow-hidden" data-year="${year}" data-source="${pub.source.toLowerCase()}" data-type="${pub.type}">
+    <div class="publication-item in-person-pub p-0 min-h-[180px] justify-self-start w-full overflow-hidden" data-year="${year}" data-source="${pub.source.toLowerCase()}" data-type="${pub.type}"${pub.isUpcoming ? ' data-upcoming="true"' : ''}>
       <div class="in-person-hero ${pub.background ? 'has-backdrop' : ''} ${hideEventBand ? 'no-band' : ''} relative flex flex-col h-full" ${backdropStyle}>
         <!-- Event band: logo + event name + date/time (omitted when hideEventBand is set) -->
         ${topBand}
@@ -479,10 +525,15 @@ const generatePublications = (publications: any[]) => {
 
 // Initialize the app
 async function initializeApp() {
-  const [profileImageSrc, recentActivityItems] = await Promise.all([
+  const [profileImageSrc, recentActivityItems, upcomingItems] = await Promise.all([
     getProfileImageSrc(),
     loadRecentActivity(),
+    loadUpcomingAppearances(),
   ]);
+
+  // Merge upcoming appearances ahead of the static publications list so they
+  // sort to the top naturally (they're future-dated).
+  const mergedPublications = [...upcomingItems, ...publicationsData.publications];
 
   // Create HTML content
   const content = `
@@ -586,18 +637,24 @@ async function initializeApp() {
           </div>
           <!-- Teaser: counts + ghost previews -->
           <div class="accordion-teaser mt-4 transition-all duration-300">
-            <div class="flex items-center gap-4 text-sm text-foreground-muted mb-3">
+            <div class="flex items-center gap-4 text-sm text-foreground-muted mb-3 flex-wrap">
               <span class="flex items-center gap-1.5">
                 <i data-lucide="file-text" class="w-4 h-4" aria-hidden="true"></i>
-                ${publicationsData.publications.filter((p: {type: string}) => p.type === 'article').length} Articles
+                ${mergedPublications.filter((p: {type: string}) => p.type === 'article').length} Articles
               </span>
               <span class="flex items-center gap-1.5">
                 <i data-lucide="tv" class="w-4 h-4" aria-hidden="true"></i>
-                ${publicationsData.publications.filter((p: {type: string}) => p.type === 'interview').length} Interviews
+                ${mergedPublications.filter((p: {type: string}) => p.type === 'interview').length} Interviews
               </span>
+              ${upcomingItems.length > 0 ? `
+                <span class="flex items-center gap-1.5 text-primary">
+                  <i data-lucide="calendar-clock" class="w-4 h-4" aria-hidden="true"></i>
+                  ${upcomingItems.length} Upcoming
+                </span>
+              ` : ''}
             </div>
             <div class="flex gap-2">
-              ${publicationsData.publications.slice(0, 3).map(() => `
+              ${mergedPublications.slice(0, 3).map(() => `
                 <div class="h-2 bg-primary/20 rounded-full flex-1"></div>
               `).join('')}
             </div>
@@ -605,9 +662,9 @@ async function initializeApp() {
         </div>
         <div id="publications-details" class="accordion-content max-h-0 overflow-hidden opacity-0 transition-all duration-500">
           <div class="px-5 pb-5">
-            ${generateYearFilters(publicationsData.publications)}
+            ${generateYearFilters(mergedPublications)}
             <div class="grid grid-cols-1 desktop:grid-cols-2 gap-2.5 mt-4">
-              ${generatePublications(publicationsData.publications)}
+              ${generatePublications(mergedPublications)}
             </div>
           </div>
         </div>

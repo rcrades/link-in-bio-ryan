@@ -143,6 +143,24 @@ body {
 .admin-edit-placeholder { padding: 32px 8px; color: var(--admin-muted); }
 .admin-edit-placeholder h2 { color: var(--admin-text); font-size: 16px; margin: 0 0 8px; }
 
+.admin-edit-help { font-size: 12px; color: var(--admin-muted); margin: 0 0 4px; line-height: 1.4; }
+.admin-edit-row-grow { grid-template-columns: 1fr auto; align-items: end; }
+.admin-edit-grow { width: 100%; }
+.admin-edit-subcard {
+  border: 1px solid var(--admin-border); border-radius: 6px; padding: 10px;
+  background: #fafafa; display: flex; flex-direction: column; gap: 8px;
+}
+.admin-edit-add {
+  align-self: flex-start; padding: 6px 12px; border: 1px dashed var(--admin-border);
+  background: transparent; color: var(--admin-text); border-radius: 6px; cursor: pointer; font-size: 13px;
+}
+.admin-edit-add:hover { border-style: solid; border-color: var(--admin-primary); color: var(--admin-primary); }
+.admin-edit-remove {
+  align-self: flex-end; padding: 4px 10px; border: none; background: transparent;
+  color: var(--admin-danger); cursor: pointer; font-size: 12px; text-decoration: underline;
+}
+.admin-edit-remove:hover { color: var(--admin-danger); text-decoration: none; }
+
 /* Top-level nav in header */
 .admin-nav { display: flex; gap: 4px; }
 .admin-nav button {
