@@ -27,6 +27,24 @@ export const list = query({
   },
 });
 
+export const publicV0Templates = query({
+  args: {},
+  handler: async (ctx) => {
+    const rows = await ctx.db
+      .query("images")
+      .withIndex("by_tag", (q) => q.eq("tag", "v0-templates"))
+      .collect();
+
+    return Promise.all(
+      rows.map(async (r) => ({
+        name: r.name,
+        alt: r.alt,
+        url: await ctx.storage.getUrl(r.storageId),
+      })),
+    );
+  },
+});
+
 export const save = mutation({
   args: {
     storageId: v.id("_storage"),
