@@ -1,11 +1,22 @@
 // Feature Flags Configuration
 const FEATURE_FLAGS = {
-  publications: true  // Set to false to disable publications section
-};
+  publications: {
+    enabled: true,
+    developmentOnly: false,
+  },
+} as const;
 
 // Feature flag helper
+const isDevelopmentEnvironment = () => {
+  if (import.meta.env.DEV) return true;
+
+  const { hostname, port } = window.location;
+  return hostname === 'localhost' || hostname === '127.0.0.1' || port.length > 0;
+};
+
 const isFeatureEnabled = (feature: keyof typeof FEATURE_FLAGS) => {
-  return FEATURE_FLAGS[feature];
+  const flag = FEATURE_FLAGS[feature];
+  return flag.enabled && (!flag.developmentOnly || isDevelopmentEnvironment());
 };
 
 // Theme handling

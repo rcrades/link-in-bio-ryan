@@ -129,17 +129,21 @@ Lightweight feature flagging system for experimental features:
 ```typescript
 // src/main.ts
 const FEATURE_FLAGS = {
-  publications: true  // Toggle features on/off
+  publications: {
+    enabled: true,
+    developmentOnly: false,
+  },
 };
 ```
 
 **Behavior:**
-- Features only appear in development environments (localhost, ports)
-- Production automatically hides all flagged features
-- Easy toggle: change flag value and refresh page
+- `enabled: false` hides a feature everywhere
+- `developmentOnly: true` limits a feature to development-like environments (Vite dev mode, localhost, or URLs with ports)
+- `developmentOnly: false` allows an enabled feature to render in production
+- Easy toggle: change flag values and refresh page
 
 **Current Flags:**
-- `publications`: Publications and Media section (currently enabled for dev)
+- `publications`: Publications and Media section (enabled in production and development)
 
 ## License
 

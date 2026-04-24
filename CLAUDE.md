@@ -82,14 +82,18 @@ Simple lightweight feature flagging system in `src/main.ts`:
 ### Configuration
 ```typescript
 const FEATURE_FLAGS = {
-  publications: true  // Set to false to disable publications section
+  publications: {
+    enabled: true,
+    developmentOnly: false,
+  },
 };
 ```
 
 ### Behavior
-- Features only show in **development** (localhost, port-based URLs)
-- Features are **hidden in production** regardless of flag state
-- Easy toggle: change flag value and refresh page
+- `enabled: false` hides a feature everywhere
+- `developmentOnly: true` limits a feature to **development** (localhost, port-based URLs, or Vite dev mode)
+- `developmentOnly: false` allows an enabled feature to render in production
+- Easy toggle: change flag values and refresh page
 
 ### Environment Detection
 Auto-detects development via:
@@ -98,7 +102,7 @@ Auto-detects development via:
 - Any URL with port number
 
 ### Current Flags
-- `publications`: Publications and Media section (currently enabled for dev)
+- `publications`: Publications and Media section (enabled in production and development)
 
 ## Content Management
 
