@@ -968,7 +968,6 @@ body::before {
 }
 
 .v0-thumb-wrap {
-  display: block;
   position: relative;
   overflow: hidden;
 }
@@ -981,25 +980,7 @@ body::before {
   transition: filter 0.3s ease;
 }
 
-.v0-thumb-fallback {
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  background:
-    radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.14), transparent 32%),
-    linear-gradient(135deg, var(--background-secondary), var(--card));
-  color: var(--foreground);
-  font-family: var(--font-body);
-  font-weight: 650;
-  font-size: clamp(1rem, 3vw, 1.45rem);
-  text-align: center;
-  transition: filter 0.3s ease;
-}
-
-.v0-card:hover .v0-thumb,
-.v0-card:hover .v0-thumb-fallback {
+.v0-card:hover .v0-thumb {
   filter: blur(6px);
 }
 

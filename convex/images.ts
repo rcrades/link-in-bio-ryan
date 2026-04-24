@@ -27,23 +27,6 @@ export const list = query({
   },
 });
 
-export const publicByNames = query({
-  args: { names: v.array(v.string()) },
-  handler: async (ctx, { names }) => {
-    const requestedNames = new Set(names);
-    const rows = await ctx.db.query("images").collect();
-    const matches = rows.filter((r) => requestedNames.has(r.name));
-
-    return Promise.all(
-      matches.map(async (r) => ({
-        name: r.name,
-        alt: r.alt,
-        url: await ctx.storage.getUrl(r.storageId),
-      })),
-    );
-  },
-});
-
 export const save = mutation({
   args: {
     storageId: v.id("_storage"),
