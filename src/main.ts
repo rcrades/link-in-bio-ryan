@@ -4,8 +4,15 @@ const FEATURE_FLAGS = {
 };
 
 // Feature flag helper
+const isDevelopmentEnvironment = () => {
+  if (import.meta.env.DEV) return true;
+
+  const { hostname, port } = window.location;
+  return hostname === 'localhost' || hostname === '127.0.0.1' || port.length > 0;
+};
+
 const isFeatureEnabled = (feature: keyof typeof FEATURE_FLAGS) => {
-  return FEATURE_FLAGS[feature];
+  return isDevelopmentEnvironment() && FEATURE_FLAGS[feature];
 };
 
 // Theme handling
