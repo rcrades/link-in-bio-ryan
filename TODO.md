@@ -1,6 +1,6 @@
 # Codebase Cleanup Backlog
 
-This backlog captures the remaining cleanup work from the April 2026 codebase review. The feature-flag drift was handled first: flags now only render in development-like environments, matching the behavior documented in `README.md` and `CLAUDE.md`.
+This backlog captures the remaining cleanup work from the April 2026 codebase review. The feature-flag drift was handled first: flags now have explicit `enabled` and `developmentOnly` settings, matching the behavior documented in `README.md` and `CLAUDE.md`.
 
 ## 1. Stop Tracking Generated And Vendor Files
 

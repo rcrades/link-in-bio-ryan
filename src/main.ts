@@ -1,7 +1,10 @@
 // Feature Flags Configuration
 const FEATURE_FLAGS = {
-  publications: true  // Set to false to disable publications section
-};
+  publications: {
+    enabled: true,
+    developmentOnly: false,
+  },
+} as const;
 
 // Feature flag helper
 const isDevelopmentEnvironment = () => {
@@ -12,7 +15,8 @@ const isDevelopmentEnvironment = () => {
 };
 
 const isFeatureEnabled = (feature: keyof typeof FEATURE_FLAGS) => {
-  return isDevelopmentEnvironment() && FEATURE_FLAGS[feature];
+  const flag = FEATURE_FLAGS[feature];
+  return flag.enabled && (!flag.developmentOnly || isDevelopmentEnvironment());
 };
 
 // Theme handling
