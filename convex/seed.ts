@@ -71,6 +71,72 @@ export const seedRecentActivity = mutation({
 });
 
 /**
+ * Seeds the historical publications list (talks, articles, interviews, videos)
+ * into the appearances table with state="media". Insert-only and keyed on
+ * title + date — items already in the table (e.g. an upcoming talk that's also
+ * listed in publications.json) are left alone, preserving their state.
+ *
+ * Run by scripts/seed-publications.mjs after image assets have been uploaded.
+ * Idempotent across re-runs: skips any row whose (title, date) already exists.
+ */
+export const seedPublications = mutation({
+  args: {
+    secret: v.string(),
+    items: v.array(
+      v.object({
+        type: v.union(
+          v.literal("video"),
+          v.literal("article"),
+          v.literal("interview"),
+          v.literal("in-person"),
+          v.literal("podcast"),
+          v.literal("panel"),
+        ),
+        title: v.string(),
+        date: v.string(),
+        dateDisplay: v.optional(v.string()),
+        url: v.optional(v.string()),
+        source: v.optional(v.string()),
+        speaker: v.optional(v.string()),
+        presentedBy: v.optional(v.string()),
+        time: v.optional(v.string()),
+        hideEventBand: v.optional(v.boolean()),
+        hideHeadshot: v.optional(v.boolean()),
+        headshotStorageId: v.optional(v.id("_storage")),
+        backgroundStorageId: v.optional(v.id("_storage")),
+        logoStorageId: v.optional(v.id("_storage")),
+        logoBg: v.optional(v.union(v.literal("light"), v.literal("dark"))),
+        logoKey: v.optional(v.string()),
+      }),
+    ),
+  },
+  handler: async (ctx, { secret, items }) => {
+    checkSecret(secret);
+    let inserted = 0;
+    let skipped = 0;
+    for (const it of items) {
+      const existing = await ctx.db
+        .query("appearances")
+        .filter((q) =>
+          q.and(q.eq(q.field("title"), it.title), q.eq(q.field("date"), it.date)),
+        )
+        .first();
+      if (existing) {
+        skipped += 1;
+        continue;
+      }
+      await ctx.db.insert("appearances", {
+        state: "media",
+        visible: true,
+        ...it,
+      });
+      inserted += 1;
+    }
+    return { inserted, skipped };
+  },
+});
+
+/**
  * Upsert a single appearance, keyed on title + date. Used by scripts that
  * need to add or update a specific talk (e.g. an upcoming speaking engagement)
  * without wiping the full appearances table. Idempotent across re-runs.

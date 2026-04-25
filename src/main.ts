@@ -118,6 +118,42 @@ async function loadUpcomingAppearances(): Promise<any[]> {
   }
 }
 
+// Past publications & media (state="media") are the historical talks, articles,
+// and interviews shown in the Publications accordion. Mirrors loadRecentActivity:
+// Convex is the source of truth when reachable; bundled publications.json is the
+// fallback so the page still renders pre-seed or if Convex is down.
+async function loadMediaPublications(): Promise<any[]> {
+  const convexUrl = import.meta.env.VITE_CONVEX_URL as string | undefined
+  if (!convexUrl) return publicationsData.publications
+  try {
+    const client = new ConvexHttpClient(convexUrl)
+    const items = await client.query(api.appearances.listPublic, { state: 'media' })
+    if (!items || items.length === 0) return publicationsData.publications
+    return items.map((c: any) => ({
+      type: c.type,
+      title: c.title,
+      description: c.description,
+      date: c.date,
+      dateDisplay: c.dateDisplay,
+      source: c.source,
+      url: c.url,
+      speaker: c.speaker,
+      presentedBy: c.presentedBy,
+      time: c.time,
+      hideEventBand: c.hideEventBand,
+      hideHeadshot: c.hideHeadshot,
+      headshot: c.headshotUrl ?? undefined,
+      background: c.backgroundUrl ?? undefined,
+      logo: c.logoUrl ?? undefined,
+      logoBg: c.logoBg,
+      logoKey: c.logoKey,
+    }))
+  } catch (err) {
+    console.warn('Convex Media Publications fetch failed, falling back to JSON', err)
+    return publicationsData.publications
+  }
+}
+
 // Initialize Vercel Analytics
 inject()
 
@@ -548,15 +584,17 @@ const generatePublications = (publications: any[]) => {
 
 // Initialize the app
 async function initializeApp() {
-  const [profileImageSrc, recentActivityItems, upcomingItems] = await Promise.all([
+  const [profileImageSrc, recentActivityItems, upcomingItems, mediaItems] = await Promise.all([
     getProfileImageSrc(),
     loadRecentActivity(),
     loadUpcomingAppearances(),
+    loadMediaPublications(),
   ]);
 
-  // Merge upcoming appearances ahead of the static publications list so they
-  // sort to the top naturally (they're future-dated).
-  const mergedPublications = [...upcomingItems, ...publicationsData.publications];
+  // Merge upcoming appearances ahead of the media list so they sort to the top
+  // naturally (they're future-dated). Media items come from Convex when seeded,
+  // and fall back to publications.json otherwise.
+  const mergedPublications = [...upcomingItems, ...mediaItems];
 
   // Create HTML content
   const content = `
