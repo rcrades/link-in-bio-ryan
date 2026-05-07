@@ -1,10 +1,9 @@
 # Agent Guidelines
 
-Guidelines for AI agents working on this codebase.
+Guidelines for AI agents working on this codebase. `AGENTS.md` and `CLAUDE.md` are intentionally mirrored; keep both files in sync when updating repo-level instructions.
 
 ## Related Documentation
 - [README.md](README.md) - Project overview, features, and setup
-- [CLAUDE.md](CLAUDE.md) - Development commands, feature flags, and layout strategy
 
 ## Commands
 - Build: `vercel build`
@@ -32,8 +31,8 @@ When working with the desktop two-column grid:
 
 ### Layout
 Two layouts only - no intermediate breakpoints:
-- **Mobile** (< 1000px): Single column stack
-- **Desktop** (≥ 1000px): Two-column grid
+- Mobile (< 1000px): single column stack
+- Desktop (>= 1000px): two-column grid
 
 ### JSON Data
 All content lives in `src/data/`:
@@ -72,21 +71,115 @@ src/
 
 ## Making Changes
 1. Test in both dark and light mode
-2. Verify desktop (≥1000px) and mobile (<1000px) layouts
+2. Verify desktop (>= 1000px) and mobile (< 1000px) layouts
 3. Run `vercel build` to ensure no type errors
 4. Keep changes minimal and focused
 
-## CRITICAL: PRs with UI changes require hosted screenshots in the body
+## PR Screenshot Evidence for UI Changes
 
-The reviewer merges from GitHub **without running the app**. Embedded screenshots in the PR body *are* the review surface. A UI-affecting PR without screenshots is incomplete — do not open it.
+The reviewer merges from GitHub without running the app locally. Screenshots embedded in the PR body are the review surface. A UI-affecting PR without screenshots is incomplete; do not open it until the screenshot evidence is in the body.
 
-**Protocol (uses the `convex-screenshot-host` skill):**
-- Capture at **both** viewports whenever the change crosses the 1000px breakpoint (which is nearly every layout change here):
-  - Desktop **1440×900**
-  - Mobile **375×812**
-- Upload each PNG to `https://resilient-echidna-374.convex.site/upload-screenshot` with header `X-Filename: link-in-bio-ryan-<feature>-<timestamp>.png` (prefix is load-bearing — the host is shared across repos).
-- Embed the returned `screenshot?id=...` URL under `## Desktop` and `## Mobile` in the PR body, with DOM metrics (`scrollWidth`, `clientWidth`, `overflows`, activity-item count) pulled from the capture script.
-- **Validate each shot** by `Read`-ing the PNG back before upload. <20 KB on a content-rich page = loading state; retry with a longer `waitForTimeout`.
-- **Never commit PNGs to the repo** — upload, embed URL, done. 30-day retention is fine for review cycles.
+Follow the local PR screenshot evidence skill at `/Users/rcr-macmini-2026/.codex/skills/pr-screenshot-evidence/SKILL.md`.
 
-Do not skip this step "for speed." The reviewer cannot merge what they cannot see, and agents have shipped loading-state screenshots into PRs by skipping the Read-back check. Follow the global `convex-screenshot-host` skill contract exactly.
+Capture viewport screenshots, not full-page screenshots unless the review specifically needs the whole page. Capture both hard layouts whenever the change crosses the `desktop:` breakpoint at 1000px, which is nearly every layout change here:
+- Desktop: 1440x900
+- Mobile: 375x812
+
+Upload PNGs to the Vercel Blob store `rcr-screenshots`. Use screenshot-specific tokens in this order:
+1. `RCR_SCREENSHOTS_BLOB_READ_WRITE_TOKEN`
+2. `SCREENSHOT_BLOB_READ_WRITE_TOKEN`
+
+Use deterministic Blob pathnames:
+- Before a PR number exists: `link-in-bio-ryan/local/<branch>/<type>-<viewport>-<label>.png`
+- After a PR number exists: `link-in-bio-ryan/pr-<number>/<type>-<viewport>-<label>.png`
+
+Use labels such as `before`, `after`, `issue`, or `fix` for `<type>`, viewport names such as `desktop-1440x900` or `mobile-375x812`, and a short state label for `<label>`. If a branch name contains `/` or spaces, replace them with `__` in the Blob pathname.
+
+Embed the returned public Blob URLs directly in the PR body, usually under `## Desktop` and `## Mobile` sections. When capture tooling exposes DOM metrics (`scrollWidth`, `clientWidth`, `overflows`, activity-item count), include those metrics next to the screenshots.
+
+Validate each screenshot before embedding it. Confirm it is not blank, still loading, cropped misleadingly, or showing the wrong state. On this content-rich page, a PNG under 20 KB usually means a loading state; retry with a longer wait.
+
+Never use legacy Convex screenshot URLs (including `/screenshot?id=...`), GitHub uploads, committed PNGs, or a generic app Blob token unless you have verified that the token writes to `rcr-screenshots`.
+
+## Responsive Layout Strategy
+
+### Breakpoints
+- Mobile/tablet: under 1000px width - compact layout with Recent Activity
+- Desktop: 1000px and above - two-column layout with Recent Activity prominent
+
+### Design Philosophy
+No "fully responsive" gymnastics. Two clear layouts:
+1. Mobile (< 1000px): compact header (photo + text side-by-side), horizontal social row, CTA button, Recent Activity, then remaining links. Theme toggle at bottom.
+2. Desktop (>= 1000px): two-column grid with Recent Activity in the right column above the fold. Theme toggle top-right.
+
+### Mobile Layout Structure
+1. Photo with name, role, and location
+2. Compact social row (LinkedIn, X, v0)
+3. Prominent "Schedule a Meeting" CTA
+4. Recent Activity with video thumbnails and articles
+5. Remaining links (Wipfli Bio, Stealth Mode)
+6. Publications, Causes, and Tech Stack sections
+7. Theme switch at the bottom
+
+### Desktop Layout Structure
+1. Horizontal, left-aligned profile header
+2. Two-column grid
+3. Social links and regular link cards in the left column
+4. Recent Activity header and items in the right column
+5. Publications, Causes, and Tech Stack full width below the grid
+
+### Desktop Grid Alignment
+The desktop layout uses a two-column CSS grid. To ensure the left and right columns align at the top:
+- Grid content cells use `self-start` to align to the top of their grid area
+- Cards use `mb-*` (bottom margin only), NOT `my-*` (top and bottom margin)
+- The first card in each column must have no top margin to align properly
+
+Critical: using `my-5` on cards will misalign columns because the first card gets pushed down. Always use `mb-5` instead.
+
+## Feature Flags
+Simple lightweight feature flagging system in `src/main.ts`:
+
+### Configuration
+```typescript
+const FEATURE_FLAGS = {
+  publications: {
+    enabled: true,
+    developmentOnly: false,
+  },
+};
+```
+
+### Behavior
+- `enabled: false` hides a feature everywhere
+- `developmentOnly: true` limits a feature to development (localhost, port-based URLs, or Vite dev mode)
+- `developmentOnly: false` allows an enabled feature to render in production
+- Easy toggle: change flag values and refresh page
+
+### Environment Detection
+Auto-detects development via:
+- `import.meta.env.DEV` (Vite)
+- `localhost` or `127.0.0.1` hostname
+- Any URL with port number
+
+### Current Flags
+- `publications`: Publications and Media section (enabled in production and development)
+
+## Content Management
+
+### Recent Activity
+The Recent Activity section showcases recent appearances, talks, or content. Located in `src/data/activity.json`:
+
+```json
+{
+  "activities": [
+    {
+      "title": "Office Hours Global",
+      "description": "Brief description",
+      "date": "2024-12-19",
+      "type": "video",
+      "url": "https://youtube.com/...",
+      "thumbnailId": "youtube-video-id"
+    }
+  ]
+}
+```
