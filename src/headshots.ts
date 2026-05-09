@@ -6,8 +6,6 @@ import { getProfileImageSrc } from './utils/profileImage'
 type Headshot = {
   id: string
   title: string
-  label: string
-  description: string
   src: string
   filename: string
 }
@@ -65,27 +63,23 @@ function downloadName(label: string, src: string) {
 }
 
 async function getHeadshots(): Promise<Headshot[]> {
-  const primarySrc = await getProfileImageSrc()
+  const profileSrc = await getProfileImageSrc()
   const secondarySrc = await firstExistingImage(SECONDARY_HEADSHOT_OPTIONS)
   const headshots: Headshot[] = [
     {
-      id: 'primary',
-      title: 'Primary Headshot',
-      label: 'Profile',
-      description: 'Current profile photo for podcast and media use.',
-      src: primarySrc,
-      filename: downloadName('primary', primarySrc),
+      id: 'headshot-1',
+      title: 'Headshot 1',
+      src: profileSrc,
+      filename: downloadName('1', profileSrc),
     },
   ]
 
   if (secondarySrc) {
     headshots.push({
-      id: 'secondary',
-      title: 'Alternate Headshot',
-      label: 'Alternate',
-      description: 'Secondary option for layouts that need a different crop.',
+      id: 'headshot-2',
+      title: 'Headshot 2',
       src: secondarySrc,
-      filename: downloadName('alternate', secondarySrc),
+      filename: downloadName('2', secondarySrc),
     })
   }
 
@@ -106,18 +100,23 @@ function renderHeadshotCard(headshot: Headshot) {
         />
       </div>
       <div class="headshot-card-body">
-        <div class="headshot-label">${headshot.label}</div>
         <h2 class="headshot-card-title">${headshot.title}</h2>
-        <p class="headshot-card-copy">${headshot.description}</p>
+        <p class="headshot-card-copy">
+          Shown as a square crop here. Download or open the file for the original image.
+        </p>
         <div class="headshot-meta" aria-label="Image details">
-          <span data-headshot-meta="${headshot.id}">${format}</span>
+          <span data-headshot-dimensions="${headshot.id}">${format}</span>
+          <span data-headshot-aspect="${headshot.id}">Checking aspect</span>
           <span>Media use</span>
         </div>
+        <p class="headshot-aspect-note" data-headshot-note="${headshot.id}">
+          Checking original dimensions...
+        </p>
         <div class="headshot-actions">
           <a
             href="${headshot.src}"
             download="${headshot.filename}"
-            class="headshot-action headshot-action--primary"
+            class="headshot-action headshot-action--download"
             aria-label="Download ${headshot.title.toLowerCase()}"
           >
             <i data-lucide="download" aria-hidden="true"></i>
@@ -139,14 +138,37 @@ function renderHeadshotCard(headshot: Headshot) {
   `
 }
 
+function trimDecimal(value: number) {
+  return value.toFixed(2).replace(/\.00$/, '').replace(/0$/, '')
+}
+
+function formatAspectRatio(width: number, height: number) {
+  if (width === height) return '1:1'
+  if (width > height) return `${trimDecimal(width / height)}:1`
+  return `1:${trimDecimal(height / width)}`
+}
+
 function hydrateImageMeta() {
   document.querySelectorAll<HTMLImageElement>('.headshot-image').forEach((img) => {
     const updateMeta = () => {
       const id = img.dataset.headshotId
       if (!id || !img.naturalWidth || !img.naturalHeight) return
-      const meta = document.querySelector<HTMLElement>(`[data-headshot-meta="${id}"]`)
-      if (!meta) return
-      meta.textContent = `${img.naturalWidth} x ${img.naturalHeight} ${formatFromSrc(img.currentSrc || img.src)}`
+      const dimensions = document.querySelector<HTMLElement>(`[data-headshot-dimensions="${id}"]`)
+      const aspect = document.querySelector<HTMLElement>(`[data-headshot-aspect="${id}"]`)
+      const note = document.querySelector<HTMLElement>(`[data-headshot-note="${id}"]`)
+      const ratio = formatAspectRatio(img.naturalWidth, img.naturalHeight)
+
+      if (dimensions) {
+        dimensions.textContent = `${img.naturalWidth} x ${img.naturalHeight} ${formatFromSrc(img.currentSrc || img.src)}`
+      }
+      if (aspect) {
+        aspect.textContent = `Original ${ratio}`
+      }
+      if (note) {
+        note.textContent = ratio === '1:1'
+          ? 'The source image is already square.'
+          : `The original ${ratio} version is available through Download or Open File.`
+      }
     }
 
     if (img.complete) {
