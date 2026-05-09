@@ -893,6 +893,14 @@ async function initializeApp() {
                 <span class="sitemap-desc">v0 templates · surfaced via the v0 social tile</span>
               </a>
             </li>
+            <li class="sitemap-row">
+              <a href="/headshots" class="sitemap-link" data-sitemap-target="/headshots">
+                <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
+                <span class="sitemap-branch">├──</span>
+                <span class="sitemap-path">/headshots</span>
+                <span class="sitemap-desc">Podcast and media headshot downloads · direct link only</span>
+              </a>
+            </li>
             <li class="sitemap-row sitemap-row--group">
               <a href="/pages/groundbreak/" class="sitemap-link" data-sitemap-target="/pages/groundbreak/">
                 <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
@@ -934,9 +942,9 @@ async function initializeApp() {
           </ul>
 
           <div class="sitemap-summary">
-            <span class="sitemap-summary-dim">9 entries ·</span>
+            <span class="sitemap-summary-dim">10 entries ·</span>
             <span><span class="sitemap-status linked sitemap-status--inline"></span> 2 linked from home</span>
-            <span><span class="sitemap-status hidden sitemap-status--inline"></span> 7 direct-link only</span>
+            <span><span class="sitemap-status hidden sitemap-status--inline"></span> 8 direct-link only</span>
           </div>
         </div>
       </div>
