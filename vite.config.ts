@@ -1,9 +1,21 @@
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import { resolve } from 'path'
 import react from '@vitejs/plugin-react'
 
+const cleanHeadshotsRoute = (): Plugin => ({
+  name: 'clean-headshots-route',
+  configureServer(server) {
+    server.middlewares.use((req, _res, next) => {
+      if (req.url === '/headshots') {
+        req.url = '/headshots/'
+      }
+      next()
+    })
+  }
+})
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [cleanHeadshotsRoute(), react()],
   build: {
     rollupOptions: {
       input: {
@@ -16,6 +28,7 @@ export default defineConfig({
         'groundbreak-thesis': resolve(__dirname, 'pages/groundbreak/thesis/index.html'),
         'groundbreak-dossier': resolve(__dirname, 'pages/groundbreak/dossier/index.html'),
         'groundbreak-preview': resolve(__dirname, 'pages/groundbreak/preview/index.html'),
+        headshots: resolve(__dirname, 'headshots/index.html'),
         'youtube-banner': resolve(__dirname, 'pages/youtube-banner/index.html')
       }
     }
@@ -25,4 +38,4 @@ export default defineConfig({
     strictPort: true
   },
   appType: 'spa'
-}) 
+})

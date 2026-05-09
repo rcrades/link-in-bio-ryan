@@ -11,7 +11,9 @@
       "has": [{ "type": "host", "value": "start-with-v0.ryanrademann.com" }],
       "destination": "/pages/start-with-v0/index.html"
     },
+    { "source": "/headshots", "destination": "/headshots/index.html" },
+    { "source": "/headshots/", "destination": "/headshots/index.html" },
     { "source": "/pages/:path*", "destination": "/pages/:path*" },
     { "source": "/(.*)", "destination": "/$1" }
   ]
-} 
+}
