@@ -347,7 +347,8 @@ const generateYearFilters = (publications: any[]) => {
 const ACTIVITY_TYPES: Record<string, { label: string; icon: string; colorClass: string }> = {
   'in-person': { label: 'In-Person', icon: 'mic', colorClass: 'border-amber-400 text-amber-400' },
   'article': { label: 'Article', icon: 'newspaper', colorClass: 'border-emerald-400 text-emerald-400' },
-  'video': { label: 'Video', icon: 'video', colorClass: 'border-purple-400 text-purple-400' }
+  'video': { label: 'Video', icon: 'video', colorClass: 'border-purple-400 text-purple-400' },
+  'podcast': { label: 'Podcast', icon: 'mic', colorClass: 'border-rose-400 text-rose-400' }
 };
 
 const getActivityTypeMeta = (type: string) =>
