@@ -75,6 +75,25 @@ src/
 3. Run `vercel build` to ensure no type errors
 4. Keep changes minimal and focused
 
+## Closed Issue Audits
+
+Use the repo-owned `closed-issue-audit` skill at `.agents/skills/closed-issue-audit/SKILL.md` when auditing a closed GitHub issue or deciding whether it is genuinely resolved. Claude-facing guidance is mirrored at `.claude/skills/closed-issue-audit/SKILL.md`.
+
+Audit closed issues against current truth, not just GitHub's closed state:
+- Read the issue body, acceptance criteria, labels, comments, closing PRs, and merge context.
+- Prefer current `origin/main` or a clean audit worktree over an old feature branch.
+- Compare the merged code, content data, docs, and reviewer evidence against every acceptance criterion.
+- Run focused verification that proves the criteria. Use `vercel build` for repo changes, and add viewport/theme checks when the issue touched UI.
+- Treat stale checkboxes, status text, or issue metadata as issue hygiene. If current evidence proves a criterion is satisfied, update the issue body before posting the final verdict.
+
+Closed-issue audit comments must start with `Codex here:`. If the issue is fully resolved, use this header:
+
+```md
+Codex here: ✅✅ **Verdict: complete-complete. I fully agree #<issue> should remain closed.**
+```
+
+Put the verdict first, then summarize findings, exact verification, and any non-blocking caveats in plain language. Keep technical proof in the PR body, checks, screenshots, or implementation notes; do not turn issue comments into local test logs. If any acceptance criterion is still unmet, do not use the green-check header. State whether the issue should be reopened or handled by a separate follow-up issue.
+
 ## PR Screenshot Evidence for UI Changes
 
 The reviewer merges from GitHub without running the app locally. Screenshots embedded in the PR body are the review surface. A UI-affecting PR without screenshots is incomplete; do not open it until the screenshot evidence is in the body.
