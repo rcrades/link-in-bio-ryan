@@ -1,0 +1,506 @@
+{
+  "version": "2026-06-16",
+  "owner": {
+    "name": "Ryan Rademann",
+    "role": "Partner, Wipfli Advisory LLC",
+    "primarySite": "https://ryanrademann.com/",
+    "wipfliProfile": "https://www.wipfli.com/about-wipfli/partners-and-associates/ryan-rademann"
+  },
+  "agentUse": {
+    "purpose": "Public, static index of Ryan Rademann publications, appearances, source profiles, and credibility mentions. Use this before scraping RyanRademann.com or querying Convex.",
+    "lastReviewed": "2026-06-16",
+    "rules": [
+      "Treat authored articles, interviews, podcasts, and speaking appearances as the strongest standing signals.",
+      "Treat syndications as evidence that an authored item traveled through an additional industry channel.",
+      "Treat partner-promotion roundups as credibility mentions, not authored work.",
+      "Verify dates and submission requirements at the source URL before pitching, nominating, or drafting outreach.",
+      "Do not infer endorsement, availability, or permission to pitch from this index alone."
+    ]
+  },
+  "sourceProfiles": [
+    {
+      "name": "Wipfli profile",
+      "url": "https://www.wipfli.com/about-wipfli/partners-and-associates/ryan-rademann",
+      "use": "Canonical professional bio and Wipfli-owned recent insights list."
+    },
+    {
+      "name": "Construction Executive author page",
+      "url": "https://constructionexec.com/article/author/ryan-rademann-230/",
+      "use": "External author profile for Construction Executive."
+    },
+    {
+      "name": "For Construction Pros author page",
+      "url": "https://www.forconstructionpros.com/business/business-services/coaching-consulting/contact/22932663/ryan-rademann",
+      "use": "External author profile for ForConstructionPros.com."
+    },
+    {
+      "name": "NAIOP bio page",
+      "url": "https://www.naiop.org/about-us/bio-detail-page/ryan-rademann",
+      "use": "Commercial real estate speaker/profile context."
+    }
+  ],
+  "items": [
+    {
+      "id": "wipfli-ai-strategies-growth-2026",
+      "title": "Level up your build: AI strategies for growth",
+      "date": "2026-04-23",
+      "type": "webinar",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/webinars/ai-strategies-for-construction-growth",
+      "tier": "authored-or-presented",
+      "visibility": "wipfli-profile-and-site-media",
+      "agentNote": "Strong current AI/construction standing signal."
+    },
+    {
+      "id": "wipfli-real-estate-tech-solutions-2025",
+      "title": "Game-changing real estate technology solutions: Don't be left behind",
+      "date": "2025-10-08",
+      "type": "article",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/articles/6-game-changing-real-estate-technology-solutions",
+      "tier": "authored-or-presented",
+      "visibility": "wipfli-profile-only",
+      "agentNote": "Useful real estate technology standing signal."
+    },
+    {
+      "id": "wipfli-crm-bidding-building-2025",
+      "title": "Turn on CRM advantages in bidding, building and beyond",
+      "date": "2025-09-22",
+      "type": "webinar",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/webinars/free-crm-webinar-for-construction-leaders",
+      "tier": "authored-or-presented",
+      "visibility": "wipfli-profile-only",
+      "agentNote": "CRM and construction technology standing signal."
+    },
+    {
+      "id": "wipfli-ai-construction-101-2025",
+      "title": "AI 101: How to keep your construction firm competitive",
+      "date": "2025-08-04",
+      "type": "article",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/articles/cons-tc-ai-in-construction-101-how-to-keep-your-firm-competitive",
+      "tier": "authored-or-presented",
+      "visibility": "wipfli-profile-only",
+      "agentNote": "Strong AI/construction standing signal."
+    },
+    {
+      "id": "wipfli-smarter-construction-tech-management-2025",
+      "title": "Improving performance with smarter construction technology management",
+      "date": "2025-05-12",
+      "type": "article",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/articles/cre-tc-smarter-construction-technology-management",
+      "tier": "authored-or-presented",
+      "visibility": "site-media-and-syndicated",
+      "agentNote": "Also syndicated through AGC Minnesota Constant Contact."
+    },
+    {
+      "id": "agc-thought-leadership-smarter-tech-2025",
+      "title": "Improving Performance with Smarter Construction Technology Management",
+      "date": "2025-07",
+      "type": "syndication",
+      "source": "AGC Thought Leadership Series / Constant Contact",
+      "url": "https://myemail.constantcontact.com/subject.html?aid=zHDX1Er_VMs&soid=1117589636377",
+      "tier": "syndicated-authored-work",
+      "visibility": "missing-from-rendered-site",
+      "agentNote": "Additional AGC channel for the Wipfli construction technology management article."
+    },
+    {
+      "id": "construction-executive-advanced-tech-stack-2025",
+      "title": "Elevating Construction Operations With an Advanced Tech Stack",
+      "date": "2025-03-21",
+      "type": "article",
+      "source": "Construction Executive",
+      "url": "https://constructionexec.com/article/elevating-construction-operations-with-an-advanced-tech-stack/",
+      "tier": "external-authored-work",
+      "visibility": "site-media-and-wipfli-profile",
+      "agentNote": "Strong external authored article and construction technology standing signal."
+    },
+    {
+      "id": "cmaa-advanced-tech-stack-syndication",
+      "title": "Elevating Construction Operations With an Advanced Tech Stack",
+      "date": "2024",
+      "type": "syndication",
+      "source": "Construction Management Association of America",
+      "url": "https://www.cmaanet.org/sites/default/files/resource/Elevating%20Construction.pdf",
+      "tier": "syndicated-authored-work",
+      "visibility": "site-media",
+      "agentNote": "CMAA-hosted reprint of the Construction Executive article."
+    },
+    {
+      "id": "forconstructionpros-ai-agents-2025",
+      "title": "How AI Agents are Leading the Future of Construction",
+      "date": "2025-03-03",
+      "type": "article",
+      "source": "ForConstructionPros.com",
+      "url": "https://www.forconstructionpros.com/construction-technology/project-management/article/22932667/wipfli-llp-how-ai-agents-are-leading-the-future-of-construction",
+      "tier": "external-authored-work",
+      "visibility": "site-media-and-wipfli-profile",
+      "agentNote": "Strong external AI/construction authored article."
+    },
+    {
+      "id": "builders-budgets-beers-ai-agents-2026",
+      "title": "How Contractors Can Adopt AI Agents Without Chaos",
+      "date": "2026-05-27",
+      "type": "podcast",
+      "source": "Builders, Budgets, and Beers",
+      "url": "https://youtu.be/NU0amPkAktU?si=cHkLn336WD30kyiT",
+      "tier": "interview-or-appearance",
+      "visibility": "site-recent-activity",
+      "agentNote": "Current podcast appearance on AI agents in construction."
+    },
+    {
+      "id": "uca-moving-beyond-basic-construction-software-2026",
+      "title": "Moving Beyond Basic Construction Management Software",
+      "date": "2026-03-18",
+      "type": "event",
+      "source": "Underground Contractors Association of Illinois",
+      "url": "https://app.glueup.com/event/moving-beyond-basic-construction-management-software-167765/",
+      "tier": "interview-or-appearance",
+      "visibility": "site-recent-activity",
+      "agentNote": "Construction software speaking appearance."
+    },
+    {
+      "id": "construction-owners-co-pod-cfma-2026",
+      "title": "Ryan Rademann, Wipfli | CO Pod | CFMA 2026 Conference Special",
+      "date": "2026",
+      "type": "podcast",
+      "source": "Construction Owners / CO Pod",
+      "url": "https://www.constructionowners.com/construction-podcast",
+      "tier": "interview-or-appearance",
+      "visibility": "missing-from-rendered-site",
+      "agentNote": "CO Pod lists Ryan as Partner, Wipfli in its CFMA 2026 conference guest section."
+    },
+    {
+      "id": "agc-gca-real-time-job-costing-2025",
+      "title": "Beyond the Month-End Scramble: A Guide to Real-Time Job Costing",
+      "date": "2025-11-18",
+      "type": "webinar",
+      "source": "AGC / General Contractors Association of Hawaii",
+      "url": "https://business.gcahawaii.org/events/Details/free-agc-webed-beyond-the-month-end-scramble-a-guide-to-real-time-job-costing-1554783?sourceTypeId=Hub",
+      "tier": "interview-or-appearance",
+      "visibility": "missing-from-rendered-site",
+      "agentNote": "AGC/GCA event listing names Ryan as a featured speaker."
+    },
+    {
+      "id": "office-hours-global-december-2025",
+      "title": "Office Hours Global - December 2025",
+      "date": "2025-12-18",
+      "type": "video",
+      "source": "Office Hours Global",
+      "url": "https://www.youtube.com/watch?v=0obMGwqO7jc",
+      "tier": "interview-or-appearance",
+      "visibility": "site-recent-activity-and-media",
+      "agentNote": "Office Hours Global appearance."
+    },
+    {
+      "id": "centuri-right-of-way-ai-2025",
+      "title": "Robots in the Right of Way: A Practical Guide to AI in the Office and the Field",
+      "date": "2025-11-13",
+      "type": "event",
+      "source": "Centuri Energy & Utility Leaders' Executive Forum",
+      "url": "",
+      "tier": "interview-or-appearance",
+      "visibility": "site-media",
+      "agentNote": "Known in-person event; verify a public event URL before citing externally."
+    },
+    {
+      "id": "procore-groundbreak-cfo-roundtable-2025",
+      "title": "Executive Forum - CFO Roundtable",
+      "date": "2025-10-15",
+      "type": "event",
+      "source": "Procore Groundbreak",
+      "url": "",
+      "tier": "interview-or-appearance",
+      "visibility": "site-media",
+      "agentNote": "Known Groundbreak 2025 appearance; verify a public event URL before citing externally."
+    },
+    {
+      "id": "procore-groundbreak-qwoted-2024",
+      "title": "Procore Groundbreak 2024",
+      "date": "2024-10",
+      "type": "source-profile",
+      "source": "Qwoted",
+      "url": "https://app.qwoted.com/opportunities/event-procore-groundbreak-2024",
+      "tier": "source-profile",
+      "visibility": "missing-from-rendered-site",
+      "agentNote": "Qwoted lists Ryan as a construction technology leader for Procore Groundbreak 2024."
+    },
+    {
+      "id": "procore-groundbreak-disconnected-systems-2024",
+      "title": "The Cost of Disconnected Systems",
+      "date": "2024-10-15",
+      "type": "event",
+      "source": "Procore Groundbreak 2024",
+      "url": "https://youtu.be/VZxeggf1-Q0",
+      "tier": "interview-or-appearance",
+      "visibility": "site-media",
+      "agentNote": "Groundbreak 2024 talk with Aldridge Electric."
+    },
+    {
+      "id": "cfma-rocky-mountain-generative-ai-2024",
+      "title": "How Generative AI Can Drive Productivity In The Office And The Field",
+      "date": "2024-09-26",
+      "type": "event",
+      "source": "Rocky Mountain CFMA Conference 2024",
+      "url": "https://youtu.be/9zJ0QphHq2Q",
+      "tier": "interview-or-appearance",
+      "visibility": "site-media",
+      "agentNote": "Conference talk on AI productivity in construction."
+    },
+    {
+      "id": "wipfli-business-case-new-tech-2024",
+      "title": "How to determine your tech ROI: A guide to building your business case for new technology",
+      "date": "2024-12-03",
+      "type": "article",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/articles/digital-build-a-strong-business-case-for-new-technology",
+      "tier": "authored-or-presented",
+      "visibility": "site-media",
+      "agentNote": "Business-case and ROI article for technology investment."
+    },
+    {
+      "id": "bricks-bytes-tech-integration-2024",
+      "title": "Why 50% of Mid-Size Contractors Still Struggle with Tech Integration",
+      "date": "2024-11-28",
+      "type": "podcast",
+      "source": "Bricks & Bytes Podcast",
+      "url": "https://bricks-bytes.com/podcast/why-50-of-mid-size-contractors-still-struggle-with-tech-integration-in-2024-insights-from-ryan-rademann-partner-at-wipfli/",
+      "tier": "interview-or-appearance",
+      "visibility": "site-recent-activity-and-media",
+      "agentNote": "Podcast interview on contractor technology integration."
+    },
+    {
+      "id": "wipfli-big-data-insights-2024",
+      "title": "Prepare your construction business for the future with big data insights",
+      "date": "2024-08-09",
+      "type": "article",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/articles/cns-tc-prepare-your-construction-business-for-the-future-with-big-data-insights",
+      "tier": "authored-or-presented",
+      "visibility": "site-media",
+      "agentNote": "Construction data/analytics article."
+    },
+    {
+      "id": "wipfli-top-data-solutions-2024",
+      "title": "3 data solutions that give construction companies a competitive advantage",
+      "date": "2024-08-09",
+      "type": "article",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/articles/cns-tc-3-data-solutions-that-give-construction-companies-a-competitive-advantage",
+      "tier": "authored-or-presented",
+      "visibility": "site-media",
+      "agentNote": "Construction data solutions article."
+    },
+    {
+      "id": "wipfli-ipaas-faqs-2024",
+      "title": "Top 10 FAQs about iPaaS integrations",
+      "date": "2024-06-13",
+      "type": "article",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/articles/digital-top-10-faqs-about-ipaas-integrations",
+      "tier": "authored-or-presented",
+      "visibility": "wipfli-profile-only",
+      "agentNote": "Integration and data plumbing standing signal."
+    },
+    {
+      "id": "cpa-practice-advisor-partner-promotion-2024",
+      "title": "Wipfli Promotes 10 to Partnership",
+      "date": "2024-05-30",
+      "type": "mention",
+      "source": "CPA Practice Advisor",
+      "url": "https://www.cpapracticeadvisor.com/2024/05/30/wipfli-promotes-10-to-partnership/106181/",
+      "tier": "credibility-mention",
+      "visibility": "missing-from-rendered-site",
+      "agentNote": "Partner-promotion mention. Do not treat as authored work."
+    },
+    {
+      "id": "inside-public-accounting-partner-group-2024",
+      "title": "Wipfli Admits 10 to Partner Group",
+      "date": "2024-05-30",
+      "type": "mention",
+      "source": "Inside Public Accounting",
+      "url": "https://insidepublicaccounting.com/2024/05/30/wipfli-admits-10-to-partner-group/",
+      "tier": "credibility-mention",
+      "visibility": "missing-from-rendered-site",
+      "agentNote": "Partner-promotion mention. Do not treat as authored work."
+    },
+    {
+      "id": "accounting-today-on-the-move-2024",
+      "title": "On the move: NJCPA hosts inaugural Accelerating Scholars in Accounting event",
+      "date": "2024-05-30",
+      "type": "mention",
+      "source": "Accounting Today",
+      "url": "https://www.accountingtoday.com/list/on-the-move-njcpa-hosts-inaugural-accelerating-scholars-in-accounting-event",
+      "tier": "credibility-mention",
+      "visibility": "missing-from-rendered-site",
+      "agentNote": "Partner-promotion mention. Do not treat as authored work."
+    },
+    {
+      "id": "wipfli-partner-promotion-2024",
+      "title": "Wipfli promotes 10 to partner",
+      "date": "2024-05-29",
+      "type": "mention",
+      "source": "Wipfli News",
+      "url": "https://www.wipfli.com/news/2024/wipfli-promotes-10-to-partner",
+      "tier": "credibility-mention",
+      "visibility": "wipfli-profile-adjacent",
+      "agentNote": "Owned partner-promotion announcement. Useful context, not authored work."
+    },
+    {
+      "id": "wipfli-tech-selection-implementation-pitfalls-2023",
+      "title": "Tech selection, implementation pitfalls",
+      "date": "2023-04-30",
+      "type": "article",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/articles/tech-selection-implementation-pitfalls",
+      "tier": "authored-or-presented",
+      "visibility": "wipfli-profile-only",
+      "agentNote": "Technology selection and implementation article."
+    },
+    {
+      "id": "wipfli-tech-roi-2023",
+      "title": "How to determine your tech ROI",
+      "date": "2023-04-27",
+      "type": "article",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/articles/how-to-determine-your-tech-roi",
+      "tier": "authored-or-presented",
+      "visibility": "site-media",
+      "agentNote": "Technology ROI article."
+    },
+    {
+      "id": "wipfli-microsoft-cloud-2023",
+      "title": "Optimize your construction firm with the Microsoft cloud",
+      "date": "2023-07-18",
+      "type": "webinar",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/webinars/cre-tc-optimize-your-construction-firm-with-cloud-solutions-from-microsoft",
+      "tier": "authored-or-presented",
+      "visibility": "site-media-and-wipfli-profile",
+      "agentNote": "Construction cloud and Microsoft technology webinar."
+    },
+    {
+      "id": "builtworlds-session-2022",
+      "title": "BuiltWorlds Session: Ryan Rademann, Wipfli",
+      "date": "2022-11-21",
+      "type": "interview",
+      "source": "BuiltWorlds",
+      "url": "https://builtworlds.com/videos/builtworlds-session-ryan-rademann-senior-manager-wipfli/",
+      "tier": "interview-or-appearance",
+      "visibility": "site-media",
+      "agentNote": "External video interview."
+    },
+    {
+      "id": "naiop-blog-innovation-tech-adoption-cre-2022",
+      "title": "Cultivating a Culture of Innovation and Tech Adoption in CRE",
+      "date": "2022-10",
+      "type": "article",
+      "source": "NAIOP Blog",
+      "url": "https://blog.naiop.org/2022/10/cultivating-a-culture-of-innovation-and-tech-adoption-in-cre/",
+      "tier": "external-authored-work",
+      "visibility": "site-media",
+      "agentNote": "Commercial real estate innovation article."
+    },
+    {
+      "id": "naiop-cre-converge-panel-2022",
+      "title": "CRE.Converge panel: Cultivating a Culture of Innovation and Tech Adoption in CRE",
+      "date": "2022-10-11",
+      "type": "event",
+      "source": "NAIOP CRE.Converge",
+      "url": "https://www.naiop.org/events-and-sponsorship/corporate-events-list/conferences/2022-cre-converge",
+      "tier": "interview-or-appearance",
+      "visibility": "missing-from-rendered-site",
+      "agentNote": "NAIOP event page lists Ryan as a panelist for the related CRE.Converge session."
+    },
+    {
+      "id": "wipfli-game-changing-real-estate-tools-2022",
+      "title": "Game-changing tech tools for real estate",
+      "date": "2022-06-13",
+      "type": "article",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/articles/cre-game-changing-techtools-for-real-estate",
+      "tier": "authored-or-presented",
+      "visibility": "wipfli-profile-only",
+      "agentNote": "Real estate technology article."
+    },
+    {
+      "id": "office-hours-scope-creep-2023",
+      "title": "Office Hours Global - Show 1350: Project Management: Scope Creep",
+      "date": "2023-12-04",
+      "type": "video",
+      "source": "Office Hours Global",
+      "url": "https://www.youtube.com/live/XTa7Jg7dykE?si=6GSpWdsFT55EHZ04",
+      "tier": "interview-or-appearance",
+      "visibility": "site-media",
+      "agentNote": "Project management discussion appearance."
+    },
+    {
+      "id": "constructive-podcast-digitization-automation-2025",
+      "title": "Digitization, Automation and other Insights from Ryan Rademann",
+      "date": "2025-02-11",
+      "type": "podcast",
+      "source": "Constructive Podcast",
+      "url": "https://youtu.be/i8l8gEdD6fQ?si=_2SLWezzZrlO20Zz",
+      "tier": "interview-or-appearance",
+      "visibility": "site-recent-activity-and-media",
+      "agentNote": "Podcast/video interview on digitization, automation, and construction technology."
+    },
+    {
+      "id": "constructforstl-historians-architects-2021",
+      "title": "How construction executives can shift from historians to architects",
+      "date": "2021-07-14",
+      "type": "article",
+      "source": "ConstructForSTL",
+      "url": "https://constructforstl.org/how-construction-executives-can-shift-from-historians-to-architects/",
+      "tier": "external-authored-work",
+      "visibility": "site-media-and-wipfli-profile",
+      "agentNote": "Construction technology and data article."
+    },
+    {
+      "id": "rejournals-chicago-office-sector-2021",
+      "title": "Taking the pulse of Chicago's downtown office sector",
+      "date": "2021-01-29",
+      "type": "article",
+      "source": "REJournals",
+      "url": "https://rejournals.com/taking-the-pulse-of-chicagos-downtown-office-sector/",
+      "tier": "external-authored-work",
+      "visibility": "site-media",
+      "agentNote": "Commercial real estate article/panel context."
+    },
+    {
+      "id": "rejournals-data-centers-ecommerce-2020",
+      "title": "The experts agree: Data centers and e-commerce are seeing staggering activity during the pandemic",
+      "date": "2020-08-31",
+      "type": "article",
+      "source": "REJournals",
+      "url": "https://rejournals.com/the-experts-agree-data-centers-and-e-commerce-are-seeing-staggering-activity-during-the-pandemic/",
+      "tier": "external-authored-work",
+      "visibility": "site-media",
+      "agentNote": "Commercial real estate market article/panel context."
+    },
+    {
+      "id": "abc-wisconsin-business-intelligence-2020",
+      "title": "How business intelligence tools can help your construction firm thrive",
+      "date": "2020-03",
+      "type": "article",
+      "source": "Associated Builders and Contractors of Wisconsin",
+      "url": "https://www.abcwi.org/articles-papers/how-business-intelligence-tools-can-help-your-construction-firm-thrive/",
+      "tier": "external-authored-work",
+      "visibility": "site-media",
+      "agentNote": "Construction BI article."
+    },
+    {
+      "id": "wipfli-business-intelligence-part-i-2020",
+      "title": "How business intelligence tools help construction: Part I",
+      "date": "2020-01-08",
+      "type": "article",
+      "source": "Wipfli",
+      "url": "https://www.wipfli.com/insights/articles/cre-tc-how-business-intelligence-tools-help-construction-part-i",
+      "tier": "authored-or-presented",
+      "visibility": "wipfli-profile-only",
+      "agentNote": "Original Wipfli business intelligence article."
+    }
+  ]
+}

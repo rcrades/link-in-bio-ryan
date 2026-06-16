@@ -887,6 +887,14 @@ async function initializeApp() {
               </a>
             </li>
             <li class="sitemap-row">
+              <a href="/agents/" class="sitemap-link" data-sitemap-target="/agents/">
+                <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
+                <span class="sitemap-branch">├──</span>
+                <span class="sitemap-path">/agents/</span>
+                <span class="sitemap-desc">Static media/source index for agents · JSON included</span>
+              </a>
+            </li>
+            <li class="sitemap-row">
               <a href="/pages/start-with-v0/" class="sitemap-link" data-sitemap-target="/pages/start-with-v0/">
                 <span class="sitemap-status linked" aria-label="Linked from homepage"></span>
                 <span class="sitemap-branch">├──</span>
