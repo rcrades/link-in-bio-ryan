@@ -5,6 +5,19 @@ Guidelines for AI agents working on this codebase. `AGENTS.md` and `CLAUDE.md` a
 ## Related Documentation
 - [README.md](README.md) - Project overview, features, and setup
 
+## Repository Status
+
+- This repository is actively maintained during the migration alongside
+  `biosite`.
+- Do not treat either repo as deprecated, archived, or replaced until Ryan makes
+  an explicit cutover decision.
+- Confirm which repo a request targets before changing site content,
+  deployment behavior, data shape, or agent-facing docs.
+- If a request affects both repos, use separate branches and PRs unless Ryan
+  explicitly asks for a different flow.
+- This repo is the Vite/static-content version of Ryan's link-in-bio site.
+  `biosite` is the Next.js, v0, Convex-backed version maintained in parallel.
+
 ## Commands
 - Build: `vercel build`
 - Development: `vercel dev`
