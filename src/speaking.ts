@@ -123,6 +123,15 @@ async function renderSpeakingPage() {
           <div class="speaking-kicker">Speaking</div>
           <h1>Talks, panels, and working sessions.</h1>
           <p>${data.profile.intro}</p>
+          <a
+            class="speaking-resume-cta"
+            href="/speaking/resume"
+            aria-label="Open the detailed speaker resume"
+          >
+            <i data-lucide="file-text" aria-hidden="true"></i>
+            <span>Detailed speaker resume</span>
+            <i data-lucide="arrow-right" aria-hidden="true" class="speaking-resume-cta-arrow"></i>
+          </a>
         </div>
         <aside class="speaking-profile" aria-label="About Ryan Rademann">
           <img src="${profileSrc}" alt="Ryan Rademann" />

@@ -2424,3 +2424,632 @@ body.speaking-body #app {
     padding: 2rem;
   }
 }
+
+/* ============================================
+   Speaking Page — Detailed resume link
+   ============================================ */
+.speaking-resume-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+  padding: 0.95rem 1.35rem;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-left: 4px solid var(--primary);
+  border-radius: 12px;
+  box-shadow: 0 4px 18px var(--shadow);
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.speaking-resume-cta:hover {
+  border-color: var(--primary);
+  box-shadow: 0 6px 22px var(--shadow-strong);
+  transform: translateY(-2px);
+}
+
+.speaking-resume-cta:focus-visible {
+  outline: 3px solid var(--speaking-accent-text);
+  outline-offset: 3px;
+}
+
+.speaking-resume-cta i {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+  color: var(--speaking-accent-text);
+}
+
+.speaking-resume-cta .speaking-resume-cta-arrow {
+  margin-left: auto;
+  transition: transform 0.2s ease;
+}
+
+.speaking-resume-cta:hover .speaking-resume-cta-arrow {
+  transform: translateX(3px);
+}
+
+/* ============================================
+   Full Speaking Resume Page
+   ============================================ */
+.resume-page {
+  --speaking-accent-text: var(--primary-dark);
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0.75rem 0 3rem;
+  color: var(--foreground);
+}
+
+.dark .resume-page {
+  --speaking-accent-text: var(--primary);
+}
+
+/* The panels and export drawer set their own display values, so `hidden`
+   needs to win over them. */
+.resume-page [hidden] {
+  display: none !important;
+}
+
+.resume-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.resume-header {
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.resume-title {
+  margin: 0.5rem 0 0.9rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 7vw, 3.4rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+}
+
+.resume-lede {
+  max-width: 640px;
+  margin: 0;
+  color: var(--foreground-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.resume-identity {
+  margin: 0.9rem 0 0;
+  color: var(--foreground-muted);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+/* --- Toolbar / export drawer --- */
+.resume-toolbar {
+  margin-top: 1.5rem;
+}
+
+.resume-toolbar-row {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.resume-export-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.6rem 1rem;
+  background: var(--foreground);
+  border: 1px solid var(--foreground);
+  border-radius: 10px;
+  color: var(--background);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.resume-export-toggle:hover {
+  background: color-mix(in srgb, var(--foreground) 86%, var(--primary));
+  transform: translateY(-1px);
+}
+
+.resume-export-toggle i {
+  width: 1rem;
+  height: 1rem;
+}
+
+.resume-export-toggle[aria-expanded='true'] .resume-export-chevron {
+  transform: rotate(180deg);
+}
+
+.resume-filter-summary {
+  margin: 0;
+  color: var(--foreground-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.resume-filter-summary.is-empty {
+  color: var(--speaking-accent-text);
+  font-weight: 700;
+}
+
+.resume-export-panel {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  padding: 1.1rem;
+  background: var(--background-secondary);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+}
+
+.resume-fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.resume-fieldset legend {
+  margin-bottom: 0.6rem;
+  padding: 0;
+  color: var(--foreground-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.resume-output-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.resume-output,
+.resume-year {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.resume-output:hover,
+.resume-year:hover {
+  border-color: var(--primary);
+}
+
+.resume-output:has(input:checked),
+.resume-year:has(input:checked) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.resume-output input,
+.resume-year input {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.resume-output input:focus-visible,
+.resume-year input:focus-visible {
+  outline: 3px solid var(--speaking-accent-text);
+  outline-offset: 2px;
+}
+
+.resume-output-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.resume-output-hint {
+  color: var(--foreground-muted);
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.resume-year-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.resume-mini-button {
+  min-height: 36px;
+  padding: 0.35rem 0.75rem;
+  background: transparent;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.resume-mini-button:hover {
+  border-color: var(--primary);
+  color: var(--speaking-accent-text);
+}
+
+.resume-year-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.5rem;
+}
+
+.resume-year-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.resume-year-count {
+  margin-left: auto;
+  color: var(--foreground-muted);
+  font-size: 0.74rem;
+}
+
+.resume-copy-row {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.resume-copy-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 46px;
+  padding: 0.7rem 1.15rem;
+  background: var(--foreground);
+  border: 1px solid var(--foreground);
+  border-radius: 10px;
+  color: var(--background);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.resume-copy-button:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--foreground) 86%, var(--primary));
+  transform: translateY(-1px);
+}
+
+.resume-copy-button:disabled {
+  background: var(--card);
+  border-color: var(--card-border);
+  color: var(--foreground-muted);
+  cursor: not-allowed;
+}
+
+.resume-copy-button i {
+  width: 1rem;
+  height: 1rem;
+}
+
+.resume-copy-hint {
+  margin: 0;
+  color: var(--foreground-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.resume-copy-hint.is-empty {
+  color: var(--speaking-accent-text);
+  font-weight: 700;
+}
+
+.resume-copy-status {
+  margin: 0.75rem 0 0;
+  min-height: 1.2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.resume-copy-status.is-success {
+  color: var(--speaking-accent-text);
+}
+
+.resume-copy-status.is-error {
+  color: #c0392b;
+}
+
+.dark .resume-copy-status.is-error {
+  color: #ff8a75;
+}
+
+.resume-export-toggle:focus-visible,
+.resume-copy-button:focus-visible,
+.resume-mini-button:focus-visible,
+.resume-tab:focus-visible,
+.resume-panel:focus-visible,
+.resume-ledger-scroll:focus-visible,
+.resume-footer a:focus-visible,
+.resume-ledger a:focus-visible {
+  outline: 3px solid var(--speaking-accent-text);
+  outline-offset: 3px;
+}
+
+/* --- Tabs --- */
+.resume-tabs {
+  margin-top: 2.5rem;
+}
+
+.resume-tablist {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.resume-tab {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem;
+  background: transparent;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  color: var(--foreground-muted);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.resume-tab:hover {
+  border-color: var(--primary);
+}
+
+.resume-tab[aria-selected='true'] {
+  background: var(--card);
+  border-color: var(--primary);
+  box-shadow: inset 3px 0 0 var(--primary);
+  color: var(--foreground);
+}
+
+.resume-tab-name {
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.resume-tab-sub {
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.resume-panel {
+  margin-top: 1.5rem;
+}
+
+/* --- Format A: plain working document --- */
+.resume-doc-section {
+  margin-top: 1.75rem;
+}
+
+.resume-doc-heading {
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--card-border);
+  color: var(--speaking-accent-text);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.resume-doc-block {
+  margin: 0;
+  color: var(--foreground);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 2;
+}
+
+.resume-doc-block--meta {
+  padding: 0.9rem 1rem;
+  background: var(--background-secondary);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  color: var(--foreground-muted);
+}
+
+/* --- Format B: chronological ledger --- */
+.resume-ledger-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+}
+
+.resume-ledger-hint {
+  margin: 0 0 0.6rem;
+  color: var(--foreground-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.resume-ledger {
+  width: 100%;
+  /* Below the desktop layout the ledger scrolls sideways inside its wrapper
+     rather than collapsing into six-line rows. */
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.resume-ledger caption {
+  padding: 0.75rem 0.9rem;
+  background: var(--background-secondary);
+  color: var(--foreground-muted);
+  font-size: 0.76rem;
+  text-align: left;
+}
+
+.resume-ledger th,
+.resume-ledger td {
+  padding: 0.65rem 0.9rem;
+  border-top: 1px solid var(--card-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.resume-ledger thead th {
+  background: var(--background-secondary);
+  color: var(--speaking-accent-text);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.resume-ledger tbody th {
+  color: var(--foreground);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.74rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.resume-ledger tbody td {
+  color: var(--foreground-muted);
+  line-height: 1.5;
+}
+
+.resume-ledger tbody tr:hover th,
+.resume-ledger tbody tr:hover td {
+  background: var(--background-secondary);
+}
+
+.resume-ledger a {
+  color: var(--speaking-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Keep the ledger scannable: the cell shows one ellipsized line, but the full
+   URL stays in the DOM, so selecting a row still copies the whole address. */
+.resume-ledger-link a {
+  display: block;
+  max-width: 210px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.resume-ledger-none {
+  color: var(--foreground-muted);
+}
+
+/* --- Empty state --- */
+.resume-empty {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1.5rem;
+  background: var(--background-secondary);
+  border: 2px dashed var(--primary);
+  border-radius: 12px;
+  color: var(--foreground-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.resume-empty strong {
+  color: var(--foreground);
+  font-size: 1rem;
+}
+
+/* --- Footer --- */
+.resume-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--card-border);
+  color: var(--foreground-muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.resume-footer p {
+  margin: 0;
+}
+
+.resume-footer a {
+  color: var(--speaking-accent-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 1000px) {
+  .resume-page {
+    padding-top: 2.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .resume-toolbar-row {
+    align-items: center;
+    flex-direction: row;
+    gap: 1.25rem;
+  }
+
+  .resume-export-panel {
+    padding: 1.5rem;
+  }
+
+  .resume-output-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .resume-copy-row {
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .resume-tablist {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .resume-ledger {
+    min-width: 0;
+    font-size: 0.82rem;
+  }
+
+  .resume-ledger-hint {
+    display: none;
+  }
+}

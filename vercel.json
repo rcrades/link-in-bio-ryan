@@ -13,6 +13,8 @@
     },
     { "source": "/speaking", "destination": "/speaking/index.html" },
     { "source": "/speaking/", "destination": "/speaking/index.html" },
+    { "source": "/speaking/resume", "destination": "/speaking/resume/index.html" },
+    { "source": "/speaking/resume/", "destination": "/speaking/resume/index.html" },
     { "source": "/headshots", "destination": "/headshots/index.html" },
     { "source": "/headshots/", "destination": "/headshots/index.html" },
     { "source": "/pages/:path*", "destination": "/pages/:path*" },

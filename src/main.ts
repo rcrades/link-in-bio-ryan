@@ -878,13 +878,22 @@ async function initializeApp() {
                 <span class="sitemap-desc">Admin controls · direct link only</span>
               </a>
             </li>
-            <li class="sitemap-row">
+            <li class="sitemap-row sitemap-row--group">
               <a href="/speaking" class="sitemap-link" data-sitemap-target="/speaking">
                 <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
                 <span class="sitemap-branch">├──</span>
                 <span class="sitemap-path">/speaking</span>
                 <span class="sitemap-desc">Talks, topics, and selected appearances · direct link only</span>
               </a>
+              <ul class="sitemap-subtree">
+                <li class="sitemap-row sitemap-row--child">
+                  <a href="/speaking/resume" class="sitemap-link" data-sitemap-target="/speaking/resume">
+                    <span class="sitemap-branch">│   └──</span>
+                    <span class="sitemap-path">resume</span>
+                    <span class="sitemap-desc">Full speaking resume · copy/export formats · linked from the speaking page</span>
+                  </a>
+                </li>
+              </ul>
             </li>
             <li class="sitemap-row">
               <a href="/pages/speaker/" class="sitemap-link" data-sitemap-target="/pages/speaker/">
@@ -951,9 +960,9 @@ async function initializeApp() {
           </ul>
 
           <div class="sitemap-summary">
-            <span class="sitemap-summary-dim">11 entries ·</span>
+            <span class="sitemap-summary-dim">12 entries ·</span>
             <span><span class="sitemap-status linked sitemap-status--inline"></span> 2 linked from home</span>
-            <span><span class="sitemap-status hidden sitemap-status--inline"></span> 9 direct-link only</span>
+            <span><span class="sitemap-status hidden sitemap-status--inline"></span> 10 direct-link only</span>
           </div>
         </div>
       </div>
