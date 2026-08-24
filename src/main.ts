@@ -879,6 +879,14 @@ async function initializeApp() {
               </a>
             </li>
             <li class="sitemap-row">
+              <a href="/speaking" class="sitemap-link" data-sitemap-target="/speaking">
+                <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
+                <span class="sitemap-branch">├──</span>
+                <span class="sitemap-path">/speaking</span>
+                <span class="sitemap-desc">Talks, topics, and selected appearances · direct link only</span>
+              </a>
+            </li>
+            <li class="sitemap-row">
               <a href="/pages/speaker/" class="sitemap-link" data-sitemap-target="/pages/speaker/">
                 <span class="sitemap-status hidden" aria-label="Unlinked, direct access"></span>
                 <span class="sitemap-branch">├──</span>
@@ -943,9 +951,9 @@ async function initializeApp() {
           </ul>
 
           <div class="sitemap-summary">
-            <span class="sitemap-summary-dim">10 entries ·</span>
+            <span class="sitemap-summary-dim">11 entries ·</span>
             <span><span class="sitemap-status linked sitemap-status--inline"></span> 2 linked from home</span>
-            <span><span class="sitemap-status hidden sitemap-status--inline"></span> 8 direct-link only</span>
+            <span><span class="sitemap-status hidden sitemap-status--inline"></span> 9 direct-link only</span>
           </div>
         </div>
       </div>

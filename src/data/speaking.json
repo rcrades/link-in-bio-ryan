@@ -1,0 +1,112 @@
+{
+  "profile": {
+    "name": "Ryan Rademann",
+    "role": "Partner, Construction & Real Estate Technology",
+    "firm": "Wipfli LLP",
+    "location": "Chicago, IL",
+    "intro": "I speak with construction and real-estate leaders about artificial intelligence, technology strategy, and the operating decisions that make change real.",
+    "bio": "Ryan Rademann is a Partner at Wipfli LLP, where he leads construction and real-estate technology work for contractors and owners across North America. His focus is the space between technology strategy and field reality: how people, software, data, and now agents work together to finish projects."
+  },
+  "topics": [
+    "Artificial intelligence without the hype",
+    "Agentic workflows and the future of work",
+    "Construction technology strategy",
+    "Data, adoption, and operating change"
+  ],
+  "formats": [
+    "Conference sessions",
+    "Executive forums and roundtables",
+    "Panels and long-form interviews"
+  ],
+  "stages": [
+    {
+      "title": "Construction and AI",
+      "event": "UCA of Illinois Member Event",
+      "date": "March 2026",
+      "detail": "A practical conversation for union contractors moving beyond basic construction-management software.",
+      "url": "https://app.glueup.com/event/moving-beyond-basic-construction-management-software-167765/",
+      "linkLabel": "Event details",
+      "image": "/logos/uca.png",
+      "imageAlt": "Underground Contractors Association of Illinois logo",
+      "imageFit": "contain"
+    },
+    {
+      "title": "Robots in the Right of Way: A Practical Guide to AI in the Office and the Field",
+      "event": "Centuri Energy & Utility Leaders' Executive Forum · Orlando",
+      "date": "November 2025",
+      "detail": "An executive-level guide to where AI is useful now and how leaders can prepare their organizations for what comes next.",
+      "image": "/centuri-orlando.jpg",
+      "imageAlt": "Centuri Energy and Utility Leaders Executive Forum",
+      "imageFit": "cover"
+    },
+    {
+      "title": "Executive Forum — CFO Roundtable",
+      "event": "Procore Groundbreak · Houston",
+      "date": "October 2025",
+      "detail": "Co-presented with Howard Fu, CFO of Procore.",
+      "image": "/gbk-2025.jpg",
+      "imageAlt": "Ryan Rademann with colleagues in front of the Groundbreak 2025 sign",
+      "imageFit": "cover"
+    },
+    {
+      "title": "The Cost of Disconnected Systems",
+      "event": "Procore Groundbreak",
+      "date": "October 2024",
+      "detail": "Presented with Aldridge Electric on the operational cost of fragmented construction systems.",
+      "url": "https://youtu.be/VZxeggf1-Q0",
+      "linkLabel": "Watch the session",
+      "image": "/gbk-rademann-2024.jpg",
+      "imageAlt": "Ryan Rademann presenting at Procore Groundbreak 2024",
+      "imageFit": "cover"
+    },
+    {
+      "title": "How Generative AI Can Drive Productivity in the Office and the Field",
+      "event": "Rocky Mountain CFMA Conference",
+      "date": "September 2024",
+      "detail": "A two-hour working session for construction financial leaders on practical generative-AI use cases.",
+      "url": "https://youtu.be/9zJ0QphHq2Q",
+      "linkLabel": "Watch the session",
+      "image": "/rocky-mountain-cfma-audience.jpg",
+      "imageAlt": "Audience at the Rocky Mountain CFMA Conference",
+      "imageFit": "cover"
+    }
+  ],
+  "conversations": [
+    {
+      "title": "How Contractors Can Adopt AI Agents Without Chaos",
+      "source": "Podcast guest appearance",
+      "date": "May 2026",
+      "url": "https://youtu.be/NU0amPkAktU?si=cHkLn336WD30kyiT"
+    },
+    {
+      "title": "Office Hours Global",
+      "source": "Live panel conversation",
+      "date": "December 2025",
+      "url": "https://www.youtube.com/watch?v=0obMGwqO7jc"
+    },
+    {
+      "title": "Digitization, Automation and Other Insights from Ryan Rademann",
+      "source": "Constructive Podcast",
+      "date": "February 2025",
+      "url": "https://youtu.be/i8l8gEdD6fQ?si=_2SLWezzZrlO20Zz"
+    },
+    {
+      "title": "Why 50% of Mid-Size Contractors Still Struggle with Tech Integration",
+      "source": "Bricks & Bytes Podcast",
+      "date": "November 2024",
+      "url": "https://bricks-bytes.com/podcast/why-50-of-mid-size-contractors-still-struggle-with-tech-integration-in-2024-insights-from-ryan-rademann-partner-at-wipfli/"
+    },
+    {
+      "title": "Project Management: Scope Creep",
+      "source": "Office Hours Global · Show 1350",
+      "date": "December 2023",
+      "url": "https://www.youtube.com/live/XTa7Jg7dykE?si=6GSpWdsFT55EHZ04"
+    },
+    {
+      "title": "BuiltWorlds Session: Ryan Rademann, Wipfli",
+      "source": "BuiltWorlds",
+      "date": "November 2022",
+      "url": "https://builtworlds.com/videos/builtworlds-session-ryan-rademann-senior-manager-wipfli/"
+    }
+  ]
+}

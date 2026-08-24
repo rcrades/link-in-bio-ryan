@@ -20,6 +20,7 @@ A modern bio page that centralizes all your important links in one place. Perfec
 ## Page Routes
 
 - `/` - Main links page
+- `/speaking` - Talks, topics, and selected appearances
 - `/pages/speaker/` - Speaker inquiry form
 - `/pages/admin/` - Admin controls
 - `/pages/start-with-v0/` - v0 templates
