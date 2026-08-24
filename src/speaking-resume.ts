@@ -492,7 +492,7 @@ function bindEvents(): void {
   })
 
   tablist?.addEventListener('keydown', (event) => {
-    const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End']
+    const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End']
     if (!keys.includes(event.key)) return
     event.preventDefault()
     if (event.key === 'Home') return activateTab('a', true)
