@@ -21,6 +21,7 @@ A modern bio page that centralizes all your important links in one place. Perfec
 
 - `/` - Main links page
 - `/speaking` - Talks, topics, and selected appearances
+- `/speaking/resume` - Full speaking resume with copy/export formats (linked from the speaking page)
 - `/pages/speaker/` - Speaker inquiry form
 - `/pages/admin/` - Admin controls
 - `/pages/start-with-v0/` - v0 templates
