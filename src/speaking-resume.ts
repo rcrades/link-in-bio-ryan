@@ -309,7 +309,6 @@ function renderPage(): string {
 
       <footer class="resume-footer">
         <p>
-          Source of truth: the speaking page data set. Nothing here is generated or embellished.
           <a href="/speaking">Back to the speaking page</a>.
         </p>
       </footer>
