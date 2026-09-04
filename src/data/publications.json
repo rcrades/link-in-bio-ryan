@@ -1,6 +1,13 @@
 {
   "publications": [
     {
+      "type": "video",
+      "title": "What AI Means For The Future Of Construction Through 3 Perspectives",
+      "date": "2026-09-01",
+      "source": "Adaptive",
+      "url": "https://www.youtube.com/watch?v=Q94UL-B9E6k"
+    },
+    {
       "type": "in-person",
       "title": "How Generative AI Can Drive Productivity In The Office And The Field",
       "date": "2024-09-26",
