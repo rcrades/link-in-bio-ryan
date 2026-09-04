@@ -4,6 +4,18 @@ A modern bio page that centralizes all your important links in one place. Perfec
 
 **Built with:** [Vite](https://vitejs.dev) • [TypeScript](https://www.typescriptlang.org) • [Tailwind CSS](https://tailwindcss.com) • [Lucide Icons](https://lucide.dev)
 
+## Parallel Migration Status
+
+This repository is still active. Ryan is maintaining both `link-in-bio-ryan` and
+`biosite` while the site migration is in progress, and neither repo should be
+treated as deprecated until there is an explicit cutover decision.
+
+- Use this repo for the Vite/static-content version of Ryan's link-in-bio site.
+- Use `biosite` for the Next.js, v0, Convex-backed version that is being
+  maintained in parallel.
+- Do not assume a change in one repo automatically applies to the other. If a
+  request affects both, make paired, repo-specific changes and PRs.
+
 ## Related Documentation
 - [CLAUDE.md](CLAUDE.md) - Development commands, feature flags, and layout strategy
 - [AGENTS.md](AGENTS.md) - AI agent guidelines and conventions
