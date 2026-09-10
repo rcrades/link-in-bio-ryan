@@ -185,6 +185,24 @@
       "date": "2023-12-04",
       "source": "Office Hours Global",
       "url": "https://www.youtube.com/live/XTa7Jg7dykE?si=6GSpWdsFT55EHZ04"
+    },
+    {
+      "type": "interview",
+      "title": "Ryan Rademann, Wipfli | CO Pod | CFMA 2026 Conference Special",
+      "date": "2026-06-11",
+      "source": "Construction Owners",
+      "url": "https://www.youtube.com/watch?v=F39F5MvHYU8",
+      "thumbnailId": "F39F5MvHYU8",
+      "visualMode": "photo",
+      "visualAlt": "Ryan Rademann on Construction Owners CO Pod at CFMA 2026"
+    },
+    {
+      "type": "in-person",
+      "title": "Construction and AI",
+      "date": "2026-03-18",
+      "source": "UCA of Illinois",
+      "url": "https://app.glueup.com/event/moving-beyond-basic-construction-management-software-167765/",
+      "speaker": "Ryan Rademann"
     }
   ]
 }
