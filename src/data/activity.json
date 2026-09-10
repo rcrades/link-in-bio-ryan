@@ -18,21 +18,20 @@
       "thumbnail": "/construction-executive-agent-budgets-thumb.jpg"
     },
     {
+      "title": "CO Pod — CFMA 2026 Conference Special",
+      "description": "Construction Owners interview",
+      "date": "2026-06-11",
+      "type": "interview",
+      "url": "https://www.youtube.com/watch?v=F39F5MvHYU8",
+      "thumbnailId": "F39F5MvHYU8"
+    },
+    {
       "title": "How Contractors Can Adopt AI Agents Without Chaos",
       "description": "Podcast guest appearance",
       "date": "2026-05-27",
       "type": "podcast",
       "url": "https://youtu.be/NU0amPkAktU?si=cHkLn336WD30kyiT",
       "thumbnail": "/ai-agents-without-chaos-thumb.jpg"
-    },
-    {
-      "title": "Construction and AI",
-      "description": "Speaker at UCA of Illinois member event",
-      "date": "2026-03-18",
-      "type": "in-person",
-      "url": "https://app.glueup.com/event/moving-beyond-basic-construction-management-software-167765/",
-      "logo": "/logos/uca.png",
-      "logoBg": "light"
     },
     {
       "title": "Office Hours Global",
