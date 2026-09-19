@@ -52,6 +52,7 @@ import linksData from './data/links.json'
 import publicationsData from './data/publications.json'
 import causesData from './data/causes.json'
 import activityData from './data/activity.json'
+import { referralPrograms } from './config/referrals'
 import { getProfileImageSrc } from './utils/profileImage'
 
 // Convex is the source of truth for Recent Activity when reachable. The
@@ -777,11 +778,11 @@ async function initializeApp() {
         </p>
       </div>
       <div class="tech-stack-buttons flex flex-col gap-3 mt-4 desktop:flex-row desktop:items-center desktop:mt-0 desktop:gap-6">
-        <a href="https://v0.link/ryan-rademann" target="_blank" class="create-your-own-btn flex items-center justify-center gap-2 py-3.5 px-5 desktop:py-3 desktop:px-5 bg-primary text-white border-none rounded-[10px] no-underline text-base font-semibold cursor-pointer transition-all duration-300 ease-bounce-in shadow-medium hover:-translate-y-0.5 hover:shadow-strong hover:bg-primary-dark desktop:whitespace-nowrap">
+        ${referralPrograms.v0.enabled ? `<a href="${referralPrograms.v0.url}" target="_blank" class="create-your-own-btn flex items-center justify-center gap-2 py-3.5 px-5 desktop:py-3 desktop:px-5 bg-primary text-white border-none rounded-[10px] no-underline text-base font-semibold cursor-pointer transition-all duration-300 ease-bounce-in shadow-medium hover:-translate-y-0.5 hover:shadow-strong hover:bg-primary-dark desktop:whitespace-nowrap">
           <i data-lucide="sparkles" class="w-4 h-4" aria-hidden="true"></i>
           Create your own with v0
           <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 opacity-80" aria-hidden="true"></i>
-        </a>
+        </a>` : ''}
         <button id="show-tech-stack-btn" class="show-tech-stack-btn bg-transparent border-none p-2 text-foreground-muted text-sm cursor-pointer underline underline-offset-2 transition-colors duration-200 hover:text-foreground desktop:whitespace-nowrap">
           Show me this thing's tech stack
         </button>
@@ -805,11 +806,11 @@ async function initializeApp() {
         </h2>
         <p class="tech-stack-modal-subtitle text-foreground-muted text-sm m-0 mb-6">Built with a bespoke software stack in 2025</p>
         <ul class="tech-stack-modal-list list-none p-0 m-0 mb-6 flex flex-col gap-4">
-          <li class="flex items-center gap-3 p-4 bg-background-secondary rounded-xl text-sm">
+          ${referralPrograms.v0.enabled ? `<li class="flex items-center gap-3 p-4 bg-background-secondary rounded-xl text-sm">
             <i data-lucide="layout-template" class="w-5 h-5 text-primary flex-shrink-0" aria-hidden="true"></i>
             <span class="text-foreground-muted">Boilerplate & Prototype:</span>
-            <a href="https://v0.link/ryan-rademann" target="_blank" class="text-primary no-underline font-semibold inline-flex items-center gap-1 transition-colors duration-200 hover:text-primary-dark">v0.app <i data-lucide="arrow-up-right" class="w-3 h-3" aria-hidden="true"></i></a>
-          </li>
+            <a href="${referralPrograms.v0.url}" target="_blank" class="text-primary no-underline font-semibold inline-flex items-center gap-1 transition-colors duration-200 hover:text-primary-dark">v0.app <i data-lucide="arrow-up-right" class="w-3 h-3" aria-hidden="true"></i></a>
+          </li>` : ''}
           <li class="flex items-center gap-3 p-4 bg-background-secondary rounded-xl text-sm">
             <i data-lucide="boxes" class="w-5 h-5 text-primary flex-shrink-0" aria-hidden="true"></i>
             <span class="text-foreground-muted">Front End:</span>
@@ -981,14 +982,14 @@ async function initializeApp() {
       </div>
       <div id="tech-stack-details-2" class="tech-stack-details">
         <ul class="list-none p-0 mt-4 mb-0 flex flex-col gap-3">
-          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+          ${referralPrograms.claude.enabled ? `<li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
             <i data-lucide="sparkles" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
-            AI Code Gen: <a href="https://claude.ai/referral/4ZgetZUURA" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">Claude <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
-          </li>
-          <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
+            AI Code Gen: <a href="${referralPrograms.claude.url}" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">Claude <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
+          </li>` : ''}
+          ${referralPrograms.v0.enabled ? `<li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
             <i data-lucide="layout-template" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
-            Vibe coding for beginners: <a href="https://v0.link/ryan-rademann" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">v0.app <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
-          </li>
+            Vibe coding for beginners: <a href="${referralPrograms.v0.url}" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">v0.app <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
+          </li>` : ''}
           <li class="flex items-center gap-3 py-3.5 px-4 rounded-[10px] border border-card-border bg-background-secondary text-card-foreground transition-all duration-300 ease-bounce-in text-sm hover:translate-x-1 hover:border-primary hover:bg-card hover:shadow-md">
             <i data-lucide="database" class="w-[1.1rem] h-[1.1rem] text-card-foreground shrink-0" aria-hidden="true"></i>
             Easy backend for vibe-coded apps: <a href="https://convex.dev/referral/RCRADE2932" target="_blank" class="text-primary no-underline transition-all duration-300 py-1.5 px-3 rounded-md bg-background-secondary border border-card-border font-semibold text-sm inline-flex items-center gap-1.5 hover:bg-primary hover:text-card hover:border-primary-dark hover:-translate-y-0.5 hover:shadow-md">Convex <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 mt-px" aria-hidden="true"></i></a>
