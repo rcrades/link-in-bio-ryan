@@ -28,8 +28,8 @@ export function SignIn() {
         <div className="gb-eyebrow">Guest brief</div>
         <h1>{mode === "signIn" ? "Sign in to read the brief" : "Create an account"}</h1>
         <p className="gb-muted gb-small">
-          This page is behind a light gate while we shape the show. If ryan
-          sent you a link, either flow below will work.
+          This page is lightly gated while the show takes shape. Use the email
+          Ryan sent the invite to.
         </p>
         <label>
           Email
@@ -65,8 +65,8 @@ export function SignIn() {
           }}
         >
           {mode === "signIn"
-            ? "First time here? Create an account"
-            : "Already have an account? Sign in"}
+            ? "Create an account"
+            : "Use an existing account"}
         </button>
       </form>
     </div>

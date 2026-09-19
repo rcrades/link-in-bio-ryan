@@ -20,12 +20,17 @@ const html = `
 
     <section class="gb-pitch-hero">
       <div>
-        <div class="gb-pitch-kicker">Talk Proposal · Groundbreak 2026</div>
+        <div class="gb-pitch-kicker">Talk proposal, Groundbreak 2026</div>
         <h1 class="gb-pitch-title">The <em>San Francisco</em> Consensus</h1>
         <p class="gb-pitch-tagline">${TALK.tagline}</p>
-        <a href="${SPEAKER.linkedin}" class="gb-pitch-cta" target="_blank" rel="noopener noreferrer">
-          Connect with Ryan →
-        </a>
+        <div class="gb-pitch-actions">
+          <a href="${SPEAKER.linkedin}" class="gb-pitch-cta" target="_blank" rel="noopener noreferrer">
+            Connect with Ryan →
+          </a>
+          <a href="/pages/groundbreak/dossier/" class="gb-pitch-cta gb-pitch-cta--secondary">
+            View dossier
+          </a>
+        </div>
       </div>
       <div>
         ${renderPreviousEngagement('hero')}
@@ -35,7 +40,8 @@ const html = `
     <section class="gb-section">
       <div class="gb-section-label">The framing</div>
       <div class="gb-hook">
-        <div class="gb-hook-kicker">The talk opens at Sunday lunch, downtown SF</div>
+        <div class="gb-hook-kicker">Sunday lunch, downtown SF</div>
+        <p class="gb-hook-short">${TALK.narrativeHook.short}</p>
         <div class="gb-hook-scene">
           <div class="gb-hook-person">
             <div class="gb-hook-role">Father</div>

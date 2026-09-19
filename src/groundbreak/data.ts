@@ -23,70 +23,70 @@ export const PREVIOUS_ENGAGEMENT = {
     'Why 50% of Mid-Size Contractors Still Struggle with Tech Integration',
   url: 'https://youtu.be/2Cd3oNo3G3Y',
   thumbnail: '/ryan-b-and-b-youtube-thumb.jpg',
-  meta: 'Nov 2024 · long-form interview',
+  meta: 'Nov 2024, long-form interview',
   note: ''
 }
 
 export const TALK = {
   title: 'The San Francisco Consensus',
   kicker: 'A Groundbreak 2026 proposal',
-  tagline: "What a ten-block radius of Market Street has already decided about AI — and why construction has ~24 months to act on it.",
+  tagline: 'What a ten-block radius of Market Street has already decided about AI, and why construction has about 24 months to act on it.',
   oneLine:
-    "A consensus is forming in San Francisco about what AI is, how it's built, and what it replaces. Construction is 3–5 years downstream of that consensus. Here's how to pre-position before it arrives.",
+    'A consensus is forming in San Francisco about what AI is, how it is built, and what it replaces. Construction is 3-5 years downstream of that consensus. Here is how to pre-position before it arrives.',
   narrativeHook: {
     short:
-      "Structured as a bird's-eye view of a recurring Sunday lunch downtown: a father from the East Bay — president of a $400M GC — and his daughter, late twenties, Stanford grad, Member of Technical Staff at Anthropic. She can't tell him what she's working on. She *can* tell him where the puck is going.",
+      "Structured as a bird's-eye view of a recurring Sunday lunch downtown: a father from the East Bay, president of a $400M GC, and his daughter, a Stanford grad and Member of Technical Staff at Anthropic.",
     scene: {
       father: 'President of a $400M East Bay GC. Sixty-one. Reads the Dodge Report over coffee, still pours concrete in his sleep.',
       daughter: 'Late twenties. Stanford CS. Member of Technical Staff at Anthropic. Under NDA for the interesting parts.',
       premise:
-        "Most of what she sees, she can't share. What she can share is the advice itself — the shape of where the puck is going."
+        'Most of what she sees, she cannot share. What she can share is the advice itself: the shape of where the puck is going.'
     },
     payoff:
-      "The talk is forty-five minutes of exactly that advice, translated into the timelines, roles, and decisions a Groundbreak audience actually controls. Skate to where the puck is going."
+      'The talk is forty-five minutes of exactly that advice, translated into the timelines, roles, and decisions a Groundbreak audience actually controls.'
   },
   claims: [
     {
       header: 'The consensus is real',
       body:
-        "Inside a ten-block radius of Market Street, a small group of labs, founders, and operators have aligned on concrete claims: the model itself is the product, agents beat apps, context is the new moat. These aren't takes — they're the operating assumptions of the next ten years."
+        'Inside a ten-block radius of Market Street, a small group of labs, founders, and operators have aligned on concrete claims: the model itself is the product, agents beat apps, and context is the new moat.'
     },
     {
       header: "Construction's AI dialogue is several cycles behind",
       body:
-        "While SF ships coding agents that write six-figure PRs, the industry's AI conversation is still mostly about job displacement and the chatbot on the project-management homepage. Useful, but the wrong question."
+        "While SF ships coding agents that write large production changes, the industry's AI conversation is still mostly about job displacement and the chatbot on the project-management homepage."
     },
     {
       header: 'The 24-month pre-position window',
       body:
-        "Consensus propagates on a lag. Construction leaders have roughly two years to shape the people, data pipelines, vendor relationships, and governance that determine whether they're a participant or a recipient when agentic workflows hit the jobsite."
+        'Consensus propagates on a lag. Construction leaders have roughly two years to shape the people, data pipelines, vendor relationships, and governance that determine whether they are a participant or a recipient.'
     },
     {
       header: 'Owners, GCs, and specialty contractors each get a different playbook',
       body:
-        "The asymmetries in the industry (fragmentation, margin, data maturity) mean the San Francisco Consensus shows up differently for each role. A unified framework with three distinct action plans — not one-size-fits-all."
+        'The asymmetries in the industry mean the San Francisco Consensus shows up differently for each role. The talk gives one unified framework with three distinct action plans.'
     }
   ],
   takeaways: [
     {
       icon: 'compass',
       text:
-        "A plain-English read of the San Francisco Consensus — and what folks like me, riding the lightning of the frontier tools, are experiencing with tools displacing staff"
+        'A plain-English read of the San Francisco Consensus and what frontier tools are already doing to staff-shaped work.'
     },
     {
       icon: 'briefcase',
       text:
-        "A primer for the C-suite on concepts that can't be left to staff to internalize, including the harness your org needs to be investing in now"
+        'A C-suite primer on the concepts that cannot be left to staff to internalize, including the harness the organization needs now.'
     },
     {
       icon: 'users',
       text:
-        'The talent framework for job reqs, interviews, and existing-team upskilling that must be acted upon sooner than later'
+        'A talent framework for job reqs, interviews, and existing-team upskilling that needs action sooner than later.'
     },
     {
       icon: 'map',
       text:
-        'Three role-specific playbooks (Owner / GC / Specialty) with first-90-day moves'
+        'Three role-specific playbooks for owners, GCs, and specialty contractors with first-90-day moves.'
     }
   ],
   formats: ['Solo', 'Interactive Session', 'Panel'],
@@ -107,7 +107,7 @@ export const CREDIBILITY = [
   { label: 'Groundbreak alumnus', detail: 'Presented at Procore Groundbreak 2024 and 2025' },
   { label: 'Speaker', detail: 'UCA of Illinois, CFMA, BuiltWorlds, Office Hours Global' },
   { label: 'Publications', detail: 'Construction Executive, ForConstructionPros, CMAA, NAIOP' },
-  { label: 'Advisor', detail: 'Fieldsity — field AI for SMB specialty contractors' }
+  { label: 'Advisor', detail: 'Fieldsity: field AI for SMB specialty contractors' }
 ]
 
 // Form answers used by the "Dossier" alt.
@@ -117,7 +117,7 @@ export const DOSSIER_ANSWERS = {
   q2_title: `${SPEAKER.title}, ${SPEAKER.firm}`,
   q3_headshot: SPEAKER.photo,
   q4_bio:
-    "Ryan Rademann is a Partner at Wipfli LLP, where he leads construction and real-estate technology practice work for contractors and owners across North America. His focus is the slice of technology strategy that most firms underspend on: how humans, software, and now agents collaborate to actually finish projects. Ryan has spoken at Procore Groundbreak, BuiltWorlds, CFMA, UCA of Illinois, and Office Hours Global, and writes for Construction Executive, ForConstructionPros, and CMAA. Alongside advising contractors large and small, he also advises early-stage startups building field AI for specialty contractors — living at the intersection of frontier-AI thinking and the working reality of a jobsite.",
+    'Ryan Rademann is a Partner at Wipfli LLP, where he leads construction and real-estate technology practice work for contractors and owners across North America. His focus is the slice of technology strategy most firms underspend on: how humans, software, and now agents collaborate to actually finish projects. Ryan has spoken at Procore Groundbreak, BuiltWorlds, CFMA, UCA of Illinois, and Office Hours Global, and writes for Construction Executive, ForConstructionPros, and CMAA. Alongside advising contractors large and small, he also advises early-stage startups building field AI for specialty contractors.',
   q5_links: `${SPEAKER.site} · ${SPEAKER.linkedin}`,
   q6_prior_groundbreak: 'Yes',
   q7_previous_engagement: PREVIOUS_ENGAGEMENT.url,
@@ -139,7 +139,7 @@ export const DOSSIER_ANSWERS = {
   q13_audiences: ['General Contractors', 'Owners', 'Specialty Contractors'],
   q14_personas: ['Executive', 'Operations', 'IT', 'Preconstruction'],
   q15_why_good_fit:
-    "Most AI sessions at industry conferences are hype reels or vendor demos. This one is a serious read on what the frontier has already decided about AI, translated into the timelines, roles, and decisions a Groundbreak audience actually controls. The talk is structured as a bird's-eye view of a recurring Sunday lunch downtown — a $400M East Bay GC president and his daughter, a Member of Technical Staff at Anthropic. She can't share most of what she sees, but she can share the advice: skate to where the puck is going. The audience walks out with 45 minutes of exactly that advice. Groundbreak is the right room because it holds all three buyer roles plus Procore's product org — the mix this talk is designed to move."
+    "Most AI sessions at industry conferences are hype reels or vendor demos. This one is a serious read on what the frontier has already decided about AI, translated into the timelines, roles, and decisions a Groundbreak audience actually controls. The talk is structured as a bird's-eye view of a recurring Sunday lunch downtown: a $400M East Bay GC president and his daughter, a Member of Technical Staff at Anthropic. She cannot share most of what she sees, but she can share the advice: skate to where the puck is going. Groundbreak is the right room because it holds all three buyer roles plus Procore's product org."
 }
 
 // Links between the four alts. Each page shows the *other* three.
@@ -147,7 +147,7 @@ export const ALTS = [
   { slug: '', label: 'The Pitch', blurb: 'Tight one-pager with previous engagement up top' },
   { slug: 'thesis/', label: 'The Thesis', blurb: 'Editorial preview of the talk' },
   { slug: 'dossier/', label: 'The Dossier', blurb: 'Every form question, answered' },
-  { slug: 'preview/', label: 'The Preview', blurb: 'Interactive taste of the talk' }
+  { slug: 'preview/', label: 'The Preview', blurb: 'Scroll-through taste of the talk' }
 ] as const
 
 export type AltSlug = typeof ALTS[number]['slug']

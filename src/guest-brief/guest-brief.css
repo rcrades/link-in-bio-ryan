@@ -84,6 +84,12 @@ body {
   color: var(--primary);
   font-weight: 600;
 }
+.gb-badge-mobile { display: none; }
+.gb-hero-eyebrow { margin-bottom: 0.75rem; }
+@media (max-width: 999px) {
+  .gb-badge-desktop { display: none; }
+  .gb-badge-mobile { display: inline; }
+}
 .gb-card label {
   display: flex;
   flex-direction: column;

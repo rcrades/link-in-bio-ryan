@@ -52,7 +52,7 @@ export const renderAltSwitcher = (current: AltSlug) => {
   const others = ALTS.filter(a => a.slug !== current)
   return `
     <section class="gb-alts">
-      <div class="gb-alts-kicker">Same speaker · alternate angle</div>
+      <div class="gb-alts-kicker">Same speaker, alternate angle</div>
       <div class="gb-alts-grid">
         ${others
           .map(
@@ -67,7 +67,7 @@ export const renderAltSwitcher = (current: AltSlug) => {
           .join('')}
       </div>
       <div class="gb-alts-footer">
-        <a href="/" class="gb-alts-home">← ryanrademann.com</a>
+        <a href="/" class="gb-alts-home">← RyanRademann.com</a>
       </div>
     </section>
   `
@@ -76,6 +76,6 @@ export const renderAltSwitcher = (current: AltSlug) => {
 export const renderGroundbreakBadge = () => `
   <div class="gb-badge">
     <span class="gb-badge-dot" aria-hidden="true"></span>
-    <span>Procore Groundbreak 2026 · Speaker Proposal</span>
+    <span>Procore Groundbreak 2026</span>
   </div>
 `

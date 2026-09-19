@@ -38,11 +38,10 @@ const html = `
 
     <section class="gb-dossier-header" style="margin-top:2rem;">
       <div class="gb-section-label">The dossier</div>
-      <h1 class="gb-dossier-title">Speaker nomination — pre-answered</h1>
+      <h1 class="gb-dossier-title">Speaker nomination, pre-answered</h1>
       <p class="gb-dossier-sub">
         Every question from the Groundbreak 2026 speaker nomination, answered the
-        way I'd answer it today. Saves the reviewer a pass through the form.
-        Question 7 is live and linked.
+        way I would answer it today. Question 7 is live and linked.
       </p>
     </section>
 
@@ -51,16 +50,16 @@ const html = `
       ${qa('2', 'Speaker job title', DOSSIER_ANSWERS.q2_title)}
       ${qa('3', 'Speaker headshot', '', {
         extra: `<img src="${DOSSIER_ANSWERS.q3_headshot}" alt="${SPEAKER.name}" class="gb-qa-photo" />`,
-        meta: 'Hi-res available on request · 2400×2400 PNG'
+        meta: 'Hi-res available on request'
       })}
-      ${qa('4', 'Speaker bio (900 char max)', DOSSIER_ANSWERS.q4_bio, {
+      ${qa('4', 'Speaker bio', DOSSIER_ANSWERS.q4_bio, {
         meta: `${DOSSIER_ANSWERS.q4_bio.length} / 900 characters`
       })}
       ${qa(
         '5',
         'LinkedIn, website, or portfolio',
         `<a href="${SPEAKER.site}" target="_blank" rel="noopener" style="color:var(--primary);text-decoration:underline;">${SPEAKER.site}</a>
-         · <a href="${SPEAKER.linkedin}" target="_blank" rel="noopener" style="color:var(--primary);text-decoration:underline;">LinkedIn</a>`
+         / <a href="${SPEAKER.linkedin}" target="_blank" rel="noopener" style="color:var(--primary);text-decoration:underline;">LinkedIn</a>`
       )}
       ${qa('6', 'Presented at Groundbreak before?', `<strong>${DOSSIER_ANSWERS.q6_prior_groundbreak}</strong>`)}
       ${qa(
@@ -73,7 +72,7 @@ const html = `
           meta: 'Featured prominently because this is the question the form explicitly asks.'
         }
       )}
-      ${qa('8', 'Speaker is a', `<strong>${DOSSIER_ANSWERS.q8_speaker_is_a}</strong> — Wipfli is a Procore Partner.`)}
+      ${qa('8', 'Speaker is a', `<strong>${DOSSIER_ANSWERS.q8_speaker_is_a}</strong>: Wipfli is a Procore Partner.`)}
       ${qa('9', 'Preferred session formats', '', {
         extra: chipList(DOSSIER_ANSWERS.q9_formats),
         meta: 'Happy to anchor a solo talk or run it as a facilitated roundtable.'
@@ -86,11 +85,11 @@ const html = `
         meta: 'The talk is product-agnostic but lands naturally on Procore AI.'
       })}
       ${qa('12', 'Procore integrations', DOSSIER_ANSWERS.q12_integrations, {
-        meta: 'Not all operate in every engagement — list reflects the full practice.'
+        meta: 'Not all operate in every engagement; list reflects the full practice.'
       })}
       ${qa('13', 'Industry audiences', '', { extra: chipList(DOSSIER_ANSWERS.q13_audiences) })}
       ${qa('14', 'Industry personas', '', { extra: chipList(DOSSIER_ANSWERS.q14_personas) })}
-      ${qa('15', 'Why is this a good fit? (900 char max)', DOSSIER_ANSWERS.q15_why_good_fit, {
+      ${qa('15', 'Why is this a good fit?', DOSSIER_ANSWERS.q15_why_good_fit, {
         meta: `${DOSSIER_ANSWERS.q15_why_good_fit.length} / 900 characters`
       })}
     </section>
