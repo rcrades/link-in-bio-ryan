@@ -582,6 +582,24 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 6px 18px rgba(255, 82, 0, 0.25);
 }
 
+.gb-pitch-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.gb-pitch-cta--secondary {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  box-shadow: none;
+  color: var(--foreground);
+}
+
+.gb-pitch-cta--secondary:hover {
+  border-color: var(--gb-procore);
+  box-shadow: none;
+}
+
 .gb-pitch-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(255, 82, 0, 0.35);
@@ -604,6 +622,13 @@ img { max-width: 100%; display: block; }
   color: var(--gb-procore);
   font-weight: 600;
   margin-bottom: 1rem;
+}
+
+.gb-hook-short {
+  color: var(--foreground);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  margin: 0.75rem 0 1.25rem;
 }
 
 .gb-hook-scene {
@@ -721,15 +746,6 @@ img { max-width: 100%; display: block; }
 
 .gb-thesis-body p {
   margin: 0 0 1.3rem;
-}
-
-.gb-thesis-body p:first-child::first-letter {
-  font-family: var(--font-display);
-  font-size: 3.8rem;
-  float: left;
-  line-height: 0.85;
-  margin: 0.15rem 0.55rem 0 0;
-  color: var(--primary);
 }
 
 .gb-thesis-h2 {

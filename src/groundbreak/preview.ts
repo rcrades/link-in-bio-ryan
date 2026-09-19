@@ -37,56 +37,56 @@ const sections: Section[] = [
     layout: 'prose',
     title: 'The framing',
     body:
-      "A father and daughter meet for lunch downtown on Sundays. He drives in from the East Bay — president of a $400M GC, sixty-one, still pours concrete in his sleep. She walks over from her side of town — late twenties, Stanford CS, Member of Technical Staff at Anthropic. She can't tell him what she's working on. She can tell him where the puck is going. This talk is an overhearing of her advice — translated for a room full of people with cranes."
+      'A father and daughter meet for lunch downtown on Sundays. He drives in from the East Bay: president of a $400M GC, sixty-one, still pours concrete in his sleep. She walks over from her side of town: late twenties, Stanford CS, Member of Technical Staff at Anthropic. She cannot tell him what she is working on. She can tell him where the puck is going.'
   },
   {
     layout: 'prose',
     title: 'The claim',
     body:
-      "Inside a ten-block radius of Market Street, a small number of labs, founders, and operators have aligned on a handful of concrete claims. The model itself is the product, not a feature bolted on top. Agents will eat applications. Context is the new moat. These aren't takes — they're the operating assumptions of the next ten years."
+      'Inside a ten-block radius of Market Street, a small number of labs, founders, and operators have aligned on a handful of concrete claims. The model itself is the product, agents will eat applications, and context is the new moat.'
   },
   {
     layout: 'signals',
     title: 'Three signals the consensus is real',
     body:
-      "You can argue about hype, you can't argue with receipts. Three signals that suggest the Bay Area isn't doing its usual overclaiming.",
+      'You can argue about hype; you cannot argue with receipts.',
     signals: [
-      'Coding agents are now writing PRs larger than 500 lines that pass review at frontier companies — not occasionally, daily.',
-      "Valuations for 'context' companies (retrieval, memory, tool-use infra) are a leading indicator of what the next moat looks like.",
-      "The migration from 'apps you open' to 'agents you delegate to' is already visible inside every major product org."
+      'Coding agents are writing large production changes that pass review at frontier companies.',
+      'Valuations for context companies are a leading indicator of what the next moat looks like.',
+      'The migration from apps you open to agents you delegate to is already visible inside major product orgs.'
     ]
   },
   {
     layout: 'prose',
-    title: "Why construction isn't a participant — yet",
+    title: 'Why construction is not a participant yet',
     body:
-      "Construction is downstream of every software consensus, historically by 3–5 years. The reasons are structural (fragmentation, thin margins, the rightful conservatism of anyone responsible for a crane above a sidewalk) — not cultural. The industry's current AI dialogue is still mostly two things: displacement anxiety, and AI-as-marketing-veneer on products you already bought. Both are distractions."
+      'Construction is downstream of every software consensus, historically by 3-5 years. The reasons are structural: fragmentation, thin margins, and the rightful conservatism of anyone responsible for a crane above a sidewalk.'
   },
   {
     layout: 'moves',
     title: 'The 24-month pre-position window',
     body:
-      "Consensus propagates on a lag. Construction leaders have roughly two years to pre-position before the agentic workflow patterns hit the jobsite in serious volume. Four moves that separate participants from recipients.",
+      'Consensus propagates on a lag. Construction leaders have roughly two years to pre-position before the agentic workflow patterns hit the jobsite in serious volume.',
     moves: [
       {
         label: 'People',
         body:
-          "Hire or promote one person whose job title includes the word \u2018agents\u2019 — not \u2018AI strategy.\u2019"
+          'Hire or promote one person whose job title includes agents, not just AI strategy.'
       },
       {
         label: 'Data',
         body:
-          'Treat your project data the way a model would — queryable, permissioned, with clean boundaries. This is 80% of the work.'
+          'Treat project data the way a model would: queryable, permissioned, and bounded.'
       },
       {
         label: 'Vendors',
         body:
-          'Ask what they build on top of, not what they stamp on top. Anyone serious will show you a model + context story.'
+          'Ask what they build on top of, not what they stamp on top.'
       },
       {
         label: 'Governance',
         body:
-          'A one-page policy for how agents act on behalf of the firm beats a 40-page AI strategy deck.'
+          'A one-page policy for how agents act on behalf of the firm beats a 40-page deck.'
       }
     ]
   },
@@ -94,7 +94,7 @@ const sections: Section[] = [
     layout: 'walk',
     title: 'What you walk out with',
     body:
-      "This talk is designed for the exact room Groundbreak assembles: Owners, GCs, and Specialty Contractors sitting next to Procore's product org. The goal isn't inspiration — it's that a construction firm's COO flies home with three specific moves for Monday.",
+      "This talk is designed for the exact room Groundbreak assembles: owners, GCs, and specialty contractors sitting next to Procore's product org.",
     items: TALK.takeaways.map(t => t.text)
   }
 ]
@@ -186,7 +186,7 @@ const html = `
 
     <section class="gb-preview-hero">
       <div class="gb-pitch-kicker">A scroll-through taste of the talk</div>
-      <h1 class="gb-preview-title">The San&nbsp;Francisco Consensus</h1>
+      <h1 class="gb-preview-title">The San Francisco Consensus</h1>
       <p class="gb-preview-tagline">${TALK.tagline}</p>
       <div class="gb-preview-scroll-hint">Scroll</div>
     </section>
@@ -194,7 +194,7 @@ const html = `
     ${sections.map(renderSection).join('')}
 
     <section class="gb-preview-proof">
-      <div class="gb-preview-proof-kicker">Evidence · Question 7</div>
+      <div class="gb-preview-proof-kicker">Evidence, question 7</div>
       ${renderPreviousEngagement('inline')}
     </section>
 

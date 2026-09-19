@@ -4,6 +4,13 @@ Guidelines for AI agents working on this codebase. `AGENTS.md` and `CLAUDE.md` a
 
 ## Related Documentation
 - [README.md](README.md) - Project overview, features, and setup
+- [docs/migration-delta-ledger.md](docs/migration-delta-ledger.md) - accepted
+  cross-site copy contracts, including the decided `V0-001`, `GB-002`, and
+  `GUEST-001` rows. Read it before reopening a parity decision.
+- Guest Brief audits must also read the current biosite repository's
+  `docs/migration-delta-ledger.md`, `docs/cutover-preflight.md`, and
+  `docs/environment.md`. The protected brief stays behind the shared Convex
+  `guestBrief:getApproved` authorization query and out of browser source.
 
 ## Commands
 - Build: `vercel build`

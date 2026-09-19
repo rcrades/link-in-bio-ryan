@@ -6,12 +6,14 @@ const templates = [
   {
     title: 'How to Start with v0',
     imageName: 'start-w-v0.png',
-    url: 'https://v0.app/templates/how-to-start-with-v0-K1gbGUb2rXK'
+    url: 'https://v0.app/templates/how-to-start-with-v0-K1gbGUb2rXK',
+    summary: 'A practical starting template for getting useful output from v0 quickly.'
   },
   {
     title: 'v0 System Instructions',
     imageName: 'prompts image.png',
-    url: 'https://v0.app/templates/v0-system-instructions-RutwgOGrI7y'
+    url: 'https://v0.app/templates/v0-system-instructions-RutwgOGrI7y',
+    summary: 'A reusable instruction set for steering v0 toward cleaner app builds.'
   }
 ]
 
@@ -57,18 +59,31 @@ async function hydrateTemplateImages(container: HTMLDivElement) {
 function renderTemplates(imagesByName = new Map<string, TemplateImage>()) {
   return `
   <div class="v0-page">
+    <header class="v0-header">
+      <div class="v0-eyebrow">v0 templates</div>
+      <div class="v0-heading-row">
+        <div>
+          <h1>Start with v0</h1>
+          <p>Two lightweight templates for getting from a rough idea to a workable first pass.</p>
+        </div>
+        <a href="https://v0.app/@rcrades" target="_blank" rel="noopener noreferrer" class="v0-profile-link">v0 profile</a>
+      </div>
+    </header>
     <div class="v0-grid">
       ${templates.map((template) => `
         <div class="v0-card">
           <a href="${template.url}" target="_blank" rel="noopener noreferrer" class="v0-thumb-wrap" aria-label="Open ${escapeAttribute(template.title)}">
             ${renderTemplateImage(template, imagesByName)}
             <div class="v0-overlay">
-              <span class="v0-overlay-text">Open v0 Template</span>
+              <span class="v0-overlay-text">Open v0 template</span>
             </div>
           </a>
           <div class="v0-card-footer">
-            <span class="v0-card-title">${escapeHtml(template.title)}</span>
-            <a href="${template.url}" target="_blank" rel="noopener noreferrer" class="v0-launch-btn">Launch</a>
+            <div>
+              <div class="v0-card-title">${escapeHtml(template.title)}</div>
+              <p class="v0-card-summary">${escapeHtml(template.summary)}</p>
+            </div>
+            <a href="${template.url}" target="_blank" rel="noopener noreferrer" class="v0-launch-btn">Open</a>
           </div>
         </div>
       `).join('')}

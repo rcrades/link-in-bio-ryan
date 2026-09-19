@@ -4,6 +4,25 @@ This file mirrors migration contracts that affect the legacy
 `link-in-bio-ryan` site. The canonical cross-site ledger remains in the
 `biosite` repository.
 
+## Canonical future-state copy — approved 2026-09-18 CDT
+
+Ryan delegated the final copy choice and selected the current Next.js wording as
+the canonical contract for all three previously open rows:
+
+- `V0-001`: preserve the explanatory heading, both template descriptions, and
+  the v0 profile link from the Next.js page in the legacy renderer.
+- `GB-002`: use the current Next.js Groundbreak wording across the pitch,
+  thesis, dossier, and preview while preserving the legacy layouts.
+- `GUEST-001`: use the current approved-only Guest Brief returned by the shared
+  `original-puffin-455` `guestBrief:getApproved` query. The legacy client must
+  render the returned blocks only after authentication and approval; protected
+  brief copy must never be restored to browser source or bundled assets.
+
+These IDs are decided and implemented as a biosite-to-legacy copy sync. Future
+audits must treat them as accepted contracts, not recurring owner decisions.
+Guest Brief authorization and payload isolation remain separate security gates.
+No shared-backend deployment or production-domain change is part of this sync.
+
 ## CO Pod appearance — 2026-09-10
 
 - ID: `MEDIA-CO-POD-2026`; class: `SHARED` content; direction: biosite -> legacy.

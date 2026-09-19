@@ -936,9 +936,60 @@ body::before {
    ============================================ */
 .v0-page {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  gap: 2rem;
   min-height: calc(100vh - 4rem);
+}
+
+.v0-header {
+  width: 100%;
+}
+
+.v0-eyebrow {
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.75rem;
+}
+
+.v0-heading-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.v0-heading-row h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1;
+  margin: 0;
+}
+
+.v0-heading-row p {
+  color: var(--foreground-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0.9rem 0 0;
+  max-width: 42rem;
+}
+
+.v0-profile-link {
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  color: var(--foreground);
+  flex: 0 0 auto;
+  font-weight: 600;
+  padding: 0.65rem 0.9rem;
+  text-decoration: none;
+}
+
+.v0-profile-link:hover {
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .v0-grid {
@@ -1035,6 +1086,21 @@ body::before {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
+  gap: 1rem;
+}
+
+.v0-card-summary {
+  color: var(--foreground-muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  margin: 0.4rem 0 0;
+}
+
+@media (max-width: 999px) {
+  .v0-heading-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 .v0-card-title {

@@ -1,17 +1,35 @@
 import { useConvexAuth, useQuery } from "convex/react";
+import type { FunctionReference } from "convex/server";
 import { api } from "../../convex/_generated/api";
 import { SignIn } from "./SignIn";
 import { Brief } from "./Brief";
+import type { GuestBriefContent } from "./types";
+
+type GuestBriefQuery = FunctionReference<
+  "query",
+  "public",
+  Record<string, never>,
+  GuestBriefContent
+>;
+
+const getApprovedGuestBrief = (
+  api as unknown as { guestBrief: { getApproved: GuestBriefQuery } }
+).guestBrief.getApproved;
 
 export function App() {
   const { isLoading, isAuthenticated } = useConvexAuth();
   const me = useQuery(api.users.me, isAuthenticated ? {} : "skip");
+  const brief = useQuery(
+    getApprovedGuestBrief,
+    isAuthenticated && me?.approved ? {} : "skip"
+  );
 
   if (isLoading) return <LoadingShell />;
   if (!isAuthenticated) return <SignIn />;
   if (me === undefined) return <LoadingShell />;
   if (!me || !me.approved) return <AwaitingApproval email={me?.email} />;
-  return <Brief />;
+  if (brief === undefined) return <LoadingShell />;
+  return <Brief brief={brief} />;
 }
 
 function LoadingShell() {
@@ -28,13 +46,11 @@ function AwaitingApproval({ email }: { email?: string }) {
       <div className="gb-card">
         <h1>Thanks for signing up</h1>
         <p>
-          You're signed in as <strong>{email}</strong>. We haven't approved this
-          account for the guest brief yet — usually that's a one-line reply on
-          the email that sent you here.
+          You are signed in as <strong>{email}</strong>. This account is not
+          approved for the guest brief yet.
         </p>
         <p className="gb-muted">
-          If you got here without an intro, drop a note to ryan and we'll sort
-          it out.
+          Reply to the email that sent you here and Ryan can sort it out.
         </p>
       </div>
     </div>
