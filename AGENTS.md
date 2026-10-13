@@ -7,6 +7,9 @@ Guidelines for AI agents working on this codebase. `AGENTS.md` and `CLAUDE.md` a
 - [docs/migration-delta-ledger.md](docs/migration-delta-ledger.md) - accepted
   cross-site copy contracts, including the decided `V0-001`, `GB-002`, and
   `GUEST-001` rows. Read it before reopening a parity decision.
+- [docs/internal/cloud-environments.md](docs/internal/cloud-environments.md) -
+  the Codex Cloud `biosite` environment shared with `rcrades/biosite`: hosts,
+  secret names, and verification state. No secret values.
 - Guest Brief audits must also read the current biosite repository's
   `docs/migration-delta-ledger.md`, `docs/cutover-preflight.md`, and
   `docs/environment.md`. The protected brief stays behind the shared Convex
